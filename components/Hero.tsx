@@ -1,10 +1,10 @@
-
-import React from 'react';
-import { ArrowRight, Calendar, Code2 } from 'lucide-react';
+import React from "react";
+import { ArrowRight, Calendar, Code2 } from "lucide-react";
 
 const Hero: React.FC = () => {
   return (
-    <section className="flex flex-col items-center text-center space-y-8 pt-12 md:pt-24 relative">
+    // CHANGED: Removed pt-8 entirely (now pt-0) to close the gap
+    <section className="flex flex-col items-center text-center space-y-8 pt-0 md:pt-12 relative">
         <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
       
       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 text-xs font-medium text-zinc-300 mb-4 animate-fade-in backdrop-blur-md">
@@ -12,12 +12,13 @@ const Hero: React.FC = () => {
         Available for new projects
       </div>
       
-      <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white max-w-5xl leading-[1.1]">
-        Building <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-emerald-400">Revenue-Focused</span> Internal Tools & Automations.
+      {/* CHANGED: New Headline text */}
+      <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white max-w-6xl leading-[1.1]">
+        Turn Manual Operations Into <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-emerald-400">Revenue Engines.</span>
       </h1>
       
       <p className="text-lg md:text-xl text-zinc-400 max-w-2xl font-light leading-relaxed">
-        I bridge the gap between complex business logic and clean code. Specializing in custom CRMs, API Integrations, and SaaS MVPs.
+        I replace spreadsheets and busywork with intelligent software. Specializing in custom CRMs, API Integrations, and SaaS MVPs.
       </p>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 pt-6">

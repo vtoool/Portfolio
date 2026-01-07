@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { Play } from 'lucide-react';
+import React from "react";
+import { Play } from "lucide-react";
 
 const TrustSection: React.FC = () => {
   return (
@@ -10,7 +9,7 @@ const TrustSection: React.FC = () => {
           THE ROI-FIRST APPROACH
         </div>
         <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-100">
-          I’m not just a coder. I’m a business builder.
+          I''m not just a coder. I''m a business builder.
         </h2>
         <p className="text-lg text-zinc-400 leading-relaxed">
           With a background in B2B Sales, I understand that software needs to generate ROI, not just look pretty. Every line of code I write is focused on efficiency, conversion, or automation.

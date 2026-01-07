@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
+﻿import React from "react";
+import { Github, Linkedin, Mail, ArrowRight } from "lucide-react";
 
 const Footer: React.FC = () => {
   return (
@@ -28,13 +27,13 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="flex items-center gap-6">
-          <a href="https://github.com" target="_blank" className="text-zinc-400 hover:text-white transition-colors">
+          <a href="https://github.com/vtoool" target="_blank" className="text-zinc-400 hover:text-white transition-colors">
             <Github className="w-5 h-5" />
           </a>
           <a href="https://linkedin.com" target="_blank" className="text-zinc-400 hover:text-white transition-colors">
             <Linkedin className="w-5 h-5" />
           </a>
-          <a href="mailto:hello@victorbujor.com" className="text-zinc-400 hover:text-white transition-colors">
+          <a href="mailto:victor@cabin-story.com" className="text-zinc-400 hover:text-white transition-colors">
             <Mail className="w-5 h-5" />
           </a>
         </div>

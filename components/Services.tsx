@@ -1,22 +1,21 @@
-
-import React from 'react';
-import { Database, Zap, Rocket } from 'lucide-react';
-import { Service } from '../types';
+import React from "react";
+import { Database, Zap, Rocket } from "lucide-react";
+import { Service } from "../types";
 
 const services: Service[] = [
   {
-    title: 'Custom CRMs',
-    description: 'Stop using spreadsheets. I build internal tools that fit your specific sales process, reducing manual entry and data fragmentation.',
+    title: "Custom CRMs",
+    description: "Stop using spreadsheets. I build internal tools that fit your specific sales process, reducing manual entry and data fragmentation.",
     icon: <Database className="w-6 h-6 text-indigo-400" />
   },
   {
-    title: 'API Integrations',
-    description: 'I connect your isolated tools (RingCentral, Meta, DocuSign) so data flows automatically. Real-time sync for better insights.',
+    title: "API Integrations",
+    description: "I connect your isolated tools (RingCentral, Meta, DocuSign) so data flows automatically. Real-time sync for better insights.",
     icon: <Zap className="w-6 h-6 text-amber-400" />
   },
   {
-    title: 'SaaS MVPs',
-    description: 'From idea to deployed product. I build fast, scalable Minimum Viable Products using modern tech stacks optimized for growth.',
+    title: "SaaS MVPs",
+    description: "From idea to deployed product. I build fast, scalable Minimum Viable Products using modern tech stacks optimized for growth.",
     icon: <Rocket className="w-6 h-6 text-emerald-400" />
   }
 ];

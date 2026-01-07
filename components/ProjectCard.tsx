@@ -1,7 +1,7 @@
-
-import React from 'react';
-import { ExternalLink } from 'lucide-react';
-import { Project } from '../types';
+﻿import React from "react";
+import { ExternalLink } from "lucide-react";
+import { Project } from "@/types";
+import Link from "next/link";
 
 interface ProjectCardProps {
   project: Project;
@@ -9,24 +9,26 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
-  // Manual Grid Logic for specific Bento Layout
   const getGridClasses = (id: string) => {
     switch (id) {
-      case 'pfcrm':
-        return 'md:col-span-2 md:row-span-2 min-h-[400px]';
-      case 'chef':
-        return 'md:col-span-1 md:row-span-2 min-h-[400px]';
-      case 'cabin':
-        return 'md:col-span-2 md:row-span-1 min-h-[200px]';
-      case 'gds':
-        return 'md:col-span-2 md:row-span-1 min-h-[200px]'; // Making GDS wide to fill
+      case "pfcrm":
+        return "md:col-span-2 md:row-span-2 min-h-[400px]";
+      case "chef":
+        return "md:col-span-1 md:row-span-2 min-h-[400px]";
+      case "cabin":
+        return "md:col-span-2 md:row-span-1 min-h-[200px]";
+      case "gds":
+        return "md:col-span-2 md:row-span-1 min-h-[200px]";
       default:
-        return 'md:col-span-1 md:row-span-1 min-h-[200px]';
+        return "md:col-span-1 md:row-span-1 min-h-[200px]";
     }
   };
 
   return (
-    <div className={`bento-card relative rounded-3xl overflow-hidden group p-6 flex flex-col justify-between ${getGridClasses(project.id)}`}>
+    <Link 
+      href={`/project/${project.id}`}
+      className={`bento-card relative rounded-3xl overflow-hidden group p-6 flex flex-col justify-between transition-all hover:scale-[1.01] hover:shadow-2xl hover:shadow-indigo-500/20 ${getGridClasses(project.id)}`}
+    >
       
       {/* Content Container */}
       <div className="space-y-4 z-20 relative h-full flex flex-col">
@@ -73,7 +75,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       ) : (
         <div className="absolute inset-0 z-0 bg-gradient-to-br from-zinc-900 to-zinc-950 group-hover:from-zinc-900 group-hover:to-indigo-950/30 transition-colors duration-500" />
       )}
-    </div>
+    </Link>
   );
 };
 

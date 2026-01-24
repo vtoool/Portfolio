@@ -49,9 +49,9 @@ export function ScrollReveal({
 
   const variants: Variants = {
     hidden: {
-      opacity: 0,
-      x: directionOffset[direction].x,
-      y: directionOffset[direction].y,
+      opacity: 1,
+      x: 0,
+      y: 0,
     },
     visible: {
       opacity: 1,

@@ -18,21 +18,21 @@ const getProjectClasses = (id: string) => {
       // Flagship: 2x2 large
       return {
         gridClass: "lg:col-span-2 lg:row-span-2",
-        padding: "p-5",
+        padding: "p-6",
         textSize: "text-lg lg:text-xl",
       };
     case "cabin":
       // Large 2x2
       return {
         gridClass: "lg:col-span-2 lg:row-span-2",
-        padding: "p-5",
+        padding: "p-6",
         textSize: "text-base lg:text-lg",
       };
     case "chef":
       // Tall: 1x2
       return {
         gridClass: "lg:col-span-1 lg:row-span-2",
-        padding: "p-4",
+        padding: "p-5",
         textSize: "text-sm lg:text-base",
       };
     case "faresnap":
@@ -53,7 +53,7 @@ const getProjectClasses = (id: string) => {
       // Large 2x2
       return {
         gridClass: "lg:col-span-2 lg:row-span-2",
-        padding: "p-5",
+        padding: "p-6",
         textSize: "text-sm lg:text-base",
       };
     default:
@@ -94,14 +94,14 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project }) => {
               {project.title}
               <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
             </h3>
-            <p className="text-zinc-400 text-xs mt-1.5 leading-relaxed line-clamp-2">
+            <p className="text-zinc-400 text-xs mt-3 leading-relaxed line-clamp-2">
               {project.shortDescription}
             </p>
           </div>
 
           {/* Tech Stack */}
-          <div className="flex-shrink-0 pt-3 border-t border-white/5 mt-2">
-            <div className="flex flex-wrap gap-1.5">
+          <div className="flex-shrink-0 pt-4 border-t border-white/5 mt-2">
+            <div className="flex flex-wrap gap-2">
               {project.techStack.slice(0, 3).map((tech) => (
                 <span key={tech} className="text-[9px] font-medium text-zinc-500 px-2 py-0.5 rounded bg-zinc-900/50 group-hover:bg-indigo-900/20 group-hover:text-indigo-300 transition-colors">
                   {tech}

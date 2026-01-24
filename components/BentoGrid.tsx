@@ -1,14 +1,19 @@
-﻿import React from "react";
-import ProjectCard from "./ProjectCard";
+"use client";
+
+import React from "react";
 import { projects } from "@/lib/data";
+import ProjectCard from "./ProjectCard";
+import { ScrollReveal } from "./ScrollReveal";
 
 const BentoGrid: React.FC = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[minmax(180px,auto)]">
-      {projects.map((project, index) => (
-        <ProjectCard key={project.id} project={project} index={index} />
-      ))}
-    </div>
+    <ScrollReveal direction="up" className="w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 auto-rows-fr gap-3 grid-flow-dense">
+        {projects.map((project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </div>
+    </ScrollReveal>
   );
 };
 

@@ -5,30 +5,60 @@ import BentoGrid from "@/components/BentoGrid";
 import Services from "@/components/Services";
 import TrustSection from "@/components/TrustSection";
 import Footer from "@/components/Footer";
+import { ScrollReveal } from "@/components/ScrollReveal";
+
+// Simple section label - no purple, just clean
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center justify-center gap-3 mb-6">
+      <span className="text-xs font-bold text-zinc-500 uppercase tracking-[0.25em]">
+        {children}
+      </span>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
     <div className="min-h-screen relative overflow-x-hidden">
-      {/* Background decoration */}
-      <div className="fixed inset-0 linear-gradient-bg pointer-events-none z-0" />
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full border-x border-zinc-900/50 pointer-events-none z-0" />
-      
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-full border-x border-zinc-900/50 pointer-events-none z-0" />
+
       <div className="relative z-10 flex flex-col items-center">
         <Navbar />
-        {/* CHANGED: Reduced pt-24 to pt-20 to pull content up */}
-        <main className="w-full max-w-7xl px-6 md:px-12 lg:px-16 pt-20 pb-24 space-y-32">
+        <main className="w-full max-w-6xl px-4 md:px-6 pt-16 pb-16 space-y-10">
           <Hero />
-          <section id="portfolio" className="space-y-12">
-            <div className="space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-100">Featured Work</h2>
-              <p className="text-zinc-400 max-w-2xl">
-                A selection of internal tools, automation systems, and SaaS products I have built to solve complex business problems.
-              </p>
-            </div>
+
+          {/* Portfolio Section */}
+          <section id="portfolio" className="space-y-4 relative bg-zinc-950 py-16 rounded-2xl">
+            <ScrollReveal direction="up">
+              <SectionLabel>Portfolio</SectionLabel>
+              <div className="space-y-4 text-center max-w-2xl mx-auto">
+                <h2 className="text-xl md:text-2xl font-bold tracking-tight text-zinc-100">
+                  Featured Work
+                </h2>
+                <p className="text-zinc-500 text-sm">
+                  A selection of internal tools, automation systems, and SaaS products.
+                </p>
+              </div>
+            </ScrollReveal>
             <BentoGrid />
           </section>
-          <Services />
-          <TrustSection />
+
+          {/* Services Section */}
+          <section id="services" className="space-y-6 relative bg-zinc-950 py-16 rounded-2xl">
+            <ScrollReveal direction="up">
+              <SectionLabel>Services</SectionLabel>
+            </ScrollReveal>
+            <Services />
+          </section>
+
+          {/* About Section */}
+          <section id="about" className="relative bg-zinc-950 py-16 rounded-2xl">
+            <ScrollReveal direction="up">
+              <SectionLabel>About</SectionLabel>
+            </ScrollReveal>
+            <TrustSection />
+          </section>
         </main>
         <Footer />
       </div>

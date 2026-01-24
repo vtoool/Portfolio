@@ -1,48 +1,94 @@
+"use client";
+
 import React from "react";
-import { Play } from "lucide-react";
+import { Star, Play } from "lucide-react";
+import { ScrollReveal } from "./ScrollReveal";
+import { testimonials, trustMetrics } from "@/lib/data";
+
+interface TestimonialCardProps {
+  testimonial: typeof testimonials[0];
+  index: number;
+}
+
+const TestimonialCard = React.memo<TestimonialCardProps>(({ testimonial, index }) => {
+  return (
+    <ScrollReveal key={testimonial.id} direction="up" delay={index * 0.1}>
+      <div className="bento-card p-5 relative group">
+        <div className="flex gap-1 mb-3">
+          {Array.from({ length: testimonial.rating || 5 }).map((_, i) => (
+            <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
+          ))}
+        </div>
+
+        <p className="text-zinc-400 text-sm leading-relaxed mb-4">
+          "{testimonial.content}"
+        </p>
+
+        <div className="flex items-center gap-2 pt-3 border-t border-white/5">
+          <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-300 text-xs font-bold">
+            {testimonial.name.split(" ").map((n) => n[0]).join("")}
+          </div>
+          <div>
+            <div className="font-medium text-zinc-200 text-xs">
+              {testimonial.name}
+            </div>
+            <div className="text-[10px] text-zinc-500">
+              {testimonial.role}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+  );
+});
+
+TestimonialCard.displayName = 'TestimonialCard';
 
 const TrustSection: React.FC = () => {
   return (
-    <section id="about" className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-12 border-y border-zinc-900">
-      <div className="space-y-6">
-        <div className="inline-block px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-medium text-zinc-400">
-          THE ROI-FIRST APPROACH
+    <section className="relative">
+      {/* Trust Metrics */}
+      <ScrollReveal direction="up" className="mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {trustMetrics.map((metric) => (
+            <div key={metric.label} className="text-center">
+              <div className="text-2xl md:text-3xl font-bold text-zinc-100 mb-1">
+                {metric.value}
+              </div>
+              <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+                {metric.label}
+              </div>
+            </div>
+          ))}
         </div>
-        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-100">
-          I''m not just a coder. I''m a business builder.
-        </h2>
-        <p className="text-lg text-zinc-400 leading-relaxed">
-          With a background in B2B Sales, I understand that software needs to generate ROI, not just look pretty. Every line of code I write is focused on efficiency, conversion, or automation.
-        </p>
-        <div className="flex items-center gap-4">
-          <div className="flex -space-x-3">
-            {[1, 2, 3, 4].map(i => (
-              <img 
-                key={i} 
-                src={`https://picsum.photos/100/100?random=${i + 10}`} 
-                className="w-10 h-10 rounded-full border-2 border-zinc-950" 
-                alt="Client" 
-              />
-            ))}
-          </div>
-          <p className="text-sm text-zinc-500 font-medium">Joined by 20+ satisfied clients</p>
+      </ScrollReveal>
+
+      {/* Testimonials */}
+      <ScrollReveal direction="up" delay={0.1}>
+        <div className="text-center mb-8">
+          <h2 className="text-xl md:text-2xl font-bold text-zinc-100 mb-2">
+            What Clients Say
+          </h2>
         </div>
+      </ScrollReveal>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        {testimonials.map((testimonial, index) => (
+          <TestimonialCard key={testimonial.id} testimonial={testimonial} index={index} />
+        ))}
       </div>
 
-      <div className="relative group rounded-2xl overflow-hidden aspect-video bg-zinc-900 border border-zinc-800 flex items-center justify-center cursor-pointer">
-        <img 
-          src="https://picsum.photos/1200/800?grayscale&blur=2" 
-          alt="Video Thumbnail" 
-          className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-50 transition-opacity"
-        />
-        <div className="z-10 bg-white text-zinc-950 w-16 h-16 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
-          <Play className="w-6 h-6 fill-current" />
+      {/* Video placeholder */}
+      <ScrollReveal direction="up" delay={0.2} className="mt-10">
+        <div className="relative rounded-2xl overflow-hidden aspect-video bg-zinc-900/50 border border-zinc-800 group cursor-pointer">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Play className="w-6 h-6 text-white ml-0.5" />
+            </div>
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 via-transparent to-transparent" />
         </div>
-        <div className="absolute bottom-6 left-6 text-left z-10">
-          <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Watch the demo</p>
-          <p className="text-white font-medium">How I automated a $2M sales pipeline</p>
-        </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 };

@@ -64,12 +64,12 @@ const FloatingAssets: React.FC = () => {
         // Each asset has unique subtle movement pattern
         const getBreathingAnimation = (index: number) => {
           const animations = [
-            { x: [0, 8, 0, -6, 0], y: [0, -5, 0, 7, 0], scale: [1, 1.02, 1, 0.98, 1] }, // Me
-            { x: [0, -5, 0, 6, 0], y: [0, 6, 0, -4, 0], scale: [1, 1.01, 1, 0.99, 1] }, // Guitar
-            { x: [0, 4, 0, -5, 0], y: [0, -4, 0, 5, 0], scale: [1, 1.015, 1, 0.985, 1] }, // Map
-            { x: [0, 6, 0, -7, 0], y: [0, 5, 0, -6, 0], scale: [1, 1.01, 1, 0.99, 1] }, // Plane
-            { x: [0, 5, 0, -4, 0], y: [0, -3, 0, 4, 0], scale: [1, 1.02, 1, 0.98, 1] }, // Gear 1
-            { x: [0, -6, 0, 5, 0], y: [0, 4, 0, -5, 0], scale: [1, 1.015, 1, 0.985, 1] }, // Gear 2
+            { x: [0, 8], y: [0, -5], scale: [1, 1.02] }, // Me
+            { x: [0, -5], y: [0, 6], scale: [1, 1.01] }, // Guitar
+            { x: [0, 4], y: [0, -4], scale: [1, 1.015] }, // Map
+            { x: [0, 6], y: [0, 5], scale: [1, 1.01] }, // Plane
+            { x: [0, 5], y: [0, -3], scale: [1, 1.02] }, // Gear 1
+            { x: [0, -6], y: [0, 4], scale: [1, 1.015] }, // Gear 2
           ];
           return animations[index % animations.length];
         };
@@ -104,6 +104,7 @@ const FloatingAssets: React.FC = () => {
               delay: asset.animation.delay,
               duration: 4 + (assetIndex * 0.5),
               repeat: Infinity,
+              repeatType: "reverse" as const,
               ease: "easeInOut"
             }}
           >

@@ -60,6 +60,28 @@ const FloatingAssets: React.FC = () => {
           [0, asset.animation.parallaxSpeed * 100]
         );
 
+        // Entry animation variants
+        const entryVariants = {
+          hidden: {
+            x: asset.animation.initialX,
+            y: asset.animation.initialY,
+            opacity: 0,
+            filter: "blur(8px)"
+          },
+          visible: {
+            x: 0,
+            y: 0,
+            opacity: 1,
+            filter: "blur(0px)",
+            transition: {
+              type: "spring" as const,
+              stiffness: 100,
+              damping: 20,
+              duration: 0.8
+            }
+          }
+        };
+
         // Floating animation configuration
         // Balanced movement for visible but subtle animations
         const getBreathingAnimation = (index: number) => {
@@ -86,11 +108,8 @@ const FloatingAssets: React.FC = () => {
               zIndex: asset.position.zIndex,
               scale: asset.scale
             }}
-            initial={{
-              x: breathingAnimation.x[1],
-              y: breathingAnimation.y[1],
-              scale: breathingAnimation.scale[1] * asset.scale
-            }}
+            initial="hidden"
+            variants={entryVariants}
             animate={{
               x: breathingAnimation.x,
               y: breathingAnimation.y,
@@ -98,7 +117,7 @@ const FloatingAssets: React.FC = () => {
             }}
             transition={{
               type: "tween" as const,
-              delay: asset.animation.delay,
+              delay: 0.8 + asset.animation.delay,
               duration: 6 + (assetIndex * 0.5),
               repeat: Infinity,
               repeatType: "reverse" as const,

@@ -60,30 +60,7 @@ const FloatingAssets: React.FC = () => {
           [0, asset.animation.parallaxSpeed * 100]
         );
 
-        // Entry animation variants
-        const entryVariants = {
-          hidden: {
-            x: asset.animation.initialX,
-            y: asset.animation.initialY,
-            opacity: 0,
-            filter: "blur(8px)"
-          },
-          visible: {
-            x: 0,
-            y: 0,
-            opacity: 1,
-            filter: "blur(0px)",
-            transition: {
-              type: "spring" as const,
-              stiffness: 100,
-              damping: 20,
-              duration: 0.8
-            }
-          }
-        };
-
-        // Floating animation configuration
-        // Balanced movement for visible but subtle animations
+        // Breathing animation configuration
         const getBreathingAnimation = (index: number) => {
           const animations = [
             { x: [0, 5], y: [0, -4], scale: [1, 1.004] }, // Me
@@ -108,20 +85,33 @@ const FloatingAssets: React.FC = () => {
               zIndex: asset.position.zIndex,
               scale: asset.scale
             }}
-            initial="hidden"
-            variants={entryVariants}
+            initial={{
+              x: asset.animation.initialX,
+              y: asset.animation.initialY,
+              opacity: 0,
+              filter: "blur(8px)"
+            }}
             animate={{
-              x: breathingAnimation.x,
-              y: breathingAnimation.y,
-              scale: breathingAnimation.scale.map(s => s * asset.scale)
+              x: [0, breathingAnimation.x[1], 0],
+              y: [0, breathingAnimation.y[1], 0],
+              scale: [1, breathingAnimation.scale[1] * asset.scale, 1],
+              opacity: [0, 1, 1],
+              filter: ["blur(8px)", "blur(0px)", "blur(0px)"]
             }}
             transition={{
-              type: "tween" as const,
-              delay: 0.8 + asset.animation.delay,
-              duration: 6 + (assetIndex * 0.5),
+              type: "spring" as const,
+              stiffness: 100,
+              damping: 20,
+              duration: 0.8,
+              delay: asset.animation.delay,
+              times: [0, 0.1, 1],
               repeat: Infinity,
               repeatType: "reverse" as const,
               ease: "easeInOut"
+            }}
+            whileHover={{
+              scale: breathingAnimation.scale[1] * 1.05,
+              transition: { duration: 0.2 }
             }}
           >
             <Image

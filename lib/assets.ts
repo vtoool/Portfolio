@@ -19,99 +19,124 @@ export interface AssetConfig {
 }
 
 export const ART_ASSETS: AssetConfig[] = [
+  // Me - Center, biggest, focal point
   {
     src: "/art/Me.png",
     alt: "Me - Clay Figurine",
     width: 400,
     height: 400,
     position: {
-      top: "15%",
-      left: "55%",
+      top: "25%",
+      left: "47%",
       zIndex: 3
     },
-    scale: 1.2,
+    scale: 1.3,
     animation: {
-      initialX: 100,
+      initialX: 80,
       initialY: -50,
       delay: 0,
       direction: 'left',
       parallaxSpeed: 0.3
     }
   },
-  {
-    src: "/art/plane.png",
-    alt: "Plane",
-    width: 300,
-    height: 300,
-    position: {
-      top: "5%",
-      left: "70%",
-      zIndex: 2
-    },
-    scale: 1.0,
-    animation: {
-      initialX: 150,
-      initialY: 0,
-      delay: 0.05,
-      direction: 'right',
-      parallaxSpeed: 0.4
-    }
-  },
+  // Guitar - Center left, slightly lower
   {
     src: "/art/guitar.png",
     alt: "Guitar",
     width: 350,
     height: 350,
     position: {
-      top: "50%",
-      left: "75%",
+      top: "40%",
+      left: "20%",
       zIndex: 2
     },
-    scale: 1.0,
+    scale: 0.9,
     animation: {
-      initialX: 120,
-      initialY: 100,
+      initialX: -100,
+      initialY: 60,
       delay: 0.1,
-      direction: 'bottom',
+      direction: 'left',
       parallaxSpeed: 0.35
     }
   },
+  // Map - Left of Me
   {
     src: "/art/map.png",
     alt: "Map App Icon",
     width: 280,
     height: 280,
     position: {
-      top: "35%",
-      left: "65%",
-      zIndex: 1
+      top: "15%",
+      left: "15%",
+      zIndex: 2
     },
-    scale: 0.9,
+    scale: 0.8,
     animation: {
-      initialX: 0,
-      initialY: -120,
+      initialX: -120,
+      initialY: -50,
       delay: 0.15,
-      direction: 'up',
+      direction: 'left',
       parallaxSpeed: 0.25
     }
   },
+  // Airplane - Right, further and lower than map
+  {
+    src: "/art/plane.png",
+    alt: "Plane",
+    width: 300,
+    height: 300,
+    position: {
+      top: "18%",
+      left: "75%",
+      zIndex: 2
+    },
+    scale: 0.85,
+    animation: {
+      initialX: 150,
+      initialY: 80,
+      delay: 0.05,
+      direction: 'right',
+      parallaxSpeed: 0.4
+    }
+  },
+  // Gear Big - Right of middle of Me
   {
     src: "/art/gear.png",
     alt: "Gear",
     width: 220,
     height: 220,
     position: {
-      top: "60%",
-      left: "62%",
+      top: "35%",
+      left: "70%",
       zIndex: 1
     },
-    scale: 0.8,
+    scale: 0.7,
     animation: {
-      initialX: -100,
-      initialY: 80,
+      initialX: 100,
+      initialY: -30,
       delay: 0.2,
-      direction: 'left',
+      direction: 'right',
       parallaxSpeed: 0.2
+    }
+  },
+  // Gear Small - Slightly lower and to the right of big gear
+  {
+    src: "/art/gear.png",
+    alt: "Small Gear",
+    width: 180,
+    height: 180,
+    position: {
+      top: "45%",
+      left: "68%",
+      zIndex: 1
+    },
+    scale: 0.55,
+    animation: {
+      initialX: 120,
+      initialY: 40,
+      delay: 0.25,
+      direction: 'right',
+      parallaxSpeed: 0.18
     }
   }
 ];

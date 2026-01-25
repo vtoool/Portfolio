@@ -7,12 +7,14 @@ import { ScrollReveal } from "./ScrollReveal";
 import { MagneticButton } from "./MagneticButton";
 import FloatingAssets from "./FloatingAssets";
 import LayoutModePanel from "./LayoutModePanel";
+import PositionForm from "./PositionForm";
 import { partnerLogos } from "@/lib/data";
 import { useLanguage } from './LanguageContext';
 
 const Hero: React.FC = () => {
   const { t } = useLanguage();
   const [isLayoutMode, setIsLayoutMode] = useState(false);
+  const [editorMode, setEditorMode] = useState<'drag' | 'form'>('form');
   const [assetValues, setAssetValues] = useState<{ [key: string]: any }>({});
 
   useEffect(() => {
@@ -92,11 +94,40 @@ const Hero: React.FC = () => {
       </div>
 
       {isLayoutMode && (
-        <LayoutModePanel
-          isVisible={isLayoutMode}
-          onClose={() => setIsLayoutMode(false)}
-          assetValues={assetValues}
-        />
+        <div className="fixed top-6 right-6 z-[9999] max-h-[90vh] overflow-y-auto">
+          <div className="mb-4 flex gap-2 justify-end">
+            <button
+              onClick={() => setEditorMode('form')}
+              className={`px-4 py-2 rounded-xl font-bold transition-all ${
+                editorMode === 'form'
+                  ? 'bg-indigo-600 text-white'
+                  : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+              }`}
+            >
+              Form Mode
+            </button>
+            <button
+              onClick={() => setEditorMode('drag')}
+              className={`px-4 py-2 rounded-xl font-bold transition-all ${
+                editorMode === 'drag'
+                  ? 'bg-indigo-600 text-white'
+                  : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+              }`}
+            >
+              Drag Mode
+            </button>
+          </div>
+
+          {editorMode === 'form' ? (
+            <PositionForm onValuesChange={handleAssetValuesChange} />
+          ) : (
+            <LayoutModePanel
+              isVisible={isLayoutMode}
+              onClose={() => setIsLayoutMode(false)}
+              assetValues={assetValues}
+            />
+          )}
+        </div>
       )}
     </section>
   );

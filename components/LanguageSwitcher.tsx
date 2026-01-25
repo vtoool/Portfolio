@@ -1,19 +1,13 @@
 "use client";
 
-import { useLocale } from 'next-intl';
-import { usePathname, useRouter } from 'next/navigation';
 import { Globe } from 'lucide-react';
+import { useLanguage } from './LanguageContext';
 
 export default function LanguageSwitcher() {
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
+  const { locale, setLocale } = useLanguage();
 
   const switchLocale = () => {
-    const newLocale = locale === 'en' ? 'ro' : 'en';
-    const segments = pathname.split('/');
-    segments[1] = newLocale;
-    router.push(segments.join('/'));
+    setLocale(locale === 'en' ? 'ro' : 'en');
   };
 
   return (

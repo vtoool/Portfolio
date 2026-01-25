@@ -5,8 +5,8 @@ import { Github, Mail, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollDirection } from "@/lib/hooks/useScrollDirection";
-import { useTranslations, useLocale } from 'next-intl';
 import LanguageSwitcher from './LanguageSwitcher';
+import { useLanguage } from './LanguageContext';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,8 +14,7 @@ const Navbar: React.FC = () => {
   const [navbarVisible, setNavbarVisible] = useState(true);
   const [hasMounted, setHasMounted] = useState(false);
   const scrollDirection = useScrollDirection(10);
-  const t = useTranslations('navbar');
-  const locale = useLocale();
+  const { t } = useLanguage();
 
   useEffect(() => {
     setHasMounted(true);
@@ -54,9 +53,9 @@ const Navbar: React.FC = () => {
   }, [scrollDirection, hasMounted]);
 
   const navLinks = [
-    { href: `/${locale}/#portfolio`, label: t('portfolio') },
-    { href: `/${locale}/#services`, label: t('services') },
-    { href: `/${locale}/#about`, label: t('about') },
+    { href: "/#portfolio", label: t('navbar.portfolio') },
+    { href: "/#services", label: t('navbar.services') },
+    { href: "/#about", label: t('navbar.about') },
   ];
 
   return (

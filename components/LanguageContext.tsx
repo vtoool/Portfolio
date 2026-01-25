@@ -1,0 +1,115 @@
+"use client";
+
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
+type Locale = 'en' | 'ro';
+
+interface LanguageContextType {
+  locale: Locale;
+  setLocale: (locale: Locale) => void;
+  t: (key: string) => string;
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+const enMessages = {
+  navbar: {
+    portfolio: "Portfolio",
+    services: "Services",
+    about: "About",
+    letsTalk: "Let's Talk"
+  },
+  hero: {
+    availability: "Available for new projects",
+    headline: "Turn Manual Operations Into {highlight}",
+    highlight: "Revenue Engines.",
+    description: "I replace spreadsheets and busywork with intelligent software. Specializing in custom CRMs, API Integrations, and SaaS MVPs.",
+    bookCall: "Book a Discovery Call",
+    viewProjects: "View Projects",
+    toolsSection: "Tools I Work With",
+    aboutMe: "Hi, I'm Victor. I'm a developer, a student, and a creative at heart. I focus on building software that solves actual business problems. My work ranges from creating booking systems for local service providers to developing specialized SaaS tools for the logistics industry. I use my background in sales to ensure that everything I build drives results, regardless of the project size. When I'm not coding, I recharge by playing the guitar and traveling to find new inspiration."
+  },
+  portfolio: {
+    sectionLabel: "Portfolio",
+    featuredWork: "Featured Work",
+    featuredWorkDesc: "A selection of internal tools, automation systems, and SaaS products."
+  },
+  services: {
+    sectionLabel: "Services"
+  },
+  about: {
+    sectionLabel: "About"
+  }
+};
+
+const roMessages = {
+  navbar: {
+    portfolio: "Portofoliu",
+    services: "Servicii",
+    about: "Despre",
+    letsTalk: "Să Discutăm"
+  },
+  hero: {
+    availability: "Disponibil pentru proiecte noi",
+    headline: "Transform Operațiunile Manuale în {highlight}",
+    highlight: "Motoare de Venituri.",
+    description: "Înlocuiesc foile de calcul și munca repetitivă cu software inteligent. Mă specializez în CRMs personalizate, Integrări API și MVP-uri SaaS.",
+    bookCall: "Rezervă o Discuție de Descoperire",
+    viewProjects: "Vezi Proiectele",
+    toolsSection: "Tehnologii cu care Lucrez",
+    aboutMe: "Salut, sunt Victor. Sunt dezvoltator, student și o persoană creativă. Mă concentrez pe construirea de software care rezolvă probleme reale de business. Activitatea mea variază de la sisteme de programări pentru prestatori de servicii locali, până la platforme SaaS complexe pentru logistică. Îmi folosesc experiența în vânzări pentru a mă asigura că tot ce construiesc aduce rezultate, indiferent de mărimea proiectului. Când nu scriu cod, mă reîncarc cântând la chitară și călătoresc pentru a găsi inspirație nouă."
+  },
+  portfolio: {
+    sectionLabel: "Portofoliu",
+    featuredWork: "Lucrări Recomandate",
+    featuredWorkDesc: "O selecție de instrumente interne, sisteme de automatizare și produse SaaS."
+  },
+  services: {
+    sectionLabel: "Servicii"
+  },
+  about: {
+    sectionLabel: "Despre"
+  }
+};
+
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [locale, setLocaleState] = useState<Locale>('en');
+
+  useEffect(() => {
+    const savedLocale = localStorage.getItem('locale') as Locale;
+    if (savedLocale && ['en', 'ro'].includes(savedLocale)) {
+      setLocaleState(savedLocale);
+    }
+  }, []);
+
+  const setLocale = (newLocale: Locale) => {
+    setLocaleState(newLocale);
+    localStorage.setItem('locale', newLocale);
+  };
+
+  const t = (key: string): string => {
+    const messages = locale === 'ro' ? roMessages : enMessages;
+    const keys = key.split('.');
+    let value: any = messages;
+
+    for (const k of keys) {
+      value = value?.[k];
+    }
+
+    return typeof value === 'string' ? value : key;
+  };
+
+  return (
+    <LanguageContext.Provider value={{ locale, setLocale, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+}
+
+export function useLanguage() {
+  const context = useContext(LanguageContext);
+  if (context === undefined) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
+}

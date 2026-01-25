@@ -6,11 +6,17 @@ import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { MagneticButton } from "./MagneticButton";
 import { partnerLogos } from "@/lib/data";
-import { useTranslations, useLocale } from 'next-intl';
+import { useLanguage } from './LanguageContext';
 
 const Hero: React.FC = () => {
-  const t = useTranslations('hero');
-  const locale = useLocale();
+  const { t } = useLanguage();
+
+  const renderHeadline = () => {
+    const headline = t('hero.headline');
+    const highlight = t('hero.highlight');
+
+    return headline.replace('{highlight}', highlight);
+  };
 
   return (
     <section className="flex flex-col items-center text-center space-y-8 pt-0 md:pt-12 relative">
@@ -19,25 +25,23 @@ const Hero: React.FC = () => {
       <ScrollReveal direction="down" duration={0.6}>
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 text-xs font-medium text-zinc-300 mb-4 backdrop-blur-md">
           <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
-          {t('availability')}
+          {t('hero.availability')}
         </div>
       </ScrollReveal>
 
       <ScrollReveal direction="up" delay={0.1}>
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white max-w-4xl leading-[1.1]">
-          {t.rich('headline', {
-            highlight: (chunks) => (
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
-                {chunks}
-              </span>
-            )
-          })}
+          {renderHeadline().split('Revenue Engines.').map((part, i) => i === 0 ? part : (
+            <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
+              Revenue Engines.
+            </span>
+          ))}
         </h1>
       </ScrollReveal>
 
       <ScrollReveal direction="up" delay={0.2}>
         <p className="text-sm md:text-base text-zinc-400 max-w-lg font-light leading-relaxed">
-          {t('description')}
+          {t('hero.description')}
         </p>
       </ScrollReveal>
 
@@ -45,7 +49,7 @@ const Hero: React.FC = () => {
       <ScrollReveal direction="up" delay={0.25}>
         <div className="max-w-3xl mx-auto bg-zinc-900/30 border border-zinc-800 rounded-xl p-6 backdrop-blur-sm">
           <p className="text-zinc-300 text-sm md:text-base leading-relaxed">
-            {t('aboutMe')}
+            {t('hero.aboutMe')}
           </p>
         </div>
       </ScrollReveal>
@@ -57,15 +61,15 @@ const Hero: React.FC = () => {
             href="mailto:victor@cabin-story.com"
           >
             <Calendar className="w-4 h-4" />
-            {t('bookCall')}
+            {t('hero.bookCall')}
             <ArrowRight className="w-4 h-4" />
           </MagneticButton>
           <MagneticButton
             variant="secondary"
-            href={`/${locale}/#portfolio`}
+            href="/#portfolio"
           >
             <Code2 className="w-4 h-4" />
-            {t('viewProjects')}
+            {t('hero.viewProjects')}
           </MagneticButton>
         </div>
       </ScrollReveal>
@@ -77,7 +81,7 @@ const Hero: React.FC = () => {
       <ScrollReveal direction="up" delay={0.4}>
         <div id="tools-section" className="pt-16 w-full max-w-4xl mx-auto">
           <p className="text-xs text-zinc-500 uppercase tracking-widest mb-8 text-center">
-            {t('toolsSection')}
+            {t('hero.toolsSection')}
           </p>
           <div className="marquee-container overflow-hidden relative">
             <div className="marquee-content flex gap-8">

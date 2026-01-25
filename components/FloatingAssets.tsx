@@ -60,21 +60,6 @@ const FloatingAssets: React.FC = () => {
           [0, asset.animation.parallaxSpeed * 100]
         );
 
-        const entryVariants = {
-          hidden: {
-            x: asset.animation.initialX,
-            y: asset.animation.initialY,
-            opacity: 0,
-            filter: "blur(12px)"
-          },
-          visible: {
-            x: 0,
-            y: 0,
-            opacity: 1,
-            filter: "blur(0px)"
-          }
-        };
-
         // Breathing/panning animation configuration
         // Each asset has unique subtle movement pattern
         const getBreathingAnimation = (index: number) => {
@@ -102,14 +87,10 @@ const FloatingAssets: React.FC = () => {
               scale: asset.scale,
               y: parallaxOffset
             }}
-            variants={entryVariants}
-            initial="hidden"
             animate={{
               x: breathingAnimation.x,
               y: breathingAnimation.y,
-              scale: breathingAnimation.scale.map(s => s * asset.scale),
-              opacity: 1,
-              filter: "blur(0px)"
+              scale: breathingAnimation.scale.map(s => s * asset.scale)
             }}
             transition={{
               type: "spring" as const,
@@ -118,7 +99,6 @@ const FloatingAssets: React.FC = () => {
               delay: asset.animation.delay,
               duration: 4 + (assetIndex * 0.5),
               repeat: Infinity,
-              repeatType: "mirror" as const,
               ease: "easeInOut"
             }}
           >

@@ -14,11 +14,11 @@ interface PageProps {
   };
 }
 
-export async function generateStaticParams() {
-  return projects.map((project) => ({
-    id: project.id,
-  }));
-}
+// export async function generateStaticParams() {
+//   return projects.map((project) => ({
+//     id: project.id,
+//   }));
+// }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const project = projects.find((p) => p.id === params.id);

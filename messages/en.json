@@ -1,0 +1,29 @@
+{
+  "navbar": {
+    "portfolio": "Portfolio",
+    "services": "Services",
+    "about": "About",
+    "letsTalk": "Let's Talk"
+  },
+  "hero": {
+    "availability": "Available for new projects",
+    "headline": "Turn Manual Operations Into {highlight}",
+    "highlight": "Revenue Engines.",
+    "description": "I replace spreadsheets and busywork with intelligent software. Specializing in custom CRMs, API Integrations, and SaaS MVPs.",
+    "bookCall": "Book a Discovery Call",
+    "viewProjects": "View Projects",
+    "toolsSection": "Tools I Work With",
+    "aboutMe": "Hi, I'm Victor. I'm a developer, a student, and a creative at heart. I focus on building software that solves actual business problems. My work ranges from creating booking systems for local service providers to developing specialized SaaS tools for the logistics industry. I use my background in sales to ensure that everything I build drives results, regardless of the project size. When I'm not coding, I recharge by playing the guitar and traveling to find new inspiration."
+  },
+  "portfolio": {
+    "sectionLabel": "Portfolio",
+    "featuredWork": "Featured Work",
+    "featuredWorkDesc": "A selection of internal tools, automation systems, and SaaS products."
+  },
+  "services": {
+    "sectionLabel": "Services"
+  },
+  "about": {
+    "sectionLabel": "About"
+  }
+}

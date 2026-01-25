@@ -1,0 +1,29 @@
+{
+  "navbar": {
+    "portfolio": "Portofoliu",
+    "services": "Servicii",
+    "about": "Despre",
+    "letsTalk": "Să Discutăm"
+  },
+  "hero": {
+    "availability": "Disponibil pentru proiecte noi",
+    "headline": "Transform Operațiunile Manuale în {highlight}",
+    "highlight": "Motoare de Venituri.",
+    "description": "Înlocuiesc foile de calcul și munca repetitivă cu software inteligent. Mă specializez în CRMs personalizate, Integrări API și MVP-uri SaaS.",
+    "bookCall": "Rezervă o Discuție de Descoperire",
+    "viewProjects": "Vezi Proiectele",
+    "toolsSection": "Tehnologii cu care Lucrez",
+    "aboutMe": "Salut, sunt Victor. Sunt dezvoltator, student și o persoană creativă. Mă concentrez pe construirea de software care rezolvă probleme reale de business. Activitatea mea variază de la sisteme de programări pentru prestatori de servicii locali, până la platforme SaaS complexe pentru logistică. Îmi folosesc experiența în vânzări pentru a mă asigura că tot ce construiesc aduce rezultate, indiferent de mărimea proiectului. Când nu scriu cod, mă reîncarc cântând la chitară și călătoresc pentru a găsi inspirație nouă."
+  },
+  "portfolio": {
+    "sectionLabel": "Portofoliu",
+    "featuredWork": "Lucrări Recomandate",
+    "featuredWorkDesc": "O selecție de instrumente interne, sisteme de automatizare și produse SaaS."
+  },
+  "services": {
+    "sectionLabel": "Servicii"
+  },
+  "about": {
+    "sectionLabel": "Despre"
+  }
+}

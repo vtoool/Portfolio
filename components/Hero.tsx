@@ -6,8 +6,12 @@ import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { MagneticButton } from "./MagneticButton";
 import { partnerLogos } from "@/lib/data";
+import { useTranslations, useLocale } from 'next-intl';
 
 const Hero: React.FC = () => {
+  const t = useTranslations('hero');
+  const locale = useLocale();
+
   return (
     <section className="flex flex-col items-center text-center space-y-8 pt-0 md:pt-12 relative">
       <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
@@ -15,23 +19,35 @@ const Hero: React.FC = () => {
       <ScrollReveal direction="down" duration={0.6}>
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 text-xs font-medium text-zinc-300 mb-4 backdrop-blur-md">
           <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
-          Available for new projects
+          {t('availability')}
         </div>
       </ScrollReveal>
 
       <ScrollReveal direction="up" delay={0.1}>
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white max-w-4xl leading-[1.1]">
-          Turn Manual Operations Into{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
-            Revenue Engines.
-          </span>
+          {t.rich('headline', {
+            highlight: (chunks) => (
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
+                {chunks}
+              </span>
+            )
+          })}
         </h1>
       </ScrollReveal>
 
       <ScrollReveal direction="up" delay={0.2}>
         <p className="text-sm md:text-base text-zinc-400 max-w-lg font-light leading-relaxed">
-          I replace spreadsheets and busywork with intelligent software. Specializing in custom CRMs, API Integrations, and SaaS MVPs.
+          {t('description')}
         </p>
+      </ScrollReveal>
+
+      {/* About Me Section - Longer description */}
+      <ScrollReveal direction="up" delay={0.25}>
+        <div className="max-w-3xl mx-auto bg-zinc-900/30 border border-zinc-800 rounded-xl p-6 backdrop-blur-sm">
+          <p className="text-zinc-300 text-sm md:text-base leading-relaxed">
+            {t('aboutMe')}
+          </p>
+        </div>
       </ScrollReveal>
 
       <ScrollReveal direction="up" delay={0.3}>
@@ -41,15 +57,15 @@ const Hero: React.FC = () => {
             href="mailto:victor@cabin-story.com"
           >
             <Calendar className="w-4 h-4" />
-            Book a Discovery Call
+            {t('bookCall')}
             <ArrowRight className="w-4 h-4" />
           </MagneticButton>
           <MagneticButton
             variant="secondary"
-            href="#portfolio"
+            href={`/${locale}/#portfolio`}
           >
             <Code2 className="w-4 h-4" />
-            View Projects
+            {t('viewProjects')}
           </MagneticButton>
         </div>
       </ScrollReveal>
@@ -61,7 +77,7 @@ const Hero: React.FC = () => {
       <ScrollReveal direction="up" delay={0.4}>
         <div id="tools-section" className="pt-16 w-full max-w-4xl mx-auto">
           <p className="text-xs text-zinc-500 uppercase tracking-widest mb-8 text-center">
-            Tools I Work With
+            {t('toolsSection')}
           </p>
           <div className="marquee-container overflow-hidden relative">
             <div className="marquee-content flex gap-8">

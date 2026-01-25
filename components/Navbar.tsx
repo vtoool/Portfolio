@@ -5,6 +5,8 @@ import { Github, Mail, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollDirection } from "@/lib/hooks/useScrollDirection";
+import { useTranslations, useLocale } from 'next-intl';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,6 +14,8 @@ const Navbar: React.FC = () => {
   const [navbarVisible, setNavbarVisible] = useState(true);
   const [hasMounted, setHasMounted] = useState(false);
   const scrollDirection = useScrollDirection(10);
+  const t = useTranslations('navbar');
+  const locale = useLocale();
 
   useEffect(() => {
     setHasMounted(true);
@@ -50,9 +54,9 @@ const Navbar: React.FC = () => {
   }, [scrollDirection, hasMounted]);
 
   const navLinks = [
-    { href: "/#portfolio", label: "Portfolio" },
-    { href: "/#services", label: "Services" },
-    { href: "/#about", label: "About" },
+    { href: `/${locale}/#portfolio`, label: t('portfolio') },
+    { href: `/${locale}/#services`, label: t('services') },
+    { href: `/${locale}/#about`, label: t('about') },
   ];
 
   return (
@@ -92,16 +96,20 @@ const Navbar: React.FC = () => {
           <a
             href="https://github.com/vtoool"
             target="_blank"
+            rel="noopener noreferrer"
             className="p-2 text-zinc-400 hover:text-white transition-colors"
           >
             <Github className="w-4 h-4" />
           </a>
+
+          <LanguageSwitcher />
+
           <a
             href="mailto:victor@cabin-story.com"
             className="hidden sm:flex bg-white text-zinc-950 px-4 py-2 rounded-full text-xs font-bold hover:bg-zinc-200 transition-colors items-center gap-2"
           >
             <Mail className="w-3 h-3" />
-            Let's Talk
+            {t('letsTalk')}
           </a>
           <button
             className="md:hidden p-2 text-zinc-400"
@@ -159,7 +167,7 @@ const Navbar: React.FC = () => {
                   className="inline-flex items-center gap-2 bg-white text-zinc-950 px-6 py-3 rounded-full text-sm font-bold"
                 >
                   <Mail className="w-4 h-4" />
-                  Let's Talk
+                  {t('letsTalk')}
                 </a>
               </motion.div>
             </div>

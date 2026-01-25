@@ -17,6 +17,17 @@ interface FloatingAssetsProps {
   onAssetValuesChange?: (values: { [key: string]: AssetValue }) => void;
 }
 
+interface DragState {
+  assetSrc: string;
+  startX: number;
+  startY: number;
+  startTop: number;
+  startLeft: number;
+  startScale: number;
+  action: 'move' | 'resize';
+  direction?: string;
+}
+
 const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) => {
   const scrollY = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,8 +35,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
 
   // Check if layout mode is enabled via URL parameter
   const [isLayoutMode, setIsLayoutMode] = useState(false);
-  const [draggedAsset, setDraggedAsset] = useState<string | null>(null);
-  const [resizedAsset, setResizedAsset] = useState<string | null>(null);
+  const [dragState, setDragState] = useState<DragState | null>(null);
   const [assetValues, setAssetValues] = useState<{ [key: string]: AssetValue }>({});
 
   useEffect(() => {
@@ -55,41 +65,96 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
     return () => window.removeEventListener("scroll", updateScroll);
   }, [scrollY, prefersReducedMotion]);
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!draggedAsset || !containerRef.current) return;
+  const parsePercentage = (value: string): number => {
+    return parseFloat(value.replace('%', ''));
+  };
 
-    const containerRect = containerRef.current.getBoundingClientRect();
-    const containerWidth = containerRect.width;
-    const containerHeight = containerRect.height;
+  const handleMouseDown = (e: React.MouseEvent, assetSrc: string, action: 'move' | 'resize', direction?: string) => {
+    if (!isLayoutMode || !containerRef.current) return;
+    e.preventDefault();
+    e.stopPropagation();
 
-    const asset = ART_ASSETS.find(a => a.src === draggedAsset);
+    const asset = ART_ASSETS.find(a => a.src === assetSrc);
     if (!asset) return;
 
-    const newLeft = ((e.clientX - containerRect.left) / containerWidth) * 100;
-    const newTop = ((e.clientY - containerRect.top) / containerHeight) * 100;
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const currentValues = assetValues[assetSrc] || {
+      top: asset.position.top,
+      left: asset.position.left,
+      scale: asset.scale,
+      zIndex: asset.position.zIndex
+    };
 
-    setAssetValues(prev => ({
-      ...prev,
-      [draggedAsset]: {
-        ...prev[draggedAsset] || {
-          top: asset.position.top,
-          left: asset.position.left,
-          scale: asset.scale,
-          zIndex: asset.position.zIndex
-        },
-        top: `${Math.max(0, Math.min(90, newTop))}%`,
-        left: `${Math.max(0, Math.min(90, newLeft))}%`
-      }
-    }));
+    const currentTop = parsePercentage(currentValues.top);
+    const currentLeft = parsePercentage(currentValues.left);
+
+    setDragState({
+      assetSrc,
+      startX: e.clientX,
+      startY: e.clientY,
+      startTop: currentTop,
+      startLeft: currentLeft,
+      startScale: currentValues.scale,
+      action,
+      direction
+    });
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!dragState || !containerRef.current) return;
+
+    if (dragState.action === 'move') {
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const containerWidth = containerRect.width;
+      const containerHeight = containerRect.height;
+
+      const deltaX = ((e.clientX - dragState.startX) / containerWidth) * 100;
+      const deltaY = ((e.clientY - dragState.startY) / containerHeight) * 100;
+
+      const newLeft = Math.max(0, Math.min(90, dragState.startLeft + deltaX));
+      const newTop = Math.max(0, Math.min(90, dragState.startTop + deltaY));
+
+      setAssetValues(prev => ({
+        ...prev,
+        [dragState.assetSrc]: {
+          ...prev[dragState.assetSrc] || {
+            top: "0%",
+            left: "0%",
+            scale: 1,
+            zIndex: 1
+          },
+          top: `${newTop}%`,
+          left: `${newLeft}%`
+        }
+      }));
+    } else if (dragState.action === 'resize') {
+      const deltaX = e.clientX - dragState.startX;
+      const deltaY = e.clientY - dragState.startY;
+      const delta = (deltaX + deltaY) / 200;
+
+      const newScale = Math.max(0.1, Math.min(3, dragState.startScale + delta));
+
+      setAssetValues(prev => ({
+        ...prev,
+        [dragState.assetSrc]: {
+          ...prev[dragState.assetSrc] || {
+            top: "0%",
+            left: "0%",
+            scale: 1,
+            zIndex: 1
+          },
+          scale: newScale
+        }
+      }));
+    }
   };
 
   const handleMouseUp = () => {
-    setDraggedAsset(null);
-    setResizedAsset(null);
+    setDragState(null);
   };
 
   useEffect(() => {
-    if (draggedAsset || resizedAsset) {
+    if (dragState) {
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
       return () => {
@@ -97,17 +162,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
         document.removeEventListener("mouseup", handleMouseUp);
       };
     }
-  }, [draggedAsset, resizedAsset]);
-
-  const handleMove = (assetSrc: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    setDraggedAsset(assetSrc);
-  };
-
-  const handleResize = (assetSrc: string, direction: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    setResizedAsset(assetSrc);
-  };
+  }, [dragState]);
 
   if (prefersReducedMotion) {
     return (
@@ -166,6 +221,8 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
           zIndex: asset.position.zIndex
         };
 
+        const isDragging = dragState?.assetSrc === asset.src;
+
         return (
           <motion.div
             key={`${asset.src}-${assetIndex}`}
@@ -173,7 +230,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
             style={{
               top: currentValues.top,
               left: currentValues.left,
-              zIndex: isLayoutMode ? 9999 : currentValues.zIndex,
+              zIndex: isLayoutMode && isDragging ? 9999 : currentValues.zIndex,
               scale: isLayoutMode ? currentValues.scale : breathingAnimation.scale[1] * asset.scale
             }}
             initial={{
@@ -196,7 +253,6 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
               duration: 1.2,
               delay: asset.animation.delay
             }}
-            onMouseDown={isLayoutMode ? (e) => handleMove(asset.src, e) : undefined}
           >
             {isLayoutMode && (
               <div
@@ -219,35 +275,36 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
 
             {isLayoutMode && (
               <>
-                <AssetHandle
-                  type="move"
-                  position="nw"
-                  onMouseDown={(e) => handleMove(asset.src, e)}
-                  isVisible={true}
+                {/* Main drag area - center of asset */}
+                <div
+                  className="absolute inset-0 cursor-move z-10"
+                  onMouseDown={(e) => handleMouseDown(e, asset.src, 'move')}
+                  style={{ zIndex: 10 }}
                 />
 
+                {/* Resize handles */}
                 <AssetHandle
                   type="resize"
                   position="nw"
-                  onMouseDown={(e) => handleResize(asset.src, "nw", e)}
+                  onMouseDown={(e) => handleMouseDown(e, asset.src, 'resize', 'nw')}
                   isVisible={true}
                 />
                 <AssetHandle
                   type="resize"
                   position="ne"
-                  onMouseDown={(e) => handleResize(asset.src, "ne", e)}
+                  onMouseDown={(e) => handleMouseDown(e, asset.src, 'resize', 'ne')}
                   isVisible={true}
                 />
                 <AssetHandle
                   type="resize"
                   position="sw"
-                  onMouseDown={(e) => handleResize(asset.src, "sw", e)}
+                  onMouseDown={(e) => handleMouseDown(e, asset.src, 'resize', 'sw')}
                   isVisible={true}
                 />
                 <AssetHandle
                   type="resize"
                   position="se"
-                  onMouseDown={(e) => handleResize(asset.src, "se", e)}
+                  onMouseDown={(e) => handleMouseDown(e, asset.src, 'resize', 'se')}
                   isVisible={true}
                 />
               </>

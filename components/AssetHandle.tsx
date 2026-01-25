@@ -3,18 +3,16 @@
 import React from "react";
 
 interface AssetHandleProps {
-  type: "move" | "resize";
+  type: "resize";
   position: "nw" | "ne" | "sw" | "se" | "n" | "s" | "e" | "w";
   onMouseDown: (e: React.MouseEvent) => void;
   isVisible: boolean;
 }
 
-export function AssetHandle({ type, position, onMouseDown, isVisible }: AssetHandleProps) {
+export function AssetHandle({ position, onMouseDown, isVisible }: AssetHandleProps) {
   if (!isVisible) return null;
 
   const getCursor = () => {
-    if (type === "move") return "move";
-
     const cursors = {
       nw: "nw-resize",
       ne: "ne-resize",
@@ -28,14 +26,10 @@ export function AssetHandle({ type, position, onMouseDown, isVisible }: AssetHan
     return cursors[position];
   };
 
-  const getSize = () => {
-    if (type === "move") return "w-5 h-5";
-    return "w-3 h-3";
-  };
+  const getSize = () => "w-3 h-3";
 
   const getPosition = () => {
-    const size = type === "move" ? 10 : 6;
-    const offset = type === "move" ? -10 : -6;
+    const offset = -6;
 
     const positions = {
       nw: { top: offset, left: offset },
@@ -55,17 +49,18 @@ export function AssetHandle({ type, position, onMouseDown, isVisible }: AssetHan
     <div
       className={`
         ${getSize()}
-        ${type === "move"
-          ? "bg-indigo-500/80 hover:bg-indigo-400 cursor-move"
-          : "bg-white border-2 border-indigo-500 cursor-pointer hover:bg-indigo-50"
-        }
-        absolute rounded-full z-[10000]
+        bg-white border-2 border-indigo-500
+        absolute rounded-full z-[10001]
+        cursor-pointer hover:bg-indigo-50
         transition-all duration-150
-        ${type === "move" ? "shadow-lg shadow-indigo-500/50" : ""}
+        shadow-lg
       `}
-      style={getPosition()}
+      style={{
+        ...getPosition(),
+        cursor: getCursor()
+      }}
       onMouseDown={onMouseDown}
-      title={type === "move" ? "Drag to move" : `Resize (${position.toUpperCase()})`}
+      title={`Resize (${position.toUpperCase()})`}
     />
   );
 }

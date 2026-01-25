@@ -140,3 +140,39 @@ export const ART_ASSETS: AssetConfig[] = [
     }
   }
 ];
+
+export function generateAssetConfig(asset: AssetConfig, values: { top: string; left: string; scale: number; zIndex: number }): string {
+  return `  {
+    src: "${asset.src}",
+    alt: "${asset.alt}",
+    width: ${asset.width},
+    height: ${asset.height},
+    position: {
+      top: "${values.top}",
+      left: "${values.left}",
+      zIndex: ${values.zIndex}
+    },
+    scale: ${values.scale},
+    animation: {
+      initialX: ${asset.animation.initialX},
+      initialY: ${asset.animation.initialY},
+      delay: ${asset.animation.delay},
+      direction: '${asset.animation.direction}',
+      parallaxSpeed: ${asset.animation.parallaxSpeed}
+    }
+  }`;
+}
+
+export function exportLayoutConfig(assets: AssetConfig[], assetValues: { [key: string]: { top: string; left: string; scale: number; zIndex: number } }): string {
+  const config = assets.map((asset) => {
+    const values = assetValues[asset.src] || {
+      top: asset.position.top,
+      left: asset.position.left,
+      scale: asset.scale,
+      zIndex: asset.position.zIndex
+    };
+    return generateAssetConfig(asset, values);
+  }).join(",\n");
+
+  return `export const ART_ASSETS: AssetConfig[] = [\n${config}\n];`;
+}

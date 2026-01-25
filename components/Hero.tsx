@@ -1,16 +1,31 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowRight, Calendar, Code2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { MagneticButton } from "./MagneticButton";
 import FloatingAssets from "./FloatingAssets";
+import LayoutModePanel from "./LayoutModePanel";
 import { partnerLogos } from "@/lib/data";
 import { useLanguage } from './LanguageContext';
 
 const Hero: React.FC = () => {
   const { t } = useLanguage();
+  const [isLayoutMode, setIsLayoutMode] = useState(false);
+  const [assetValues, setAssetValues] = useState<{ [key: string]: any }>({});
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const layoutMode = urlParams.get("layoutMode");
+      setIsLayoutMode(layoutMode === "true");
+    }
+  }, []);
+
+  const handleAssetValuesChange = (values: { [key: string]: any }) => {
+    setAssetValues(values);
+  };
 
   const renderHeadline = () => {
     const headline = t('hero.headline');
@@ -73,8 +88,16 @@ const Hero: React.FC = () => {
       </div>
 
       <div className="flex-[1.15] relative min-h-[50vh] lg:min-h-screen overflow-visible pl-8">
-        <FloatingAssets />
+        <FloatingAssets onAssetValuesChange={handleAssetValuesChange} />
       </div>
+
+      {isLayoutMode && (
+        <LayoutModePanel
+          isVisible={isLayoutMode}
+          onClose={() => setIsLayoutMode(false)}
+          assetValues={assetValues}
+        />
+      )}
     </section>
   );
 };

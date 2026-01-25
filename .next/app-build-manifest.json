@@ -1,39 +1,39 @@
 {
   "pages": {
     "/_not-found": [
-      "static/chunks/webpack-5d46aca72e8abe79.js",
+      "static/chunks/webpack-d3aeba024291d182.js",
       "static/chunks/fd9d1056-14766259694fc46e.js",
       "static/chunks/938-ddd316d02bbde68d.js",
       "static/chunks/main-app-a1895b1d6ffc0e32.js",
       "static/chunks/app/_not-found-7c7196994f5627b8.js"
     ],
     "/layout": [
-      "static/chunks/webpack-5d46aca72e8abe79.js",
+      "static/chunks/webpack-d3aeba024291d182.js",
       "static/chunks/fd9d1056-14766259694fc46e.js",
       "static/chunks/938-ddd316d02bbde68d.js",
       "static/chunks/main-app-a1895b1d6ffc0e32.js",
-      "static/css/610c0093af5c56e0.css",
-      "static/chunks/app/layout-9ebcf2e88e34ccbd.js"
+      "static/css/9abd180d9dceab09.css",
+      "static/chunks/app/layout-4d5ba9d5aa13e540.js"
     ],
     "/loading": [
-      "static/chunks/webpack-5d46aca72e8abe79.js",
+      "static/chunks/webpack-d3aeba024291d182.js",
       "static/chunks/fd9d1056-14766259694fc46e.js",
       "static/chunks/938-ddd316d02bbde68d.js",
       "static/chunks/main-app-a1895b1d6ffc0e32.js",
       "static/chunks/app/loading-9bc002f4a9be4cc9.js"
     ],
     "/page": [
-      "static/chunks/webpack-5d46aca72e8abe79.js",
+      "static/chunks/webpack-d3aeba024291d182.js",
       "static/chunks/fd9d1056-14766259694fc46e.js",
       "static/chunks/938-ddd316d02bbde68d.js",
       "static/chunks/main-app-a1895b1d6ffc0e32.js",
       "static/chunks/21-439a20494faeb8ba.js",
       "static/chunks/111-36ad3fa87863d436.js",
       "static/chunks/297-afc9758c35517948.js",
-      "static/chunks/app/page-b114bb260b365971.js"
+      "static/chunks/app/page-baf1b96046a52255.js"
     ],
     "/project/[id]/page": [
-      "static/chunks/webpack-5d46aca72e8abe79.js",
+      "static/chunks/webpack-d3aeba024291d182.js",
       "static/chunks/fd9d1056-14766259694fc46e.js",
       "static/chunks/938-ddd316d02bbde68d.js",
       "static/chunks/main-app-a1895b1d6ffc0e32.js",
@@ -43,7 +43,7 @@
       "static/chunks/app/project/[id]/page-43ba81f3719f3aab.js"
     ],
     "/project/[id]/loading": [
-      "static/chunks/webpack-5d46aca72e8abe79.js",
+      "static/chunks/webpack-d3aeba024291d182.js",
       "static/chunks/fd9d1056-14766259694fc46e.js",
       "static/chunks/938-ddd316d02bbde68d.js",
       "static/chunks/main-app-a1895b1d6ffc0e32.js",

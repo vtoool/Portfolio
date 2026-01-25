@@ -64,12 +64,12 @@ const FloatingAssets: React.FC = () => {
         // Balanced movement for visible but subtle animations
         const getBreathingAnimation = (index: number) => {
           const animations = [
-            { x: [0, 4], y: [0, -3], scale: [1, 1.004] }, // Me
-            { x: [0, -3], y: [0, 4], scale: [1, 1.003] }, // Guitar
-            { x: [0, 2], y: [0, -2], scale: [1, 1.005] }, // Map
-            { x: [0, 3], y: [0, 2], scale: [1, 1.003] }, // Plane
-            { x: [0, 2], y: [0, -1.5], scale: [1, 1.006] }, // Gear 1
-            { x: [0, -2.5], y: [0, 2], scale: [1, 1.004] }, // Gear 2
+            { x: [0, 5], y: [0, -4], scale: [1, 1.004] }, // Me
+            { x: [0, -4], y: [0, 5], scale: [1, 1.003] }, // Guitar
+            { x: [0, 3], y: [0, -3], scale: [1, 1.005] }, // Map
+            { x: [0, 4], y: [0, 3], scale: [1, 1.003] }, // Plane
+            { x: [0, 3], y: [0, -2], scale: [1, 1.006] }, // Gear 1
+            { x: [0, -3.5], y: [0, 3], scale: [1, 1.004] }, // Gear 2
           ];
           return animations[index % animations.length];
         };
@@ -110,7 +110,10 @@ const FloatingAssets: React.FC = () => {
               alt={asset.alt}
               width={asset.width}
               height={asset.height}
-              className="pointer-events-none select-none drop-shadow-2xl"
+              className="pointer-events-none select-none"
+              style={{
+                filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.15)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.08))',
+              }}
               priority={asset.animation.delay === 0}
             />
           </motion.div>

@@ -92,26 +92,18 @@ const FloatingAssets: React.FC = () => {
               filter: "blur(8px)"
             }}
             animate={{
-              x: [0, breathingAnimation.x[1], 0],
-              y: [0, breathingAnimation.y[1], 0],
-              scale: [1, breathingAnimation.scale[1] * asset.scale, 1],
-              opacity: [0, 1, 1],
-              filter: ["blur(8px)", "blur(0px)", "blur(0px)"]
+              x: 0,
+              y: 0,
+              scale: breathingAnimation.scale[1] * asset.scale,
+              opacity: 1,
+              filter: "blur(0px)"
             }}
             transition={{
               type: "spring" as const,
               stiffness: 100,
               damping: 20,
-              duration: 0.8,
-              delay: asset.animation.delay,
-              times: [0, 0.1, 1],
-              repeat: Infinity,
-              repeatType: "reverse" as const,
-              ease: "easeInOut"
-            }}
-            whileHover={{
-              scale: breathingAnimation.scale[1] * 1.05,
-              transition: { duration: 0.2 }
+              duration: 1.2,
+              delay: asset.animation.delay
             }}
           >
             <Image

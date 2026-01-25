@@ -32,7 +32,7 @@ const Hero: React.FC = () => {
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={0.1}>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white max-w-2xl mx-auto lg:mx-0 leading-[1.1]">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white max-w-2xl mx-auto lg:mx-0 leading-[1.2]">
             {renderHeadline().split('Revenue Engines.').map((part, i) => i === 0 ? part : (
               <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
                 Revenue Engines.
@@ -42,8 +42,8 @@ const Hero: React.FC = () => {
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={0.2}>
-          <div className="max-w-2xl mx-auto lg:mx-0 bg-zinc-900/30 border border-zinc-800 rounded-xl p-6 backdrop-blur-sm mt-6">
-            <p className="text-zinc-300 text-sm md:text-base leading-relaxed">
+          <div className="max-w-2xl mx-auto lg:mx-0 bg-zinc-900/30 border border-zinc-800 rounded-xl p-8 backdrop-blur-sm mt-6">
+            <p className="text-zinc-300 text-sm md:text-base leading-[1.6]">
               {t('hero.aboutMe')}
             </p>
           </div>

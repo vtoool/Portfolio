@@ -37,7 +37,7 @@ export function MagneticButton({
     "relative px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 overflow-hidden";
 
   const variants = {
-    primary: "bg-white text-zinc-950 hover:bg-zinc-200 shadow-xl shadow-indigo-500/10",
+    primary: "bg-white text-zinc-950 hover:bg-zinc-200 shadow-xl shadow-indigo-500/20 hover:shadow-2xl hover:shadow-indigo-500/30",
     secondary: "bg-zinc-900/50 border border-zinc-800 text-zinc-100 hover:bg-zinc-900 hover:border-zinc-700 backdrop-blur-sm",
   };
 

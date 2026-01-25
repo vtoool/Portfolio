@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
           </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
+        <div className="hidden md:flex items-center gap-12 text-sm font-medium text-zinc-400">
           {navLinks.map((link) => (
             <Link
               key={link.href}

@@ -1,11 +1,10 @@
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import { getMessages } from '../../i18n';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -46,16 +45,14 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  const messages = await getMessages();
+  const messages = await getMessages(locale);
 
   return (
     <html lang={locale} className="dark scroll-smooth">
       <body className={inter.className}>
-        <ErrorBoundary>
-          <NextIntlClientProvider messages={messages} locale={locale}>
-            {children}
-          </NextIntlClientProvider>
-        </ErrorBoundary>
+        <NextIntlClientProvider messages={messages} locale={locale}>
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );

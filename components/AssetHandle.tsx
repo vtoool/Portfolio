@@ -3,7 +3,6 @@
 import React from "react";
 
 interface AssetHandleProps {
-  type: "resize";
   position: "nw" | "ne" | "sw" | "se" | "n" | "s" | "e" | "w";
   onMouseDown: (e: React.MouseEvent) => void;
   isVisible: boolean;
@@ -26,10 +25,10 @@ export function AssetHandle({ position, onMouseDown, isVisible }: AssetHandlePro
     return cursors[position];
   };
 
-  const getSize = () => "w-3 h-3";
+  const getSize = () => "w-6 h-6";
 
   const getPosition = () => {
-    const offset = -6;
+    const offset = -12;
 
     const positions = {
       nw: { top: offset, left: offset },
@@ -49,11 +48,11 @@ export function AssetHandle({ position, onMouseDown, isVisible }: AssetHandlePro
     <div
       className={`
         ${getSize()}
-        bg-white border-2 border-indigo-500
+        bg-white border-2 border-indigo-600
         absolute rounded-full z-[10001]
-        cursor-pointer hover:bg-indigo-50
+        cursor-pointer hover:bg-indigo-200
         transition-all duration-150
-        shadow-lg
+        shadow-2xl hover:shadow-indigo-500/50
       `}
       style={{
         ...getPosition(),

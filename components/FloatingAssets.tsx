@@ -130,9 +130,18 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
     } else if (dragState.action === 'resize') {
       const deltaX = e.clientX - dragState.startX;
       const deltaY = e.clientY - dragState.startY;
-      const delta = (deltaX + deltaY) / 200;
 
-      const newScale = Math.max(0.1, Math.min(3, dragState.startScale + delta));
+      // Calculate distance from starting point
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      // Scale factor: moving away from start increases size, towards decreases
+      // Adjust sensitivity with divisor
+      const scaleChange = distance / 100;
+
+      // Determine direction (increase or decrease)
+      const scaleMultiplier = deltaX > 0 || deltaY > 0 ? 1 : -1;
+
+      const newScale = Math.max(0.1, Math.min(5, dragState.startScale + (scaleChange * scaleMultiplier)));
 
       setAssetValues(prev => ({
         ...prev,
@@ -282,27 +291,23 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
                   style={{ zIndex: 10 }}
                 />
 
-                {/* Resize handles */}
+                {/* Resize handles - much more visible */}
                 <AssetHandle
-                  type="resize"
                   position="nw"
                   onMouseDown={(e) => handleMouseDown(e, asset.src, 'resize', 'nw')}
                   isVisible={true}
                 />
                 <AssetHandle
-                  type="resize"
                   position="ne"
                   onMouseDown={(e) => handleMouseDown(e, asset.src, 'resize', 'ne')}
                   isVisible={true}
                 />
                 <AssetHandle
-                  type="resize"
                   position="sw"
                   onMouseDown={(e) => handleMouseDown(e, asset.src, 'resize', 'sw')}
                   isVisible={true}
                 />
                 <AssetHandle
-                  type="resize"
                   position="se"
                   onMouseDown={(e) => handleMouseDown(e, asset.src, 'resize', 'se')}
                   isVisible={true}

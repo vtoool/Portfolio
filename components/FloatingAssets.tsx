@@ -87,9 +87,9 @@ const FloatingAssets: React.FC = () => {
               scale: asset.scale
             }}
             initial={{
-              x: breathingAnimation.x[0],
-              y: breathingAnimation.y[0],
-              scale: breathingAnimation.scale[0] * asset.scale
+              x: breathingAnimation.x[1],
+              y: breathingAnimation.y[1],
+              scale: breathingAnimation.scale[1] * asset.scale
             }}
             animate={{
               x: breathingAnimation.x,

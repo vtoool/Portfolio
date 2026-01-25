@@ -53,23 +53,11 @@ const FloatingAssets: React.FC = () => {
 
   return (
     <div ref={containerRef} className="relative w-full h-full overflow-visible">
-      {ART_ASSETS.map((asset) => {
+      {ART_ASSETS.map((asset, assetIndex) => {
         const parallaxOffset = useTransform(
           scrollY,
           [0, 1000],
           [0, asset.animation.parallaxSpeed * 100]
-        );
-
-        const blurAmount = useTransform(
-          scrollY,
-          [0, 400],
-          [0, 6]
-        );
-
-        const opacityLevel = useTransform(
-          scrollY,
-          [0, 400],
-          [1, 0.5]
         );
 
         const entryVariants = {
@@ -87,27 +75,51 @@ const FloatingAssets: React.FC = () => {
           }
         };
 
+        // Breathing/panning animation configuration
+        // Each asset has unique subtle movement pattern
+        const getBreathingAnimation = (index: number) => {
+          const animations = [
+            { x: [0, 8, 0, -6, 0], y: [0, -5, 0, 7, 0], scale: [1, 1.02, 1, 0.98, 1] }, // Me
+            { x: [0, -5, 0, 6, 0], y: [0, 6, 0, -4, 0], scale: [1, 1.01, 1, 0.99, 1] }, // Guitar
+            { x: [0, 4, 0, -5, 0], y: [0, -4, 0, 5, 0], scale: [1, 1.015, 1, 0.985, 1] }, // Map
+            { x: [0, 6, 0, -7, 0], y: [0, 5, 0, -6, 0], scale: [1, 1.01, 1, 0.99, 1] }, // Plane
+            { x: [0, 5, 0, -4, 0], y: [0, -3, 0, 4, 0], scale: [1, 1.02, 1, 0.98, 1] }, // Gear 1
+            { x: [0, -6, 0, 5, 0], y: [0, 4, 0, -5, 0], scale: [1, 1.015, 1, 0.985, 1] }, // Gear 2
+          ];
+          return animations[index % animations.length];
+        };
+
+        const breathingAnimation = getBreathingAnimation(assetIndex);
+
         return (
           <motion.div
-            key={asset.src}
+            key={`${asset.src}-${assetIndex}`}
             className="absolute floating-asset transform-gpu"
             style={{
               top: asset.position.top,
               left: asset.position.left,
               zIndex: asset.position.zIndex,
               scale: asset.scale,
-              y: parallaxOffset,
-              filter: blurAmount,
-              opacity: opacityLevel
+              y: parallaxOffset
             }}
             variants={entryVariants}
             initial="hidden"
-            animate="visible"
+            animate={{
+              x: breathingAnimation.x,
+              y: breathingAnimation.y,
+              scale: breathingAnimation.scale.map(s => s * asset.scale),
+              opacity: 1,
+              filter: "blur(0px)"
+            }}
             transition={{
               type: "spring" as const,
               stiffness: 50,
               damping: 15,
-              delay: asset.animation.delay
+              delay: asset.animation.delay,
+              duration: 4 + (assetIndex * 0.5),
+              repeat: Infinity,
+              repeatType: "mirror" as const,
+              ease: "easeInOut"
             }}
           >
             <Image

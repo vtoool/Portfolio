@@ -27,10 +27,10 @@ export const ART_ASSETS: AssetConfig[] = [
     height: 400,
     position: {
       top: "25%",
-      left: "47%",
+      left: "42%",
       zIndex: 3
     },
-    scale: 1.3,
+    scale: 1.5,
     animation: {
       initialX: 80,
       initialY: -50,
@@ -50,7 +50,7 @@ export const ART_ASSETS: AssetConfig[] = [
       left: "20%",
       zIndex: 2
     },
-    scale: 0.9,
+    scale: 0.75,
     animation: {
       initialX: -100,
       initialY: 60,

@@ -70,7 +70,6 @@ const Hero: React.FC = () => {
               </MagneticButton>
             </div>
           </ScrollReveal>
-        </ScrollReveal>
 
         {/* RIGHT SIDE - Floating Assets */}
         <div className="flex-1 relative min-h-[50vh] lg:min-h-screen overflow-hidden">

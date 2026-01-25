@@ -5,6 +5,7 @@ import { ArrowRight, Calendar, Code2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { MagneticButton } from "./MagneticButton";
+import FloatingAssets from "./FloatingAssets";
 import { partnerLogos } from "@/lib/data";
 import { useLanguage } from './LanguageContext';
 
@@ -19,95 +20,98 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col items-center text-center space-y-8 pt-0 md:pt-12 relative">
-      <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
+    <>
+      <section className="flex flex-col lg:flex-row min-h-screen pt-0 md:pt-12 relative">
+        <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
 
-      <ScrollReveal direction="down" duration={0.6}>
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 text-xs font-medium text-zinc-300 mb-4 backdrop-blur-md">
-          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
-          {t('hero.availability')}
-        </div>
-      </ScrollReveal>
+        {/* LEFT SIDE - Text Content */}
+        <div className="flex-1 flex flex-col justify-center px-6 lg:px-12 py-12 lg:py-20 text-center lg:text-left">
+          <ScrollReveal direction="down" duration={0.6}>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 text-xs font-medium text-zinc-300 mb-4 backdrop-blur-md mx-auto lg:mx-0">
+              <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+              {t('hero.availability')}
+            </div>
+          </ScrollReveal>
 
-      <ScrollReveal direction="up" delay={0.1}>
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white max-w-4xl leading-[1.1]">
-          {renderHeadline().split('Revenue Engines.').map((part, i) => i === 0 ? part : (
-            <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
-              Revenue Engines.
-            </span>
-          ))}
-        </h1>
-      </ScrollReveal>
-
-      <ScrollReveal direction="up" delay={0.2}>
-        <p className="text-sm md:text-base text-zinc-400 max-w-lg font-light leading-relaxed">
-          {t('hero.description')}
-        </p>
-      </ScrollReveal>
-
-      {/* About Me Section - Longer description */}
-      <ScrollReveal direction="up" delay={0.25}>
-        <div className="max-w-3xl mx-auto bg-zinc-900/30 border border-zinc-800 rounded-xl p-6 backdrop-blur-sm">
-          <p className="text-zinc-300 text-sm md:text-base leading-relaxed">
-            {t('hero.aboutMe')}
-          </p>
-        </div>
-      </ScrollReveal>
-
-      <ScrollReveal direction="up" delay={0.3}>
-        <div className="flex flex-col sm:flex-row items-center gap-4 pt-6">
-          <MagneticButton
-            variant="primary"
-            href="mailto:victor@cabin-story.com"
-          >
-            <Calendar className="w-4 h-4" />
-            {t('hero.bookCall')}
-            <ArrowRight className="w-4 h-4" />
-          </MagneticButton>
-          <MagneticButton
-            variant="secondary"
-            href="/#portfolio"
-          >
-            <Code2 className="w-4 h-4" />
-            {t('hero.viewProjects')}
-          </MagneticButton>
-        </div>
-      </ScrollReveal>
-
-      {/* Trigger element - hide navbar when CTAs disappear */}
-      <div id="cta-trigger" className="h-1 w-full" />
-
-      {/* Partner Logos - Infinite marquee effect */}
-      <ScrollReveal direction="up" delay={0.4}>
-        <div id="tools-section" className="pt-16 w-full max-w-4xl mx-auto">
-          <p className="text-xs text-zinc-500 uppercase tracking-widest mb-8 text-center">
-            {t('hero.toolsSection')}
-          </p>
-          <div className="marquee-container overflow-hidden relative">
-            <div className="marquee-content flex gap-8">
-              {/* First set */}
-              {partnerLogos.map((logo, index) => (
-                <span
-                  key={`first-${logo.name}-${index}`}
-                  className={`text-lg font-bold tracking-tighter text-white opacity-40 hover:opacity-100 transition-all duration-300 whitespace-nowrap ${logo.color}`}
-                >
-                  {logo.name}
+          <ScrollReveal direction="up" delay={0.1}>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white max-w-2xl mx-auto lg:mx-0 leading-[1.1]">
+              {renderHeadline().split('Revenue Engines.').map((part, i) => i === 0 ? part : (
+                <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
+                  Revenue Engines.
                 </span>
               ))}
-              {/* Duplicate set for seamless loop */}
-              {partnerLogos.map((logo, index) => (
-                <span
-                  key={`second-${logo.name}-${index}`}
-                  className={`text-lg font-bold tracking-tighter text-white opacity-40 hover:opacity-100 transition-all duration-300 whitespace-nowrap ${logo.color}`}
-                >
-                  {logo.name}
-                </span>
-              ))}
+            </h1>
+          </ScrollReveal>
+
+          <ScrollReveal direction="up" delay={0.2}>
+            <div className="max-w-xl mx-auto lg:mx-0 bg-zinc-900/30 border border-zinc-800 rounded-xl p-6 backdrop-blur-sm mt-6">
+              <p className="text-zinc-300 text-sm md:text-base leading-relaxed">
+                {t('hero.aboutMe')}
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal direction="up" delay={0.25}>
+            <div className="flex flex-col sm:flex-row items-center gap-4 pt-6 justify-center lg:justify-start">
+              <MagneticButton
+                variant="primary"
+                href="mailto:victor@cabin-story.com"
+              >
+                <Calendar className="w-4 h-4" />
+                {t('hero.bookCall')}
+                <ArrowRight className="w-4 h-4" />
+              </MagneticButton>
+              <MagneticButton
+                variant="secondary"
+                href="/#portfolio"
+              >
+                <Code2 className="w-4 h-4" />
+                {t('hero.viewProjects')}
+              </MagneticButton>
+            </div>
+          </ScrollReveal>
+        </ScrollReveal>
+
+        {/* RIGHT SIDE - Floating Assets */}
+        <div className="flex-1 relative min-h-[50vh] lg:min-h-screen overflow-hidden">
+          <FloatingAssets />
+        </div>
+
+        {/* Trigger element - hide navbar when CTAs disappear */}
+        <div id="cta-trigger" className="h-1 w-full" />
+      </section>
+
+      {/* Partner Logos - Separate section, NOT inside flex */}
+      <section className="py-20 bg-zinc-950/50">
+        <ScrollReveal direction="up" delay={0.3}>
+          <div className="w-full max-w-4xl mx-auto px-6">
+            <p className="text-xs text-zinc-500 uppercase tracking-widest mb-8 text-center">
+              {t('hero.toolsSection')}
+            </p>
+            <div className="marquee-container overflow-hidden relative">
+              <div className="marquee-content flex gap-8">
+                {partnerLogos.map((logo, index) => (
+                  <span
+                    key={`first-${logo.name}-${index}`}
+                    className={`text-lg font-bold tracking-tighter text-white opacity-40 hover:opacity-100 transition-all duration-300 whitespace-nowrap ${logo.color}`}
+                  >
+                    {logo.name}
+                  </span>
+                ))}
+                {partnerLogos.map((logo, index) => (
+                  <span
+                    key={`second-${logo.name}-${index}`}
+                    className={`text-lg font-bold tracking-tighter text-white opacity-40 hover:opacity-100 transition-all duration-300 whitespace-nowrap ${logo.color}`}
+                  >
+                    {logo.name}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </ScrollReveal>
-    </section>
+        </ScrollReveal>
+      </section>
+    </>
   );
 };
 

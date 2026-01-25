@@ -60,16 +60,16 @@ const FloatingAssets: React.FC = () => {
           [0, asset.animation.parallaxSpeed * 100]
         );
 
-        // Breathing/panning animation configuration
-        // Each asset has unique subtle movement pattern
+        // Magical floating animation configuration
+        // Each asset has unique subtle movement pattern for organic feel
         const getBreathingAnimation = (index: number) => {
           const animations = [
-            { x: [0, 8], y: [0, -5], scale: [1, 1.02] }, // Me
-            { x: [0, -5], y: [0, 6], scale: [1, 1.01] }, // Guitar
-            { x: [0, 4], y: [0, -4], scale: [1, 1.015] }, // Map
-            { x: [0, 6], y: [0, 5], scale: [1, 1.01] }, // Plane
-            { x: [0, 5], y: [0, -3], scale: [1, 1.02] }, // Gear 1
-            { x: [0, -6], y: [0, 4], scale: [1, 1.015] }, // Gear 2
+            { x: [0, 2], y: [0, -2], scale: [1, 1.003] }, // Me
+            { x: [0, -1.5], y: [0, 2.5], scale: [1, 1.002] }, // Guitar
+            { x: [0, 1], y: [0, -1.5], scale: [1, 1.004] }, // Map
+            { x: [0, 2.5], y: [0, 1.5], scale: [1, 1.002] }, // Plane
+            { x: [0, 1.5], y: [0, -1], scale: [1, 1.005] }, // Gear 1
+            { x: [0, -2], y: [0, 1.5], scale: [1, 1.003] }, // Gear 2
           ];
           return animations[index % animations.length];
         };
@@ -98,11 +98,9 @@ const FloatingAssets: React.FC = () => {
               scale: breathingAnimation.scale.map(s => s * asset.scale)
             }}
             transition={{
-              type: "spring" as const,
-              stiffness: 50,
-              damping: 15,
+              type: "tween" as const,
               delay: asset.animation.delay,
-              duration: 4 + (assetIndex * 0.5),
+              duration: 12 + (assetIndex * 1.8),
               repeat: Infinity,
               repeatType: "reverse" as const,
               ease: "easeInOut"

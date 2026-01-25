@@ -5,6 +5,7 @@ import BentoGrid from "@/components/BentoGrid";
 import Services from "@/components/Services";
 import TrustSection from "@/components/TrustSection";
 import Footer from "@/components/Footer";
+import ToolsSection from "@/components/ToolsSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 // Simple section label - no purple, just clean
@@ -29,6 +30,7 @@ export default function Home() {
         <Navbar />
         <main className="w-full max-w-6xl px-4 md:px-6 pt-16 pb-16 space-y-10">
           <Hero />
+          <ToolsSection />
 
           {/* Portfolio Section */}
           <section id="portfolio" className="space-y-4 relative bg-zinc-950 py-16 rounded-2xl">

@@ -60,16 +60,16 @@ const FloatingAssets: React.FC = () => {
           [0, asset.animation.parallaxSpeed * 100]
         );
 
-        // Magical floating animation configuration
-        // Each asset has unique subtle movement pattern for organic feel
+        // Floating animation configuration
+        // Balanced movement for visible but subtle animations
         const getBreathingAnimation = (index: number) => {
           const animations = [
-            { x: [0, 2], y: [0, -2], scale: [1, 1.003] }, // Me
-            { x: [0, -1.5], y: [0, 2.5], scale: [1, 1.002] }, // Guitar
-            { x: [0, 1], y: [0, -1.5], scale: [1, 1.004] }, // Map
-            { x: [0, 2.5], y: [0, 1.5], scale: [1, 1.002] }, // Plane
-            { x: [0, 1.5], y: [0, -1], scale: [1, 1.005] }, // Gear 1
-            { x: [0, -2], y: [0, 1.5], scale: [1, 1.003] }, // Gear 2
+            { x: [0, 4], y: [0, -3], scale: [1, 1.004] }, // Me
+            { x: [0, -3], y: [0, 4], scale: [1, 1.003] }, // Guitar
+            { x: [0, 2], y: [0, -2], scale: [1, 1.005] }, // Map
+            { x: [0, 3], y: [0, 2], scale: [1, 1.003] }, // Plane
+            { x: [0, 2], y: [0, -1.5], scale: [1, 1.006] }, // Gear 1
+            { x: [0, -2.5], y: [0, 2], scale: [1, 1.004] }, // Gear 2
           ];
           return animations[index % animations.length];
         };
@@ -84,8 +84,7 @@ const FloatingAssets: React.FC = () => {
               top: asset.position.top,
               left: asset.position.left,
               zIndex: asset.position.zIndex,
-              scale: asset.scale,
-              y: parallaxOffset
+              scale: asset.scale
             }}
             initial={{
               x: breathingAnimation.x[0],
@@ -100,7 +99,7 @@ const FloatingAssets: React.FC = () => {
             transition={{
               type: "tween" as const,
               delay: asset.animation.delay,
-              duration: 12 + (assetIndex * 1.8),
+              duration: 6 + (assetIndex * 0.5),
               repeat: Infinity,
               repeatType: "reverse" as const,
               ease: "easeInOut"

@@ -23,7 +23,7 @@ const Hero: React.FC = () => {
     <section className="flex flex-col lg:flex-row min-h-screen pt-0 md:pt-12 relative">
       <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
 
-      <div className="flex-1 flex flex-col justify-center px-6 lg:px-12 py-12 lg:py-20 text-center lg:text-left">
+      <div className="flex-[0.85] flex flex-col justify-center px-6 lg:px-12 py-12 lg:py-20 text-center lg:text-left">
         <ScrollReveal direction="down" duration={0.6}>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 text-xs font-medium text-zinc-300 mb-4 backdrop-blur-md mx-auto lg:mx-0">
             <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
@@ -42,7 +42,7 @@ const Hero: React.FC = () => {
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={0.2}>
-          <div className="max-w-2xl mx-auto lg:mx-0 bg-zinc-900/30 border border-zinc-800 rounded-xl p-8 backdrop-blur-sm mt-6">
+          <div className="max-w-2xl mx-auto lg:mx-0 bg-zinc-900/20 border border-zinc-800 rounded-2xl p-8 backdrop-blur-sm mt-6">
             <p className="text-zinc-300 text-sm md:text-base leading-[1.6]">
               {t('hero.aboutMe')}
             </p>
@@ -72,7 +72,7 @@ const Hero: React.FC = () => {
         <div id="cta-trigger" className="h-1 w-full" />
       </div>
 
-      <div className="flex-1 relative min-h-[50vh] lg:min-h-screen overflow-hidden">
+      <div className="flex-[1.15] relative min-h-[50vh] lg:min-h-screen overflow-visible pl-8">
         <FloatingAssets />
       </div>
     </section>

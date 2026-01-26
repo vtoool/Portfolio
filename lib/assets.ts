@@ -26,10 +26,10 @@ export const ART_ASSETS: AssetConfig[] = [
     height: 400,
     position: {
       top: "25%",
-      left: "9%",
+      left: "-20%",
       zIndex: 3
     },
-    scale: 1.25,
+    scale: 1.3,
     animation: {
       initialX: 80,
       initialY: -50,
@@ -45,10 +45,10 @@ export const ART_ASSETS: AssetConfig[] = [
     height: 350,
     position: {
       top: "36%",
-      left: "-5%",
+      left: "-43%",
       zIndex: 1
     },
-    scale: 0.64,
+    scale: 0.65,
     animation: {
       initialX: -100,
       initialY: 60,
@@ -64,7 +64,7 @@ export const ART_ASSETS: AssetConfig[] = [
     height: 280,
     position: {
       top: "17%",
-      left: "1%",
+      left: "-30%",
       zIndex: 2
     },
     scale: 0.6,
@@ -82,11 +82,11 @@ export const ART_ASSETS: AssetConfig[] = [
     width: 300,
     height: 300,
     position: {
-      top: "18%",
-      left: "40%",
+      top: "15%",
+      left: "25%",
       zIndex: 2
     },
-    scale: 0.54,
+    scale: 0.52,
     animation: {
       initialX: 150,
       initialY: 80,
@@ -102,7 +102,7 @@ export const ART_ASSETS: AssetConfig[] = [
     height: 220,
     position: {
       top: "45%",
-      left: "45%",
+      left: "35%",
       zIndex: 1
     },
     scale: 0.65,
@@ -120,8 +120,8 @@ export const ART_ASSETS: AssetConfig[] = [
     width: 180,
     height: 180,
     position: {
-      top: "43%",
-      left: "54%",
+      top: "42.6%",
+      left: "48%",
       zIndex: 1
     },
     scale: 0.55,

@@ -178,7 +178,7 @@ export const ASSET_CONFIGS = {
   mobile: {
     visible: true,
     assets: [
-      // Me - main character (largest on mobile, like desktop)
+      // Me - main character (largest on mobile)
       {
         src: "/art/Me.png",
         alt: "Me - Clay Figurine",
@@ -189,7 +189,7 @@ export const ASSET_CONFIGS = {
           left: "-15%",
           zIndex: 3
         },
-        scale: 1.3,
+        scale: 1.0,
         animation: {
           initialX: 60,
           initialY: -40,
@@ -209,7 +209,7 @@ export const ASSET_CONFIGS = {
           left: "-35%",
           zIndex: 1
         },
-        scale: 0.65,
+        scale: 1.0,
         animation: {
           initialX: -70,
           initialY: 40,
@@ -229,7 +229,7 @@ export const ASSET_CONFIGS = {
           left: "-25%",
           zIndex: 2
         },
-        scale: 0.6,
+        scale: 1.0,
         animation: {
           initialX: -80,
           initialY: -40,
@@ -249,7 +249,7 @@ export const ASSET_CONFIGS = {
           left: "22%",
           zIndex: 2
         },
-        scale: 0.52,
+        scale: 1.0,
         animation: {
           initialX: 100,
           initialY: 60,
@@ -269,7 +269,7 @@ export const ASSET_CONFIGS = {
           left: "32%",
           zIndex: 1
         },
-        scale: 0.65,
+        scale: 1.0,
         animation: {
           initialX: 70,
           initialY: -20,

@@ -90,18 +90,36 @@ const Hero: React.FC = () => {
       </div>
 
       <div className="flex-[1.15] relative min-h-[50vh] lg:min-h-screen overflow-visible pl-8">
-        <FloatingAssets onAssetValuesChange={handleAssetValuesChange} />
+        <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
       </div>
 
       {isLayoutMode && (
-        <div className="fixed top-6 right-6 z-[9999] max-h-[90vh] overflow-y-auto">
-          <div className="mb-4 flex gap-2 justify-end">
+        <div
+          className="fixed bottom-6 left-6 z-[9999] max-w-md w-[calc(100%-3rem)]"
+          style={{
+            maxHeight: '85vh',
+            overflow: 'hidden',
+            touchAction: 'none'
+          }}
+          onWheel={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
+        >
+          <div
+            className="h-full overflow-y-auto pr-2"
+            style={{
+              maxHeight: 'calc(85vh - 1.5rem)',
+              touchAction: 'none'
+            }}
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+          >
+            <div className="mb-4 flex gap-2">
             <button
               onClick={() => setEditorMode('form')}
               className={`px-4 py-2 rounded-xl font-bold transition-all ${
                 editorMode === 'form'
                   ? 'bg-indigo-600 text-white'
-                  : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+                  : 'bg-zinc-800/90 text-zinc-400 hover:bg-zinc-700'
               }`}
             >
               Form Mode
@@ -111,7 +129,7 @@ const Hero: React.FC = () => {
               className={`px-4 py-2 rounded-xl font-bold transition-all ${
                 editorMode === 'drag'
                   ? 'bg-indigo-600 text-white'
-                  : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+                  : 'bg-zinc-800/90 text-zinc-400 hover:bg-zinc-700'
               }`}
             >
               Drag Mode
@@ -127,6 +145,7 @@ const Hero: React.FC = () => {
               assetValues={assetValues}
             />
           )}
+          </div>
         </div>
       )}
     </section>

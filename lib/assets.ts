@@ -19,18 +19,17 @@ export interface AssetConfig {
 }
 
 export const ART_ASSETS: AssetConfig[] = [
-  // Me - Center, biggest, focal point
   {
     src: "/art/Me.png",
     alt: "Me - Clay Figurine",
     width: 400,
     height: 400,
     position: {
-      top: "30%",
-      left: "41%",
+      top: "25%",
+      left: "9%",
       zIndex: 3
     },
-    scale: 1.15,
+    scale: 1.25,
     animation: {
       initialX: 80,
       initialY: -50,
@@ -39,18 +38,17 @@ export const ART_ASSETS: AssetConfig[] = [
       parallaxSpeed: 0.3
     }
   },
-  // Guitar - Center left, slightly lower
   {
     src: "/art/guitar.png",
     alt: "Guitar",
     width: 350,
     height: 350,
     position: {
-      top: "48%",
-      left: "10%",
-      zIndex: 2
+      top: "36%",
+      left: "-5%",
+      zIndex: 1
     },
-    scale: 0.6,
+    scale: 0.65,
     animation: {
       initialX: -100,
       initialY: 60,
@@ -59,15 +57,14 @@ export const ART_ASSETS: AssetConfig[] = [
       parallaxSpeed: 0.35
     }
   },
-  // Map - Left of Me
   {
     src: "/art/map.png",
     alt: "Map App Icon",
     width: 280,
     height: 280,
     position: {
-      top: "10%",
-      left: "3%",
+      top: "17%",
+      left: "1%",
       zIndex: 2
     },
     scale: 0.6,
@@ -79,7 +76,6 @@ export const ART_ASSETS: AssetConfig[] = [
       parallaxSpeed: 0.25
     }
   },
-  // Airplane - Right, further and lower than map
   {
     src: "/art/plane.png",
     alt: "Plane",
@@ -87,10 +83,10 @@ export const ART_ASSETS: AssetConfig[] = [
     height: 300,
     position: {
       top: "12%",
-      left: "75%",
+      left: "40%",
       zIndex: 2
     },
-    scale: 0.8,
+    scale: 0.6,
     animation: {
       initialX: 150,
       initialY: 80,
@@ -99,15 +95,14 @@ export const ART_ASSETS: AssetConfig[] = [
       parallaxSpeed: 0.4
     }
   },
-  // Gear Big - Right of middle of Me
   {
     src: "/art/gear.png",
     alt: "Gear",
     width: 220,
     height: 220,
     position: {
-      top: "38%",
-      left: "55%",
+      top: "55%",
+      left: "50%",
       zIndex: 1
     },
     scale: 0.65,
@@ -119,18 +114,17 @@ export const ART_ASSETS: AssetConfig[] = [
       parallaxSpeed: 0.2
     }
   },
-  // Gear Small - Slightly lower and to the right of big gear
   {
     src: "/art/gear.png",
     alt: "Small Gear",
     width: 180,
     height: 180,
     position: {
-      top: "47%",
-      left: "54%",
+      top: "65%",
+      left: "58%",
       zIndex: 1
     },
-    scale: 0.5,
+    scale: 0.55,
     animation: {
       initialX: 120,
       initialY: 40,
@@ -165,7 +159,9 @@ export function generateAssetConfig(asset: AssetConfig, values: { top: string; l
 
 export function exportLayoutConfig(assets: AssetConfig[], assetValues: { [key: string]: { top: string; left: string; scale: number; zIndex: number } }): string {
   const config = assets.map((asset) => {
-    const values = assetValues[asset.src] || {
+    // Create unique key using src and alt
+    const assetKey = `${asset.src}-${asset.alt}`;
+    const values = assetValues[assetKey] || {
       top: asset.position.top,
       left: asset.position.left,
       scale: asset.scale,

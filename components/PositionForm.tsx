@@ -26,15 +26,17 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
     }
   }, [assetValues, onValuesChange]);
 
-  const updateValue = (assetSrc: string, field: keyof AssetValue, value: string | number) => {
+  const updateValue = (asset: any, field: keyof AssetValue, value: string | number) => {
+    // Create unique key using src and alt to handle duplicate src values
+    const assetKey = `${asset.src}-${asset.alt}`;
     setAssetValues(prev => ({
       ...prev,
-      [assetSrc]: {
-        ...prev[assetSrc] || {
-          top: ART_ASSETS.find(a => a.src === assetSrc)?.position.top || "0%",
-          left: ART_ASSETS.find(a => a.src === assetSrc)?.position.left || "0%",
-          scale: ART_ASSETS.find(a => a.src === assetSrc)?.scale || 1,
-          zIndex: ART_ASSETS.find(a => a.src === assetSrc)?.position.zIndex || 1
+      [assetKey]: {
+        ...prev[assetKey] || {
+          top: asset.position.top,
+          left: asset.position.left,
+          scale: asset.scale,
+          zIndex: asset.position.zIndex
         },
         [field]: value
       }
@@ -53,7 +55,8 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
 
   const exportAllConfiguration = () => {
     const config = ART_ASSETS.map((asset, index) => {
-      const values = assetValues[asset.src] || {
+      const assetKey = `${asset.src}-${asset.alt}`;
+      const values = assetValues[assetKey] || {
         top: asset.position.top,
         left: asset.position.left,
         scale: asset.scale,
@@ -86,9 +89,9 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
   };
 
   return (
-    <div className="bg-zinc-900/95 border border-indigo-500/50 rounded-2xl p-6 backdrop-blur-xl shadow-2xl max-w-4xl w-full">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold text-white">Position Form Editor</h3>
+    <div className="bg-zinc-900/95 border border-indigo-500/50 rounded-2xl p-4 backdrop-blur-xl shadow-2xl max-w-4xl w-full">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-bold text-white">Position Form Editor</h3>
         <button
           onClick={exportAllConfiguration}
           className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-emerald-500 text-white font-bold rounded-xl hover:from-indigo-600 hover:to-emerald-600 transition-all flex items-center gap-2"
@@ -97,9 +100,10 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
         </button>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         {ART_ASSETS.map((asset, index) => {
-          const values = assetValues[asset.src] || {
+          const assetKey = `${asset.src}-${asset.alt}`;
+          const values = assetValues[assetKey] || {
             top: asset.position.top,
             left: asset.position.left,
             scale: asset.scale,
@@ -108,14 +112,14 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
 
           return (
             <motion.div
-              key={asset.src}
+              key={assetKey}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              className="bg-zinc-800/50 rounded-xl p-4 border border-zinc-700"
+              className="bg-zinc-800/50 rounded-xl p-3 border border-zinc-700"
             >
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-lg font-semibold text-white">{asset.alt}</h4>
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="text-sm font-semibold text-white">{asset.alt}</h4>
                 <button
                   onClick={() =>
                     copyToClipboard(
@@ -139,7 +143,7 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
                   <input
                     type="text"
                     value={values.top}
-                    onChange={(e) => updateValue(asset.src, 'top', e.target.value)}
+                    onChange={(e) => updateValue(asset, 'top', e.target.value)}
                     className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
                     placeholder="25%"
                   />
@@ -150,7 +154,7 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
                   <input
                     type="text"
                     value={values.left}
-                    onChange={(e) => updateValue(asset.src, 'left', e.target.value)}
+                    onChange={(e) => updateValue(asset, 'left', e.target.value)}
                     className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
                     placeholder="40%"
                   />
@@ -162,7 +166,7 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
                     type="number"
                     step="0.01"
                     value={values.scale}
-                    onChange={(e) => updateValue(asset.src, 'scale', parseFloat(e.target.value))}
+                    onChange={(e) => updateValue(asset, 'scale', parseFloat(e.target.value))}
                     className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
                     placeholder="1.0"
                   />
@@ -173,7 +177,7 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
                   <input
                     type="number"
                     value={values.zIndex}
-                    onChange={(e) => updateValue(asset.src, 'zIndex', parseInt(e.target.value))}
+                    onChange={(e) => updateValue(asset, 'zIndex', parseInt(e.target.value))}
                     className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
                     placeholder="1"
                   />
@@ -190,8 +194,8 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
         })}
       </div>
 
-      <div className="mt-6 pt-4 border-t border-zinc-700">
-        <p className="text-sm text-zinc-400 text-center">
+      <div className="mt-3 pt-3 border-t border-zinc-700">
+        <p className="text-xs text-zinc-400 text-center">
           💡 Tip: Adjust values and see changes instantly. Copy values when satisfied!
         </p>
       </div>

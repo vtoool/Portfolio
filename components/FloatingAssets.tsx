@@ -15,6 +15,7 @@ interface AssetValue {
 
 interface FloatingAssetsProps {
   onAssetValuesChange?: (values: { [key: string]: AssetValue }) => void;
+  assetValues?: { [key: string]: AssetValue };
 }
 
 interface DragState {
@@ -28,7 +29,7 @@ interface DragState {
   direction?: string;
 }
 
-const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) => {
+const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, assetValues: externalAssetValues }) => {
   const scrollY = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
@@ -52,6 +53,13 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
     }
   }, [assetValues, onAssetValuesChange]);
 
+  // Sync external assetValues with internal state
+  useEffect(() => {
+    if (externalAssetValues) {
+      setAssetValues(externalAssetValues);
+    }
+  }, [externalAssetValues]);
+
   useEffect(() => {
     if (prefersReducedMotion) return;
 
@@ -69,16 +77,16 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
     return parseFloat(value.replace('%', ''));
   };
 
-  const handleMouseDown = (e: React.MouseEvent, assetSrc: string, action: 'move' | 'resize', direction?: string) => {
+  const handleMouseDown = (e: React.MouseEvent, asset: any, action: 'move' | 'resize', direction?: string) => {
     if (!isLayoutMode || !containerRef.current) return;
     e.preventDefault();
     e.stopPropagation();
 
-    const asset = ART_ASSETS.find(a => a.src === assetSrc);
-    if (!asset) return;
+    // Create unique key using src and alt
+    const assetKey = `${asset.src}-${asset.alt}`;
 
     const containerRect = containerRef.current.getBoundingClientRect();
-    const currentValues = assetValues[assetSrc] || {
+    const currentValues = assetValues[assetKey] || {
       top: asset.position.top,
       left: asset.position.left,
       scale: asset.scale,
@@ -89,7 +97,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
     const currentLeft = parsePercentage(currentValues.left);
 
     setDragState({
-      assetSrc,
+      assetSrc: assetKey,
       startX: e.clientX,
       startY: e.clientY,
       startTop: currentTop,
@@ -223,14 +231,15 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
         };
 
         const breathingAnimation = getBreathingAnimation(assetIndex);
-        const currentValues = assetValues[asset.src] || {
+        const assetKey = `${asset.src}-${asset.alt}`;
+        const currentValues = assetValues[assetKey] || {
           top: asset.position.top,
           left: asset.position.left,
           scale: asset.scale,
           zIndex: asset.position.zIndex
         };
 
-        const isDragging = dragState?.assetSrc === asset.src;
+        const isDragging = dragState?.assetSrc === assetKey;
 
         return (
           <motion.div
@@ -287,29 +296,29 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange }) 
                 {/* Main drag area - center of asset */}
                 <div
                   className="absolute inset-0 cursor-move z-10"
-                  onMouseDown={(e) => handleMouseDown(e, asset.src, 'move')}
+                  onMouseDown={(e) => handleMouseDown(e, asset, 'move')}
                   style={{ zIndex: 10 }}
                 />
 
                 {/* Resize handles - much more visible */}
                 <AssetHandle
                   position="nw"
-                  onMouseDown={(e) => handleMouseDown(e, asset.src, 'resize', 'nw')}
+                  onMouseDown={(e) => handleMouseDown(e, asset, 'resize', 'nw')}
                   isVisible={true}
                 />
                 <AssetHandle
                   position="ne"
-                  onMouseDown={(e) => handleMouseDown(e, asset.src, 'resize', 'ne')}
+                  onMouseDown={(e) => handleMouseDown(e, asset, 'resize', 'ne')}
                   isVisible={true}
                 />
                 <AssetHandle
                   position="sw"
-                  onMouseDown={(e) => handleMouseDown(e, asset.src, 'resize', 'sw')}
+                  onMouseDown={(e) => handleMouseDown(e, asset, 'resize', 'sw')}
                   isVisible={true}
                 />
                 <AssetHandle
                   position="se"
-                  onMouseDown={(e) => handleMouseDown(e, asset.src, 'resize', 'se')}
+                  onMouseDown={(e) => handleMouseDown(e, asset, 'resize', 'se')}
                   isVisible={true}
                 />
               </>

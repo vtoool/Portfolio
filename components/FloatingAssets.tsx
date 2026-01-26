@@ -192,7 +192,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     }
   }, [dragState]);
 
-  if (prefersReducedMotion) {
+  if (prefersReducedMotion || breakpoint === 'mobile') {
     return (
       <div className="relative w-full h-full overflow-hidden">
         {assetsToRender.map((asset) => (
@@ -215,58 +215,6 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
               priority={asset.animation.delay === 0}
             />
           </div>
-        ))}
-      </div>
-    );
-  }
-
-  // Mobile: Assets float in on scroll
-  if (breakpoint === 'mobile') {
-    return (
-      <div className="relative w-full h-full overflow-hidden">
-        {assetsToRender.map((asset, assetIndex) => (
-          <motion.div
-            key={asset.src}
-            className="absolute floating-asset transform-gpu"
-            style={{
-              top: asset.position.top,
-              left: asset.position.left,
-              zIndex: asset.position.zIndex,
-              scale: asset.scale
-            }}
-            initial={{
-              x: asset.animation.initialX,
-              y: asset.animation.initialY,
-              opacity: 0,
-              filter: "blur(8px)"
-            }}
-            whileInView={{
-              x: 0,
-              y: 0,
-              opacity: 1,
-              filter: "blur(0px)"
-            }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{
-              type: "spring" as const,
-              stiffness: 100,
-              damping: 20,
-              duration: 1.2,
-              delay: asset.animation.delay
-            }}
-          >
-            <Image
-              src={asset.src}
-              alt={asset.alt}
-              width={asset.width}
-              height={asset.height}
-              className="pointer-events-none select-none"
-              style={{
-                filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.08)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.04))',
-              }}
-              priority={asset.animation.delay === 0}
-            />
-          </motion.div>
         ))}
       </div>
     );

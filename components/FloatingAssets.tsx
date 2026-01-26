@@ -223,12 +223,6 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
   return (
     <div ref={containerRef} className="relative w-full h-full overflow-visible">
       {assetsToRender.map((asset, assetIndex) => {
-        const parallaxOffset = useTransform(
-          scrollY,
-          [0, 1000],
-          [0, asset.animation.parallaxSpeed * 100]
-        );
-
         const getBreathingAnimation = (index: number, isMobile: boolean) => {
           // Mobile: Smaller, less frequent animations for better performance
           if (isMobile) {
@@ -266,6 +260,9 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
         };
 
         const isDragging = dragState?.assetSrc === assetKey;
+
+        // Calculate parallax offset directly without useTransform hook
+        const parallaxOffset = scrollY.get() * asset.animation.parallaxSpeed;
 
         return (
           <motion.div

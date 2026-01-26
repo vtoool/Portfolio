@@ -3,7 +3,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion, useMotionValue, useTransform, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { ART_ASSETS, AssetConfig } from "@/lib/assets";
+import { ART_ASSETS, AssetConfig, getAssetsForBreakpoint } from "@/lib/assets";
+import { useViewport } from "@/hooks/useViewport";
 import AssetHandle from "./AssetHandle";
 
 interface AssetValue {
@@ -38,6 +39,16 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
   const [isLayoutMode, setIsLayoutMode] = useState(false);
   const [dragState, setDragState] = useState<DragState | null>(null);
   const [assetValues, setAssetValues] = useState<{ [key: string]: AssetValue }>({});
+
+  // Viewport detection for responsive assets
+  const { breakpoint } = useViewport();
+
+  // Get assets for current breakpoint
+  const getAssetsForCurrentBreakpoint = () => {
+    return getAssetsForBreakpoint(breakpoint);
+  };
+
+  const assetsToRender = getAssetsForCurrentBreakpoint();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -183,8 +194,8 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
 
   if (prefersReducedMotion) {
     return (
-      <div className="relative w-full h-full">
-        {ART_ASSETS.map((asset) => (
+      <div className="relative w-full h-full overflow-hidden">
+        {assetsToRender.map((asset) => (
           <div
             key={asset.src}
             className="absolute"
@@ -209,9 +220,61 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     );
   }
 
+  // Mobile: Assets float in on scroll
+  if (breakpoint === 'mobile') {
+    return (
+      <div className="relative w-full h-full overflow-hidden">
+        {assetsToRender.map((asset, assetIndex) => (
+          <motion.div
+            key={asset.src}
+            className="absolute floating-asset transform-gpu"
+            style={{
+              top: asset.position.top,
+              left: asset.position.left,
+              zIndex: asset.position.zIndex,
+              scale: asset.scale
+            }}
+            initial={{
+              x: asset.animation.initialX,
+              y: asset.animation.initialY,
+              opacity: 0,
+              filter: "blur(8px)"
+            }}
+            whileInView={{
+              x: 0,
+              y: 0,
+              opacity: 1,
+              filter: "blur(0px)"
+            }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{
+              type: "spring" as const,
+              stiffness: 100,
+              damping: 20,
+              duration: 1.2,
+              delay: asset.animation.delay
+            }}
+          >
+            <Image
+              src={asset.src}
+              alt={asset.alt}
+              width={asset.width}
+              height={asset.height}
+              className="pointer-events-none select-none"
+              style={{
+                filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.08)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.04))',
+              }}
+              priority={asset.animation.delay === 0}
+            />
+          </motion.div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div ref={containerRef} className="relative w-full h-full overflow-visible">
-      {ART_ASSETS.map((asset, assetIndex) => {
+      {assetsToRender.map((asset, assetIndex) => {
         const parallaxOffset = useTransform(
           scrollY,
           [0, 1000],

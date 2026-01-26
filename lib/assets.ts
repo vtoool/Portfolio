@@ -172,3 +172,253 @@ export function exportLayoutConfig(assets: AssetConfig[], assetValues: { [key: s
 
   return `export const ART_ASSETS: AssetConfig[] = [\n${config}\n];`;
 }
+
+// Responsive asset configurations for different breakpoints
+export const ASSET_CONFIGS = {
+  mobile: {
+    visible: true,
+    assets: [
+      {
+        src: "/art/Me.png",
+        alt: "Me - Clay Figurine",
+        width: 240,
+        height: 240,
+        position: {
+          top: "auto",
+          left: "10%",
+          zIndex: 3
+        },
+        scale: 0.6,
+        animation: {
+          initialX: 50,
+          initialY: -30,
+          delay: 0,
+          direction: 'left' as const,
+          parallaxSpeed: 0.3
+        }
+      },
+      {
+        src: "/art/guitar.png",
+        alt: "Guitar",
+        width: 200,
+        height: 200,
+        position: {
+          top: "auto",
+          left: "65%",
+          zIndex: 1
+        },
+        scale: 0.55,
+        animation: {
+          initialX: 80,
+          initialY: 60,
+          delay: 0.1,
+          direction: 'left' as const,
+          parallaxSpeed: 0.35
+        }
+      },
+      {
+        src: "/art/map.png",
+        alt: "Map App Icon",
+        width: 160,
+        height: 160,
+        position: {
+          top: "auto",
+          left: "5%",
+          zIndex: 2
+        },
+        scale: 0.6,
+        animation: {
+          initialX: -120,
+          initialY: -50,
+          delay: 0.15,
+          direction: 'left' as const,
+          parallaxSpeed: 0.25
+        }
+      },
+      {
+        src: "/art/plane.png",
+        alt: "Plane",
+        width: 180,
+        height: 180,
+        position: {
+          top: "auto",
+          left: "55%",
+          zIndex: 2
+        },
+        scale: 0.5,
+        animation: {
+          initialX: 150,
+          initialY: 80,
+          delay: 0.05,
+          direction: 'right' as const,
+          parallaxSpeed: 0.4
+        }
+      },
+      {
+        src: "/art/gear.png",
+        alt: "Gear",
+        width: 140,
+        height: 140,
+        position: {
+          top: "auto",
+          left: "20%",
+          zIndex: 1
+        },
+        scale: 0.65,
+        animation: {
+          initialX: 100,
+          initialY: -30,
+          delay: 0.2,
+          direction: 'right' as const,
+          parallaxSpeed: 0.2
+        }
+      },
+      {
+        src: "/art/gear.png",
+        alt: "Small Gear",
+        width: 120,
+        height: 120,
+        position: {
+          top: "auto",
+          left: "70%",
+          zIndex: 1
+        },
+        scale: 0.55,
+        animation: {
+          initialX: 120,
+          initialY: 40,
+          delay: 0.25,
+          direction: 'right' as const,
+          parallaxSpeed: 0.18
+        }
+      }
+    ]
+  },
+  tablet: {
+    visible: true,
+    assets: [
+      {
+        src: "/art/Me.png",
+        alt: "Me - Clay Figurine",
+        width: 320,
+        height: 320,
+        position: {
+          top: "25%",
+          left: "-5%",
+          zIndex: 3
+        },
+        scale: 1.0,
+        animation: {
+          initialX: 80,
+          initialY: -50,
+          delay: 0,
+          direction: 'left' as const,
+          parallaxSpeed: 0.3
+        }
+      },
+      {
+        src: "/art/guitar.png",
+        alt: "Guitar",
+        width: 280,
+        height: 280,
+        position: {
+          top: "36%",
+          left: "-20%",
+          zIndex: 1
+        },
+        scale: 0.6,
+        animation: {
+          initialX: -100,
+          initialY: 60,
+          delay: 0.1,
+          direction: 'left' as const,
+          parallaxSpeed: 0.35
+        }
+      },
+      {
+        src: "/art/map.png",
+        alt: "Map App Icon",
+        width: 240,
+        height: 240,
+        position: {
+          top: "17%",
+          left: "-10%",
+          zIndex: 2
+        },
+        scale: 0.55,
+        animation: {
+          initialX: -120,
+          initialY: -50,
+          delay: 0.15,
+          direction: 'left' as const,
+          parallaxSpeed: 0.25
+        }
+      },
+      {
+        src: "/art/plane.png",
+        alt: "Plane",
+        width: 250,
+        height: 250,
+        position: {
+          top: "15%",
+          left: "25%",
+          zIndex: 2
+        },
+        scale: 0.5,
+        animation: {
+          initialX: 150,
+          initialY: 80,
+          delay: 0.05,
+          direction: 'right' as const,
+          parallaxSpeed: 0.4
+        }
+      },
+      {
+        src: "/art/gear.png",
+        alt: "Gear",
+        width: 180,
+        height: 180,
+        position: {
+          top: "45%",
+          left: "35%",
+          zIndex: 1
+        },
+        scale: 0.6,
+        animation: {
+          initialX: 100,
+          initialY: -30,
+          delay: 0.2,
+          direction: 'right' as const,
+          parallaxSpeed: 0.2
+        }
+      },
+      {
+        src: "/art/gear.png",
+        alt: "Small Gear",
+        width: 150,
+        height: 150,
+        position: {
+          top: "42.6%",
+          left: "48%",
+          zIndex: 1
+        },
+        scale: 0.5,
+        animation: {
+          initialX: 120,
+          initialY: 40,
+          delay: 0.25,
+          direction: 'right' as const,
+          parallaxSpeed: 0.18
+        }
+      }
+    ]
+  },
+  desktop: {
+    visible: true,
+    assets: ART_ASSETS
+  }
+};
+
+export const getAssetsForBreakpoint = (breakpoint: 'mobile' | 'tablet' | 'desktop'): AssetConfig[] => {
+  return ASSET_CONFIGS[breakpoint].assets;
+};

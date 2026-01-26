@@ -17,22 +17,22 @@ const getProjectClasses = (id: string) => {
     case "pfcrm":
       // Flagship: Mobile full width tall, Tablet 2x1, Desktop 2x2
       return {
-        gridClass: "col-span-1 row-span-3 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2",
-        padding: "p-5 md:p-6",
+        gridClass: "col-span-1 row-span-2 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2",
+        padding: "p-6",
         textSize: "text-base md:text-lg lg:text-xl",
       };
     case "cabin":
       // CabinStory: Mobile full width tall, Tablet 2x1, Desktop 2x2
       return {
-        gridClass: "col-span-1 row-span-3 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2",
-        padding: "p-5 md:p-6",
+        gridClass: "col-span-1 row-span-2 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2",
+        padding: "p-6",
         textSize: "text-sm md:text-base lg:text-lg",
       };
     case "chef":
       // Chef De Chef: Mobile full width medium, Tablet 1x2, Desktop 1x2
       return {
         gridClass: "col-span-1 row-span-2 md:col-span-1 md:row-span-2 lg:col-span-1 lg:row-span-2",
-        padding: "p-4 md:p-5",
+        padding: "p-5",
         textSize: "text-sm md:text-sm lg:text-base",
       };
     case "faresnap":
@@ -52,8 +52,8 @@ const getProjectClasses = (id: string) => {
     case "gds":
       // GDS: Mobile full width tall, Tablet 2x1, Desktop 2x2
       return {
-        gridClass: "col-span-1 row-span-3 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2",
-        padding: "p-5 md:p-6",
+        gridClass: "col-span-1 row-span-2 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2",
+        padding: "p-6",
         textSize: "text-sm md:text-sm lg:text-base",
       };
     default:

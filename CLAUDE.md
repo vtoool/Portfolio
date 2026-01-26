@@ -219,6 +219,40 @@ This section describes a systematic approach to using Claude Code effectively wi
 - Database changes: Use Supabase plugin for migrations and queries
 - Verify implementation: Use Web Search for current best practices
 
+### Visual Feedback Loop Protocol
+
+**CRITICAL: Use Visual Analysis for Every UI/UX Change**
+
+This project employs a continuous visual feedback loop to ensure optimal UI/UX quality. For every visual change:
+
+1. **Make Code Changes** → Edit components, styles, layouts
+2. **Deploy to Vercel** → Push to production for accurate rendering
+3. **Capture Screenshots** → Use Playwright to capture targeted screenshots
+4. **Analyze Visually** → Use `understand_image` tool with UI/UX expert perspective
+5. **Iterate & Improve** → Make targeted adjustments based on visual analysis
+6. **Repeat** → Continue until visual quality meets professional standards
+
+**When to Trigger Visual Analysis**:
+- After any layout or styling changes
+- When adjusting animations or transitions
+- When modifying component spacing, sizing, or positioning
+- When updating color schemes or typography
+- After adding new interactive elements
+- When fixing visual bugs or inconsistencies
+- During responsive design adjustments
+
+**Visual Analysis Questions** (ask in `understand_image` prompt):
+- Does the visual hierarchy support user goals?
+- Are there alignment or spacing inconsistencies?
+- Do colors and contrast meet accessibility standards?
+- Is the visual balance and proportion appropriate?
+- Do animations enhance or distract from the experience?
+- Are interactive elements clearly distinguishable?
+- Does the design feel cohesive with the overall brand?
+- What specific improvements would enhance user engagement?
+
+**Visual Analysis Context File**: Document all findings in `.context/visual-analysis.md`
+
 ### Knowledge Management System
 
 **Create Context Files** for recurring patterns and solutions:
@@ -261,6 +295,35 @@ This section describes a systematic approach to using Claude Code effectively wi
 **Dependencies**: [What blocks this]
 ```
 
+**File: `.context/visual-analysis.md`** - UI/UX visual insights
+```markdown
+## UI/UX Expert Evaluations
+**Date**: [When analyzed]
+**Component**: [Component name]
+**Visual Findings**: [Analysis results]
+**Screenshots**: [Reference to captured images]
+**Action Items**: [List of improvements]
+**Status**: [In Progress/Complete]
+```
+
+**File: `.context/design-system.md`** - Design system documentation
+```markdown
+## Color Palette
+**Primary**: [Colors and usage]
+**Secondary**: [Colors and usage]
+**Typography**: [Font sizes, weights, hierarchy]
+**Spacing**: [Spacing scale and rules]
+```
+
+**File: `.context/workflow.md`** - Visual feedback loop guide
+```markdown
+Complete guide for using visual analysis in development:
+- Step-by-step workflow
+- Analysis prompt templates
+- Common issues and fixes
+- Example workflows
+```
+
 **Use TodoWrite Tool** for all tasks:
 - Break complex work into atomic todos
 - Mark completed items immediately
@@ -293,7 +356,10 @@ Store context files in `.context/` directory (add to `.gitignore`):
 ├── failures.md           # Bug tracking
 ├── lessons-learned.md    # Knowledge base
 ├── preferences.md        # Decision log
-└── progress.md           # Active work
+├── progress.md           # Active work
+├── visual-analysis.md    # UI/UX visual insights
+├── design-system.md      # Design system documentation
+└── workflow.md           # Visual feedback loop guide
 ```
 
 ### Research Workflow
@@ -317,6 +383,16 @@ Store context files in `.context/` directory (add to `.gitignore`):
 - Which failures repeat?
 - What preferences have changed?
 - How can processes be improved?
+- What visual issues recur in `.context/visual-analysis.md`?
+- Are design system guidelines being followed consistently?
+- Is the visual feedback loop improving UI quality?
+
+**Visual Feedback Loop Reviews**:
+- Review iteration logs in `.context/visual-analysis.md`
+- Identify recurring visual issues
+- Update `.context/design-system.md` based on findings
+- Improve workflow based on what works/doesn't work
+- Track visual quality improvements over time
 
 **Update Documentation**:
 - When patterns emerge, update CLAUDE.md

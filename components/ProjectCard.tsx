@@ -15,52 +15,52 @@ interface ProjectCardProps {
 const getProjectClasses = (id: string) => {
   switch (id) {
     case "pfcrm":
-      // Flagship: 2x2 large
+      // Flagship: Mobile full width tall, Tablet 2x1, Desktop 2x2
       return {
-        gridClass: "lg:col-span-2 lg:row-span-2",
-        padding: "p-6",
-        textSize: "text-lg lg:text-xl",
+        gridClass: "col-span-1 row-span-3 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2",
+        padding: "p-5 md:p-6",
+        textSize: "text-base md:text-lg lg:text-xl",
       };
     case "cabin":
-      // Large 2x2
+      // CabinStory: Mobile full width tall, Tablet 2x1, Desktop 2x2
       return {
-        gridClass: "lg:col-span-2 lg:row-span-2",
-        padding: "p-6",
-        textSize: "text-base lg:text-lg",
+        gridClass: "col-span-1 row-span-3 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2",
+        padding: "p-5 md:p-6",
+        textSize: "text-sm md:text-base lg:text-lg",
       };
     case "chef":
-      // Tall: 1x2
+      // Chef De Chef: Mobile full width medium, Tablet 1x2, Desktop 1x2
       return {
-        gridClass: "lg:col-span-1 lg:row-span-2",
-        padding: "p-5",
-        textSize: "text-sm lg:text-base",
+        gridClass: "col-span-1 row-span-2 md:col-span-1 md:row-span-2 lg:col-span-1 lg:row-span-2",
+        padding: "p-4 md:p-5",
+        textSize: "text-sm md:text-sm lg:text-base",
       };
     case "faresnap":
-      // Small: 1x1
+      // FareSnap: Mobile half width, Tablet half width, Desktop 1x1
       return {
-        gridClass: "lg:col-span-1 lg:row-span-1",
+        gridClass: "col-span-1 row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1",
         padding: "p-4",
-        textSize: "text-xs lg:text-sm",
+        textSize: "text-xs md:text-xs lg:text-sm",
       };
     case "meta":
-      // Small: 1x1
+      // Meta: Mobile half width, Tablet half width, Desktop 1x1
       return {
-        gridClass: "lg:col-span-1 lg:row-span-1",
+        gridClass: "col-span-1 row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1",
         padding: "p-4",
-        textSize: "text-xs lg:text-sm",
+        textSize: "text-xs md:text-xs lg:text-sm",
       };
     case "gds":
-      // Large 2x2
+      // GDS: Mobile full width tall, Tablet 2x1, Desktop 2x2
       return {
-        gridClass: "lg:col-span-2 lg:row-span-2",
-        padding: "p-6",
-        textSize: "text-sm lg:text-base",
+        gridClass: "col-span-1 row-span-3 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2",
+        padding: "p-5 md:p-6",
+        textSize: "text-sm md:text-sm lg:text-base",
       };
     default:
       return {
-        gridClass: "lg:col-span-1 lg:row-span-1",
+        gridClass: "col-span-1 row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1",
         padding: "p-4",
-        textSize: "text-xs lg:text-sm",
+        textSize: "text-xs md:text-xs lg:text-sm",
       };
   }
 };

@@ -41,7 +41,7 @@ const Hero: React.FC = () => {
   return (
     <section className={`
       flex ${breakpoint === 'mobile' ? 'flex-col' : 'lg:flex-row'}
-      min-h-[80vh] md:min-h-[70vh] pt-0 relative
+      min-h-[80vh] md:min-h-[70vh] ${breakpoint === 'mobile' ? 'pt-24' : 'pt-0'} relative
     `}>
       <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
 

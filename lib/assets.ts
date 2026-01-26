@@ -186,7 +186,7 @@ export const ASSET_CONFIGS = {
         height: 140,
         position: {
           top: "28%",
-          left: "-15%",
+          left: "5%",
           zIndex: 3
         },
         scale: 1.0,
@@ -206,7 +206,7 @@ export const ASSET_CONFIGS = {
         height: 100,
         position: {
           top: "38%",
-          left: "-35%",
+          left: "-5%",
           zIndex: 1
         },
         scale: 1.0,
@@ -226,7 +226,7 @@ export const ASSET_CONFIGS = {
         height: 85,
         position: {
           top: "20%",
-          left: "-25%",
+          left: "8%",
           zIndex: 2
         },
         scale: 1.0,
@@ -246,7 +246,7 @@ export const ASSET_CONFIGS = {
         height: 80,
         position: {
           top: "18%",
-          left: "22%",
+          left: "62%",
           zIndex: 2
         },
         scale: 1.0,
@@ -266,7 +266,7 @@ export const ASSET_CONFIGS = {
         height: 65,
         position: {
           top: "46%",
-          left: "32%",
+          left: "72%",
           zIndex: 1
         },
         scale: 1.0,

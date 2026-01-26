@@ -178,99 +178,24 @@ export const ASSET_CONFIGS = {
   mobile: {
     visible: true,
     assets: [
-      {
-        src: "/art/Me.png",
-        alt: "Me - Clay Figurine",
-        width: 240,
-        height: 240,
-        position: {
-          top: "auto",
-          left: "10%",
-          zIndex: 3
-        },
-        scale: 0.6,
-        animation: {
-          initialX: 50,
-          initialY: -30,
-          delay: 0,
-          direction: 'left' as const,
-          parallaxSpeed: 0.3
-        }
-      },
-      {
-        src: "/art/guitar.png",
-        alt: "Guitar",
-        width: 200,
-        height: 200,
-        position: {
-          top: "auto",
-          left: "65%",
-          zIndex: 1
-        },
-        scale: 0.55,
-        animation: {
-          initialX: 80,
-          initialY: 60,
-          delay: 0.1,
-          direction: 'left' as const,
-          parallaxSpeed: 0.35
-        }
-      },
+      // Top row - 3 small assets in columns
       {
         src: "/art/map.png",
         alt: "Map App Icon",
         width: 160,
         height: 160,
         position: {
-          top: "auto",
-          left: "5%",
+          top: "5%",
+          left: "8%",
           zIndex: 2
         },
-        scale: 0.6,
+        scale: 0.55,
         animation: {
-          initialX: -120,
-          initialY: -50,
-          delay: 0.15,
-          direction: 'left' as const,
-          parallaxSpeed: 0.25
-        }
-      },
-      {
-        src: "/art/plane.png",
-        alt: "Plane",
-        width: 180,
-        height: 180,
-        position: {
-          top: "auto",
-          left: "55%",
-          zIndex: 2
-        },
-        scale: 0.5,
-        animation: {
-          initialX: 150,
-          initialY: 80,
-          delay: 0.05,
-          direction: 'right' as const,
-          parallaxSpeed: 0.4
-        }
-      },
-      {
-        src: "/art/gear.png",
-        alt: "Gear",
-        width: 140,
-        height: 140,
-        position: {
-          top: "auto",
-          left: "20%",
-          zIndex: 1
-        },
-        scale: 0.65,
-        animation: {
-          initialX: 100,
+          initialX: -80,
           initialY: -30,
-          delay: 0.2,
-          direction: 'right' as const,
-          parallaxSpeed: 0.2
+          delay: 0.05,
+          direction: 'left' as const,
+          parallaxSpeed: 0.15
         }
       },
       {
@@ -279,17 +204,97 @@ export const ASSET_CONFIGS = {
         width: 120,
         height: 120,
         position: {
-          top: "auto",
-          left: "70%",
+          top: "8%",
+          left: "39%",
           zIndex: 1
         },
-        scale: 0.55,
+        scale: 0.5,
         animation: {
-          initialX: 120,
-          initialY: 40,
+          initialX: 0,
+          initialY: -40,
+          delay: 0.1,
+          direction: 'bottom' as const,
+          parallaxSpeed: 0.1
+        }
+      },
+      {
+        src: "/art/plane.png",
+        alt: "Plane",
+        width: 150,
+        height: 150,
+        position: {
+          top: "5%",
+          left: "70%",
+          zIndex: 2
+        },
+        scale: 0.45,
+        animation: {
+          initialX: 80,
+          initialY: -30,
+          delay: 0.15,
+          direction: 'right' as const,
+          parallaxSpeed: 0.12
+        }
+      },
+
+      // Middle row - 2 medium assets
+      {
+        src: "/art/Me.png",
+        alt: "Me - Clay Figurine",
+        width: 200,
+        height: 200,
+        position: {
+          top: "35%",
+          left: "15%",
+          zIndex: 3
+        },
+        scale: 0.5,
+        animation: {
+          initialX: -50,
+          initialY: 0,
+          delay: 0.2,
+          direction: 'left' as const,
+          parallaxSpeed: 0.2
+        }
+      },
+      {
+        src: "/art/gear.png",
+        alt: "Gear",
+        width: 180,
+        height: 180,
+        position: {
+          top: "40%",
+          left: "62%",
+          zIndex: 1
+        },
+        scale: 0.48,
+        animation: {
+          initialX: 60,
+          initialY: 30,
           delay: 0.25,
           direction: 'right' as const,
-          parallaxSpeed: 0.18
+          parallaxSpeed: 0.15
+        }
+      },
+
+      // Bottom row - 1 large asset
+      {
+        src: "/art/guitar.png",
+        alt: "Guitar",
+        width: 220,
+        height: 220,
+        position: {
+          top: "68%",
+          left: "30%",
+          zIndex: 1
+        },
+        scale: 0.45,
+        animation: {
+          initialX: 0,
+          initialY: 50,
+          delay: 0.3,
+          direction: 'up' as const,
+          parallaxSpeed: 0.08
         }
       }
     ]

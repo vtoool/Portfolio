@@ -192,7 +192,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     }
   }, [dragState]);
 
-  if (prefersReducedMotion || breakpoint === 'mobile') {
+  if (prefersReducedMotion) {
     return (
       <div className="relative w-full h-full overflow-hidden">
         {assetsToRender.map((asset) => (
@@ -229,8 +229,22 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
           [0, asset.animation.parallaxSpeed * 100]
         );
 
-        const getBreathingAnimation = (index: number) => {
-          const animations = [
+        const getBreathingAnimation = (index: number, isMobile: boolean) => {
+          // Mobile: Smaller, less frequent animations for better performance
+          if (isMobile) {
+            const mobileAnimations = [
+              { x: [0, 2], y: [0, -2], scale: [1, 1.002] },
+              { x: [0, -2], y: [0, 2], scale: [1, 1.0015] },
+              { x: [0, 1.5], y: [0, -1.5], scale: [1, 1.0025] },
+              { x: [0, 2], y: [0, 1.5], scale: [1, 1.0015] },
+              { x: [0, 1.5], y: [0, -1], scale: [1, 1.003] },
+              { x: [0, -1.5], y: [0, 1.5], scale: [1, 1.002] },
+            ];
+            return mobileAnimations[index % mobileAnimations.length];
+          }
+
+          // Desktop: Original animations
+          const desktopAnimations = [
             { x: [0, 5], y: [0, -4], scale: [1, 1.004] },
             { x: [0, -4], y: [0, 5], scale: [1, 1.003] },
             { x: [0, 3], y: [0, -3], scale: [1, 1.005] },
@@ -238,10 +252,11 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
             { x: [0, 3], y: [0, -2], scale: [1, 1.006] },
             { x: [0, -3.5], y: [0, 3], scale: [1, 1.004] },
           ];
-          return animations[index % animations.length];
+          return desktopAnimations[index % desktopAnimations.length];
         };
 
-        const breathingAnimation = getBreathingAnimation(assetIndex);
+        const isMobile = breakpoint === 'mobile';
+        const breathingAnimation = getBreathingAnimation(assetIndex, isMobile);
         const assetKey = `${asset.src}-${asset.alt}`;
         const currentValues = assetValues[assetKey] || {
           top: asset.position.top,
@@ -263,10 +278,10 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
               scale: isLayoutMode ? currentValues.scale : breathingAnimation.scale[1] * asset.scale
             }}
             initial={{
-              x: asset.animation.initialX,
-              y: asset.animation.initialY,
+              x: isMobile ? 0 : asset.animation.initialX,
+              y: isMobile ? 20 : asset.animation.initialY,
               opacity: 0,
-              filter: "blur(8px)"
+              filter: "blur(4px)"
             }}
             animate={{
               x: 0,
@@ -277,10 +292,10 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
             }}
             transition={{
               type: "spring" as const,
-              stiffness: 100,
-              damping: 20,
-              duration: 1.2,
-              delay: asset.animation.delay
+              stiffness: isMobile ? 150 : 100,
+              damping: isMobile ? 25 : 20,
+              duration: isMobile ? 0.8 : 1.2,
+              delay: asset.animation.delay * (isMobile ? 0.5 : 1)
             }}
           >
             {isLayoutMode && (

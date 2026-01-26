@@ -11,7 +11,7 @@ export const useViewport = () => {
       const width = window.innerWidth;
       setViewportWidth(width);
 
-      if (width < 480) {
+      if (width < 640) {
         setBreakpoint('mobile');
       } else if (width < 768) {
         setBreakpoint('tablet');

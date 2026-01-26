@@ -178,123 +178,104 @@ export const ASSET_CONFIGS = {
   mobile: {
     visible: true,
     assets: [
-      // Top row - 3 small assets in columns
-      {
-        src: "/art/map.png",
-        alt: "Map App Icon",
-        width: 160,
-        height: 160,
-        position: {
-          top: "5%",
-          left: "8%",
-          zIndex: 2
-        },
-        scale: 0.55,
-        animation: {
-          initialX: -80,
-          initialY: -30,
-          delay: 0.05,
-          direction: 'left' as const,
-          parallaxSpeed: 0.15
-        }
-      },
-      {
-        src: "/art/gear.png",
-        alt: "Small Gear",
-        width: 120,
-        height: 120,
-        position: {
-          top: "8%",
-          left: "39%",
-          zIndex: 1
-        },
-        scale: 0.5,
-        animation: {
-          initialX: 0,
-          initialY: -40,
-          delay: 0.1,
-          direction: 'bottom' as const,
-          parallaxSpeed: 0.1
-        }
-      },
-      {
-        src: "/art/plane.png",
-        alt: "Plane",
-        width: 150,
-        height: 150,
-        position: {
-          top: "5%",
-          left: "70%",
-          zIndex: 2
-        },
-        scale: 0.45,
-        animation: {
-          initialX: 80,
-          initialY: -30,
-          delay: 0.15,
-          direction: 'right' as const,
-          parallaxSpeed: 0.12
-        }
-      },
-
-      // Middle row - 2 medium assets
+      // Me - main character, smaller on mobile
       {
         src: "/art/Me.png",
         alt: "Me - Clay Figurine",
-        width: 200,
-        height: 200,
+        width: 120,
+        height: 120,
         position: {
-          top: "35%",
-          left: "15%",
+          top: "25%",
+          left: "65%",
           zIndex: 3
         },
         scale: 0.5,
         animation: {
-          initialX: -50,
-          initialY: 0,
-          delay: 0.2,
+          initialX: 40,
+          initialY: -25,
+          delay: 0,
           direction: 'left' as const,
           parallaxSpeed: 0.2
         }
       },
-      {
-        src: "/art/gear.png",
-        alt: "Gear",
-        width: 180,
-        height: 180,
-        position: {
-          top: "40%",
-          left: "62%",
-          zIndex: 1
-        },
-        scale: 0.48,
-        animation: {
-          initialX: 60,
-          initialY: 30,
-          delay: 0.25,
-          direction: 'right' as const,
-          parallaxSpeed: 0.15
-        }
-      },
-
-      // Bottom row - 1 large asset
+      // Guitar - creative symbol
       {
         src: "/art/guitar.png",
         alt: "Guitar",
-        width: 220,
-        height: 220,
+        width: 90,
+        height: 90,
         position: {
-          top: "68%",
-          left: "30%",
+          top: "48%",
+          left: "5%",
+          zIndex: 1
+        },
+        scale: 0.4,
+        animation: {
+          initialX: -40,
+          initialY: 30,
+          delay: 0.1,
+          direction: 'left' as const,
+          parallaxSpeed: 0.25
+        }
+      },
+      // Map - travel/tech icon
+      {
+        src: "/art/map.png",
+        alt: "Map App Icon",
+        width: 80,
+        height: 80,
+        position: {
+          top: "55%",
+          left: "75%",
+          zIndex: 2
+        },
+        scale: 0.45,
+        animation: {
+          initialX: 30,
+          initialY: 20,
+          delay: 0.15,
+          direction: 'right' as const,
+          parallaxSpeed: 0.18
+        }
+      },
+      // Plane - travel icon
+      {
+        src: "/art/plane.png",
+        alt: "Plane",
+        width: 70,
+        height: 70,
+        position: {
+          top: "15%",
+          left: "8%",
+          zIndex: 2
+        },
+        scale: 0.4,
+        animation: {
+          initialX: -50,
+          initialY: -30,
+          delay: 0.2,
+          direction: 'left' as const,
+          parallaxSpeed: 0.15
+        }
+      },
+      // Gear - engineering icon
+      {
+        src: "/art/gear.png",
+        alt: "Gear",
+        width: 60,
+        height: 60,
+        position: {
+          top: "40%",
+          left: "45%",
           zIndex: 1
         },
         scale: 0.45,
         animation: {
           initialX: 0,
-          initialY: 50,
-          delay: 0.3,
-          direction: 'up' as const,
-          parallaxSpeed: 0.08
+          initialY: 0,
+          delay: 0.25,
+          direction: 'center' as const,
+          parallaxSpeed: 0.12
         }
       }
     ]

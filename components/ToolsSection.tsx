@@ -20,7 +20,7 @@ const ToolsSection: React.FC = () => {
               {partnerLogos.map((logo, index) => (
                 <span
                   key={`first-${logo.name}-${index}`}
-                  className={`text-lg font-bold tracking-tighter text-white opacity-40 hover:opacity-100 transition-all duration-300 whitespace-nowrap ${logo.color}`}
+                  className={`text-lg font-bold tracking-tighter text-white opacity-70 hover:opacity-100 transition-all duration-300 whitespace-nowrap ${logo.color}`}
                 >
                   {logo.name}
                 </span>
@@ -28,7 +28,7 @@ const ToolsSection: React.FC = () => {
               {partnerLogos.map((logo, index) => (
                 <span
                   key={`second-${logo.name}-${index}`}
-                  className={`text-lg font-bold tracking-tighter text-white opacity-40 hover:opacity-100 transition-all duration-300 whitespace-nowrap ${logo.color}`}
+                  className={`text-lg font-bold tracking-tighter text-white opacity-70 hover:opacity-100 transition-all duration-300 whitespace-nowrap ${logo.color}`}
                 >
                   {logo.name}
                 </span>

@@ -98,7 +98,7 @@ const Hero: React.FC = () => {
       </div>
 
       <div className={`
-        ${breakpoint === 'mobile' ? 'flex-1 order-2 min-h-[40vh]' : 'flex-[1] lg:order-1 lg:min-h-[60vh]'}
+        ${breakpoint === 'mobile' ? 'flex-1 order-2 min-h-[30vh]' : 'flex-[1] lg:order-1 lg:min-h-[60vh]'}
         relative overflow-visible ${breakpoint === 'mobile' ? 'pl-0' : 'pl-8'}
       `}>
         <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />

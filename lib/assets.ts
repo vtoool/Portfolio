@@ -178,104 +178,104 @@ export const ASSET_CONFIGS = {
   mobile: {
     visible: true,
     assets: [
-      // Me - main character, smaller on mobile
+      // Me - main character (largest on mobile, like desktop)
       {
         src: "/art/Me.png",
         alt: "Me - Clay Figurine",
-        width: 120,
-        height: 120,
+        width: 140,
+        height: 140,
         position: {
-          top: "25%",
-          left: "65%",
+          top: "28%",
+          left: "-15%",
           zIndex: 3
         },
-        scale: 0.5,
+        scale: 1.3,
         animation: {
-          initialX: 40,
-          initialY: -25,
+          initialX: 60,
+          initialY: -40,
           delay: 0,
           direction: 'left' as const,
-          parallaxSpeed: 0.2
+          parallaxSpeed: 0.3
         }
       },
-      // Guitar - creative symbol
+      // Guitar - creative (medium size)
       {
         src: "/art/guitar.png",
         alt: "Guitar",
-        width: 90,
-        height: 90,
+        width: 100,
+        height: 100,
         position: {
-          top: "48%",
-          left: "5%",
+          top: "38%",
+          left: "-35%",
           zIndex: 1
         },
-        scale: 0.4,
+        scale: 0.65,
         animation: {
-          initialX: -40,
-          initialY: 30,
+          initialX: -70,
+          initialY: 40,
           delay: 0.1,
+          direction: 'left' as const,
+          parallaxSpeed: 0.35
+        }
+      },
+      // Map - travel/tech (small)
+      {
+        src: "/art/map.png",
+        alt: "Map App Icon",
+        width: 85,
+        height: 85,
+        position: {
+          top: "20%",
+          left: "-25%",
+          zIndex: 2
+        },
+        scale: 0.6,
+        animation: {
+          initialX: -80,
+          initialY: -40,
+          delay: 0.15,
           direction: 'left' as const,
           parallaxSpeed: 0.25
         }
       },
-      // Map - travel/tech icon
-      {
-        src: "/art/map.png",
-        alt: "Map App Icon",
-        width: 80,
-        height: 80,
-        position: {
-          top: "55%",
-          left: "75%",
-          zIndex: 2
-        },
-        scale: 0.45,
-        animation: {
-          initialX: 30,
-          initialY: 20,
-          delay: 0.15,
-          direction: 'right' as const,
-          parallaxSpeed: 0.18
-        }
-      },
-      // Plane - travel icon
+      // Plane - travel icon (small)
       {
         src: "/art/plane.png",
         alt: "Plane",
-        width: 70,
-        height: 70,
+        width: 80,
+        height: 80,
         position: {
-          top: "15%",
-          left: "8%",
+          top: "18%",
+          left: "22%",
           zIndex: 2
         },
-        scale: 0.4,
+        scale: 0.52,
         animation: {
-          initialX: -50,
-          initialY: -30,
+          initialX: 100,
+          initialY: 60,
           delay: 0.2,
-          direction: 'left' as const,
-          parallaxSpeed: 0.15
+          direction: 'right' as const,
+          parallaxSpeed: 0.4
         }
       },
-      // Gear - engineering icon
+      // Gear - engineering (small-medium)
       {
         src: "/art/gear.png",
         alt: "Gear",
-        width: 60,
-        height: 60,
+        width: 65,
+        height: 65,
         position: {
-          top: "40%",
-          left: "45%",
+          top: "46%",
+          left: "32%",
           zIndex: 1
         },
-        scale: 0.45,
+        scale: 0.65,
         animation: {
-          initialX: 0,
-          initialY: 0,
+          initialX: 70,
+          initialY: -20,
           delay: 0.25,
-          direction: 'center' as const,
-          parallaxSpeed: 0.12
+          direction: 'right' as const,
+          parallaxSpeed: 0.2
         }
       }
     ]

@@ -46,7 +46,7 @@ const Hero: React.FC = () => {
       <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
 
       <div className={`
-        ${breakpoint === 'mobile' ? 'order-1' : 'flex-[1.5]'}
+        ${breakpoint === 'mobile' ? 'flex-1 order-1' : 'flex-[1.5]'}
         flex flex-col justify-start pt-8 md:pt-16 px-6 lg:px-12 pb-8 text-center lg:text-left
       `}>
         <ScrollReveal direction="down" duration={0.6}>
@@ -98,7 +98,7 @@ const Hero: React.FC = () => {
       </div>
 
       <div className={`
-        flex-[1] ${breakpoint === 'mobile' ? 'order-2 min-h-[70vh]' : 'lg:order-1 lg:min-h-[60vh]'}
+        ${breakpoint === 'mobile' ? 'flex-1 order-2 min-h-[70vh]' : 'flex-[1] lg:order-1 lg:min-h-[60vh]'}
         relative overflow-visible pl-8
       `}>
         <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />

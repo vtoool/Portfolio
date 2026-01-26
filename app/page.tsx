@@ -28,12 +28,12 @@ export default function Home() {
 
       <div className="relative z-10 flex flex-col items-center">
         <Navbar />
-        <main className="w-full max-w-6xl px-4 md:px-6 pt-16 pb-16 space-y-10">
+        <main className="w-full max-w-6xl px-4 md:px-6 pt-8 pb-8 space-y-6">
           <Hero />
           <ToolsSection />
 
           {/* Portfolio Section */}
-          <section id="portfolio" className="space-y-4 relative bg-zinc-950 py-16 rounded-2xl">
+          <section id="portfolio" className="space-y-4 relative bg-zinc-950 py-8 rounded-2xl">
             <ScrollReveal direction="up">
               <SectionLabel>Portfolio</SectionLabel>
               <div className="space-y-4 text-center max-w-2xl mx-auto">
@@ -49,7 +49,7 @@ export default function Home() {
           </section>
 
           {/* Services Section */}
-          <section id="services" className="space-y-6 relative bg-zinc-950 py-16 rounded-2xl">
+          <section id="services" className="space-y-6 relative bg-zinc-950 py-8 rounded-2xl">
             <ScrollReveal direction="up">
               <SectionLabel>Services</SectionLabel>
             </ScrollReveal>
@@ -57,7 +57,7 @@ export default function Home() {
           </section>
 
           {/* About Section */}
-          <section id="about" className="relative bg-zinc-950 py-16 rounded-2xl">
+          <section id="about" className="relative bg-zinc-950 py-8 rounded-2xl">
             <ScrollReveal direction="up">
               <SectionLabel>About</SectionLabel>
             </ScrollReveal>

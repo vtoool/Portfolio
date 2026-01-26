@@ -9,7 +9,7 @@ const ToolsSection: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="py-20 bg-zinc-950/50">
+    <section className="py-8 bg-zinc-950/50">
       <ScrollReveal direction="up" delay={0.3}>
         <div className="w-full max-w-4xl mx-auto px-6">
           <p className="text-xs text-zinc-500 uppercase tracking-widest mb-8 text-center">

@@ -37,7 +37,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col lg:flex-row min-h-screen pt-0 md:pt-12 relative">
+    <section className="flex flex-col lg:flex-row min-h-[80vh] md:min-h-[70vh] pt-0 md:pt-12 relative">
       <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
 
       <div className="flex-[1.5] flex flex-col justify-center px-6 lg:px-12 py-12 lg:py-20 text-center lg:text-left">
@@ -89,7 +89,7 @@ const Hero: React.FC = () => {
         <div id="cta-trigger" className="h-1 w-full" />
       </div>
 
-      <div className="flex-[1] relative min-h-[50vh] lg:min-h-screen overflow-visible pl-8">
+      <div className="flex-[1] relative min-h-[40vh] lg:min-h-[70vh] overflow-visible pl-8">
         <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
       </div>
 

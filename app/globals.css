@@ -113,15 +113,15 @@ html.dark .hero-glow {
 }
 
 .bento-card {
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(228, 228, 231, 0.6);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(228, 228, 231, 0.8);
   backdrop-filter: blur(12px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 html.dark .bento-card {
   background: rgba(24, 24, 27, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: none;
 }
 

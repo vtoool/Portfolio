@@ -120,8 +120,10 @@ const roMessages = {
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>('en');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const savedLocale = localStorage.getItem('locale') as Locale;
     if (savedLocale && ['en', 'ro'].includes(savedLocale)) {
       setLocaleState(savedLocale);

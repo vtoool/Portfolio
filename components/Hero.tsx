@@ -14,10 +14,13 @@ import { useViewport } from '@/hooks/useViewport';
 
 const Hero: React.FC = () => {
   const { t, locale } = useLanguage();
-  const { breakpoint } = useViewport();
+  const { breakpoint, mounted } = useViewport();
   const [isLayoutMode, setIsLayoutMode] = useState(false);
   const [editorMode, setEditorMode] = useState<'drag' | 'form'>('form');
   const [assetValues, setAssetValues] = useState<{ [key: string]: any }>({});
+
+  // Avoid hydration mismatch by using safe defaults
+  const safeBreakpoint = mounted ? breakpoint : 'desktop';
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -40,13 +43,13 @@ const Hero: React.FC = () => {
 
   return (
     <section className={`
-      flex ${breakpoint === 'mobile' ? 'flex-col' : 'lg:flex-row'}
-      min-h-[80vh] md:min-h-[70vh] ${breakpoint === 'mobile' ? 'pt-24' : 'pt-0'} relative
+      flex ${safeBreakpoint === 'mobile' ? 'flex-col' : 'lg:flex-row'}
+      min-h-[80vh] md:min-h-[70vh] ${safeBreakpoint === 'mobile' ? 'pt-24' : 'pt-0'} relative
     `}>
       <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
 
       <div className={`
-        ${breakpoint === 'mobile' ? 'flex-1 order-1' : 'flex-[1.5]'}
+        ${safeBreakpoint === 'mobile' ? 'flex-1 order-1' : 'flex-[1.5]'}
         flex flex-col justify-start pt-8 md:pt-16 px-6 lg:px-12 pb-8 text-center lg:text-left
       `}>
         <ScrollReveal direction="down" duration={0.6}>

@@ -3,22 +3,50 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Copy, Check } from "lucide-react";
-import { ART_ASSETS } from "@/lib/assets";
+import { ART_ASSETS, AssetConfig, exportGridLayoutConfig } from "@/lib/assets";
 
-interface AssetValue {
-  top: string;
-  left: string;
+interface GridAssetValue {
+  rowStart: number;
+  rowEnd: number;
+  colStart: number;
+  colEnd: number;
   scale: number;
   zIndex: number;
+  parallaxX: number;
+  parallaxY: number;
+  breathingX: number;
+  breathingY: number;
+  breathingScale: number;
 }
 
 interface PositionFormProps {
-  onValuesChange?: (values: { [key: string]: AssetValue }) => void;
+  onValuesChange?: (values: { [key: string]: GridAssetValue }) => void;
 }
 
 export function PositionForm({ onValuesChange }: PositionFormProps) {
-  const [assetValues, setAssetValues] = useState<{ [key: string]: AssetValue }>({});
+  const [assetValues, setAssetValues] = useState<{ [key: string]: GridAssetValue }>({});
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const initial: { [key: string]: GridAssetValue } = {};
+    ART_ASSETS.forEach((asset) => {
+      const key = `${asset.src}-${asset.alt}`;
+      initial[key] = {
+        rowStart: asset.position.rowStart,
+        rowEnd: asset.position.rowEnd,
+        colStart: asset.position.colStart,
+        colEnd: asset.position.colEnd,
+        scale: asset.scale,
+        zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
+        parallaxX: asset.animation.parallaxSpeedX,
+        parallaxY: asset.animation.parallaxSpeedY,
+        breathingX: asset.animation.breathingAmplitude.x,
+        breathingY: asset.animation.breathingAmplitude.y,
+        breathingScale: asset.animation.breathingAmplitude.scale
+      };
+    });
+    setAssetValues(initial);
+  }, []);
 
   useEffect(() => {
     if (onValuesChange) {
@@ -26,17 +54,23 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
     }
   }, [assetValues, onValuesChange]);
 
-  const updateValue = (asset: any, field: keyof AssetValue, value: string | number) => {
-    // Create unique key using src and alt to handle duplicate src values
+  const updateValue = (asset: AssetConfig, field: keyof GridAssetValue, value: number) => {
     const assetKey = `${asset.src}-${asset.alt}`;
     setAssetValues(prev => ({
       ...prev,
       [assetKey]: {
         ...prev[assetKey] || {
-          top: asset.position.top,
-          left: asset.position.left,
+          rowStart: asset.position.rowStart,
+          rowEnd: asset.position.rowEnd,
+          colStart: asset.position.colStart,
+          colEnd: asset.position.colEnd,
           scale: asset.scale,
-          zIndex: asset.position.zIndex
+          zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
+          parallaxX: asset.animation.parallaxSpeedX,
+          parallaxY: asset.animation.parallaxSpeedY,
+          breathingX: asset.animation.breathingAmplitude.x,
+          breathingY: asset.animation.breathingAmplitude.y,
+          breathingScale: asset.animation.breathingAmplitude.scale
         },
         [field]: value
       }
@@ -54,44 +88,14 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
   };
 
   const exportAllConfiguration = () => {
-    const config = ART_ASSETS.map((asset, index) => {
-      const assetKey = `${asset.src}-${asset.alt}`;
-      const values = assetValues[assetKey] || {
-        top: asset.position.top,
-        left: asset.position.left,
-        scale: asset.scale,
-        zIndex: asset.position.zIndex
-      };
-
-      return `  {
-    src: "${asset.src}",
-    alt: "${asset.alt}",
-    width: ${asset.width},
-    height: ${asset.height},
-    position: {
-      top: "${values.top}",
-      left: "${values.left}",
-      zIndex: ${values.zIndex}
-    },
-    scale: ${values.scale},
-    animation: {
-      initialX: ${asset.animation.initialX},
-      initialY: ${asset.animation.initialY},
-      delay: ${asset.animation.delay},
-      direction: '${asset.animation.direction}',
-      parallaxSpeed: ${asset.animation.parallaxSpeed}
-    }
-  }`;
-    }).join(",\n");
-
-    const fullConfig = `export const ART_ASSETS: AssetConfig[] = [\n${config}\n];`;
+    const fullConfig = exportGridLayoutConfig(ART_ASSETS, assetValues);
     copyToClipboard(fullConfig, -1);
   };
 
   return (
     <div className="bg-zinc-900/95 border border-indigo-500/50 rounded-2xl p-4 backdrop-blur-xl shadow-2xl max-w-4xl w-full">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-bold text-white">Position Form Editor</h3>
+        <h3 className="text-lg font-bold text-white">Position Form Editor (Grid-Based)</h3>
         <button
           onClick={exportAllConfiguration}
           className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-emerald-500 text-white font-bold rounded-xl hover:from-indigo-600 hover:to-emerald-600 transition-all flex items-center gap-2"
@@ -104,10 +108,17 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
         {ART_ASSETS.map((asset, index) => {
           const assetKey = `${asset.src}-${asset.alt}`;
           const values = assetValues[assetKey] || {
-            top: asset.position.top,
-            left: asset.position.left,
+            rowStart: asset.position.rowStart,
+            rowEnd: asset.position.rowEnd,
+            colStart: asset.position.colStart,
+            colEnd: asset.position.colEnd,
             scale: asset.scale,
-            zIndex: asset.position.zIndex
+            zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
+            parallaxX: asset.animation.parallaxSpeedX,
+            parallaxY: asset.animation.parallaxSpeedY,
+            breathingX: asset.animation.breathingAmplitude.x,
+            breathingY: asset.animation.breathingAmplitude.y,
+            breathingScale: asset.animation.breathingAmplitude.scale
           };
 
           return (
@@ -123,7 +134,7 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
                 <button
                   onClick={() =>
                     copyToClipboard(
-                      `top: "${values.top}", left: "${values.left}", scale: ${values.scale}`,
+                      `row: ${values.rowStart.toFixed(1)}/${values.rowEnd.toFixed(1)}, col: ${values.colStart.toFixed(1)}/${values.colEnd.toFixed(1)}, scale: ${values.scale.toFixed(2)}`,
                       index
                     )
                   }
@@ -139,24 +150,58 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-zinc-400 mb-1">Top (%)</label>
+                  <label className="block text-xs font-medium text-zinc-400 mb-1">Row Start</label>
                   <input
-                    type="text"
-                    value={values.top}
-                    onChange={(e) => updateValue(asset, 'top', e.target.value)}
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    max="12"
+                    value={values.rowStart}
+                    onChange={(e) => updateValue(asset, 'rowStart', parseFloat(e.target.value))}
                     className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
-                    placeholder="25%"
+                    placeholder="2.5"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-zinc-400 mb-1">Left (%)</label>
+                  <label className="block text-xs font-medium text-zinc-400 mb-1">Row End</label>
                   <input
-                    type="text"
-                    value={values.left}
-                    onChange={(e) => updateValue(asset, 'left', e.target.value)}
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    max="12"
+                    value={values.rowEnd}
+                    onChange={(e) => updateValue(asset, 'rowEnd', parseFloat(e.target.value))}
                     className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
-                    placeholder="40%"
+                    placeholder="6.0"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-zinc-400 mb-1">Col Start</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    max="12"
+                    value={values.colStart}
+                    onChange={(e) => updateValue(asset, 'colStart', parseFloat(e.target.value))}
+                    className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
+                    placeholder="4.0"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-zinc-400 mb-1">Col End</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    max="12"
+                    value={values.colEnd}
+                    onChange={(e) => updateValue(asset, 'colEnd', parseFloat(e.target.value))}
+                    className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
+                    placeholder="8.0"
                   />
                 </div>
 
@@ -168,7 +213,7 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
                     value={values.scale}
                     onChange={(e) => updateValue(asset, 'scale', parseFloat(e.target.value))}
                     className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
-                    placeholder="1.0"
+                    placeholder="0.65"
                   />
                 </div>
 
@@ -179,14 +224,42 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
                     value={values.zIndex}
                     onChange={(e) => updateValue(asset, 'zIndex', parseInt(e.target.value))}
                     className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
-                    placeholder="1"
+                    placeholder="3"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-zinc-400 mb-1">Parallax X</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    max="1"
+                    value={values.parallaxX}
+                    onChange={(e) => updateValue(asset, 'parallaxX', parseFloat(e.target.value))}
+                    className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
+                    placeholder="0.30"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-zinc-400 mb-1">Parallax Y</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    max="1"
+                    value={values.parallaxY}
+                    onChange={(e) => updateValue(asset, 'parallaxY', parseFloat(e.target.value))}
+                    className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
+                    placeholder="0.25"
                   />
                 </div>
               </div>
 
               <div className="mt-3 pt-3 border-t border-zinc-700">
                 <p className="text-xs text-zinc-500 font-mono">
-                  Current: top: {values.top}, left: {values.left}, scale: {values.scale}, zIndex: {values.zIndex}
+                  Grid: {values.rowStart.toFixed(1)}/{values.rowEnd.toFixed(1)} × {values.colStart.toFixed(1)}/{values.colEnd.toFixed(1)} | Scale: {values.scale.toFixed(2)} | Z: {values.zIndex}
                 </p>
               </div>
             </motion.div>
@@ -196,7 +269,7 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
 
       <div className="mt-3 pt-3 border-t border-zinc-700">
         <p className="text-xs text-zinc-400 text-center">
-          💡 Tip: Adjust values and see changes instantly. Copy values when satisfied!
+          Grid-based positioning: rowStart/rowEnd × colStart/colEnd | Use decimal values for fine-tuning (e.g., 2.004 / 5.84)
         </p>
       </div>
     </div>

@@ -3,18 +3,27 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Copy, Check, X } from "lucide-react";
-import { ART_ASSETS, AssetConfig, exportLayoutConfig } from "@/lib/assets";
+import { ART_ASSETS, AssetConfig, exportGridLayoutConfig } from "@/lib/assets";
+
+interface GridAssetValue {
+  rowStart: number;
+  rowEnd: number;
+  colStart: number;
+  colEnd: number;
+  scale: number;
+  zIndex: number;
+  parallaxX: number;
+  parallaxY: number;
+  breathingX: number;
+  breathingY: number;
+  breathingScale: number;
+}
 
 interface LayoutModePanelProps {
   isVisible: boolean;
   onClose: () => void;
   assetValues: {
-    [key: string]: {
-      top: string;
-      left: string;
-      scale: number;
-      zIndex: number;
-    };
+    [key: string]: GridAssetValue;
   };
 }
 
@@ -32,7 +41,7 @@ export function LayoutModePanel({ isVisible, onClose, assetValues }: LayoutModeP
   };
 
   const exportAllConfiguration = () => {
-    const fullConfig = exportLayoutConfig(ART_ASSETS, assetValues);
+    const fullConfig = exportGridLayoutConfig(ART_ASSETS, assetValues);
     copyToClipboard(fullConfig, -1);
   };
 
@@ -61,17 +70,25 @@ export function LayoutModePanel({ isVisible, onClose, assetValues }: LayoutModeP
             Drag assets to move • Resize via corner handles
           </p>
           <p className="text-xs text-zinc-500">
-            Values update in real-time
+            Values update in real-time • Use grid coordinates
           </p>
         </div>
 
         <div className="space-y-3 mb-4 max-h-96 overflow-y-auto">
           {ART_ASSETS.map((asset, index) => {
-            const values = assetValues[asset.src] || {
-              top: asset.position.top,
-              left: asset.position.left,
+            const assetKey = `${asset.src}-${asset.alt}`;
+            const values = assetValues[assetKey] || {
+              rowStart: asset.position.rowStart,
+              rowEnd: asset.position.rowEnd,
+              colStart: asset.position.colStart,
+              colEnd: asset.position.colEnd,
               scale: asset.scale,
-              zIndex: asset.position.zIndex
+              zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
+              parallaxX: asset.animation.parallaxSpeedX,
+              parallaxY: asset.animation.parallaxSpeedY,
+              breathingX: asset.animation.breathingAmplitude.x,
+              breathingY: asset.animation.breathingAmplitude.y,
+              breathingScale: asset.animation.breathingAmplitude.scale
             };
 
             return (
@@ -89,7 +106,7 @@ export function LayoutModePanel({ isVisible, onClose, assetValues }: LayoutModeP
                   <button
                     onClick={() =>
                       copyToClipboard(
-                        `top: "${values.top}", left: "${values.left}", scale: ${values.scale}`,
+                        `row: ${values.rowStart.toFixed(1)}/${values.rowEnd.toFixed(1)}, col: ${values.colStart.toFixed(1)}/${values.colEnd.toFixed(1)}, scale: ${values.scale.toFixed(2)}`,
                         index
                       )
                     }
@@ -104,12 +121,12 @@ export function LayoutModePanel({ isVisible, onClose, assetValues }: LayoutModeP
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div>
-                    <span className="text-zinc-500">Top:</span>
-                    <span className="text-white ml-1 font-mono">{values.top}</span>
+                    <span className="text-zinc-500">Row:</span>
+                    <span className="text-white ml-1 font-mono">{values.rowStart.toFixed(1)}-{values.rowEnd.toFixed(1)}</span>
                   </div>
                   <div>
-                    <span className="text-zinc-500">Left:</span>
-                    <span className="text-white ml-1 font-mono">{values.left}</span>
+                    <span className="text-zinc-500">Col:</span>
+                    <span className="text-white ml-1 font-mono">{values.colStart.toFixed(1)}-{values.colEnd.toFixed(1)}</span>
                   </div>
                   <div>
                     <span className="text-zinc-500">Scale:</span>

@@ -1,20 +1,29 @@
+export interface GridPosition {
+  rowStart: number;
+  rowEnd: number;
+  colStart: number;
+  colEnd: number;
+}
+
 export interface AssetConfig {
   src: string;
   alt: string;
-  width: number;
-  height: number;
-  position: {
-    top: string;
-    left: string;
-    zIndex: number;
-  };
+  position: GridPosition;
   scale: number;
+  zIndexOverride?: number;
   animation: {
-    initialX: number;
-    initialY: number;
     delay: number;
-    direction: 'up' | 'down' | 'left' | 'right' | 'center' | 'bottom';
-    parallaxSpeed: number;
+    parallaxSpeedX: number;
+    parallaxSpeedY: number;
+    breathingAmplitude: {
+      x: number;
+      y: number;
+      scale: number;
+    };
+  };
+  mobile?: {
+    position: GridPosition;
+    scale: number;
   };
 }
 
@@ -22,402 +31,268 @@ export const ART_ASSETS: AssetConfig[] = [
   {
     src: "/art/Me.webp",
     alt: "Me - Clay Figurine",
-    width: 400,
-    height: 400,
     position: {
-      top: "25%",
-      left: "-20%",
-      zIndex: 3
+      rowStart: 2.5,
+      rowEnd: 6,
+      colStart: 4,
+      colEnd: 8
     },
-    scale: 1.3,
+    scale: 0.65,
     animation: {
-      initialX: 80,
-      initialY: -50,
       delay: 0,
-      direction: 'left',
-      parallaxSpeed: 0.3
+      parallaxSpeedX: 0.3,
+      parallaxSpeedY: 0.25,
+      breathingAmplitude: {
+        x: 5,
+        y: 4,
+        scale: 0.004
+      }
     }
   },
   {
     src: "/art/Guitar.webp",
     alt: "Guitar",
-    width: 350,
-    height: 350,
     position: {
-      top: "36%",
-      left: "-43%",
-      zIndex: 1
+      rowStart: 3.5,
+      rowEnd: 6.5,
+      colStart: 1,
+      colEnd: 4
     },
-    scale: 0.65,
+    scale: 0.55,
     animation: {
-      initialX: -100,
-      initialY: 60,
       delay: 0.1,
-      direction: 'left',
-      parallaxSpeed: 0.35
+      parallaxSpeedX: 0.35,
+      parallaxSpeedY: 0.3,
+      breathingAmplitude: {
+        x: 4,
+        y: 5,
+        scale: 0.003
+      }
     }
   },
   {
     src: "/art/Map.webp",
     alt: "Map App Icon",
-    width: 280,
-    height: 280,
     position: {
-      top: "17%",
-      left: "-30%",
-      zIndex: 2
+      rowStart: 1.5,
+      rowEnd: 4.5,
+      colStart: 2.5,
+      colEnd: 5.5
     },
     scale: 0.6,
     animation: {
-      initialX: -120,
-      initialY: -50,
       delay: 0.15,
-      direction: 'left',
-      parallaxSpeed: 0.25
+      parallaxSpeedX: 0.25,
+      parallaxSpeedY: 0.2,
+      breathingAmplitude: {
+        x: 3,
+        y: 3,
+        scale: 0.005
+      }
     }
   },
   {
     src: "/art/Plane.webp",
     alt: "Plane",
-    width: 300,
-    height: 300,
     position: {
-      top: "15%",
-      left: "25%",
-      zIndex: 2
+      rowStart: 1.5,
+      rowEnd: 4,
+      colStart: 8,
+      colEnd: 11
     },
     scale: 0.52,
     animation: {
-      initialX: 150,
-      initialY: 80,
       delay: 0.05,
-      direction: 'right',
-      parallaxSpeed: 0.4
+      parallaxSpeedX: 0.4,
+      parallaxSpeedY: 0.35,
+      breathingAmplitude: {
+        x: 4,
+        y: 3,
+        scale: 0.003
+      }
     }
   },
   {
     src: "/art/Gear1.webp",
     alt: "Gear",
-    width: 220,
-    height: 220,
     position: {
-      top: "45%",
-      left: "35%",
-      zIndex: 1
+      rowStart: 4.5,
+      rowEnd: 7.5,
+      colStart: 9,
+      colEnd: 12
     },
     scale: 0.65,
     animation: {
-      initialX: 100,
-      initialY: -30,
       delay: 0.2,
-      direction: 'right',
-      parallaxSpeed: 0.2
+      parallaxSpeedX: 0.2,
+      parallaxSpeedY: 0.18,
+      breathingAmplitude: {
+        x: 3,
+        y: 2,
+        scale: 0.006
+      }
     }
   },
   {
     src: "/art/Gear2.webp",
     alt: "Small Gear",
-    width: 180,
-    height: 180,
     position: {
-      top: "42.6%",
-      left: "48%",
-      zIndex: 1
+      rowStart: 4.3,
+      rowEnd: 7,
+      colStart: 10,
+      colEnd: 12.5
     },
     scale: 0.55,
     animation: {
-      initialX: 120,
-      initialY: 40,
       delay: 0.25,
-      direction: 'right',
-      parallaxSpeed: 0.18
+      parallaxSpeedX: 0.18,
+      parallaxSpeedY: 0.22,
+      breathingAmplitude: {
+        x: 3.5,
+        y: 3,
+        scale: 0.004
+      }
     }
   }
 ];
 
-export function generateAssetConfig(asset: AssetConfig, values: { top: string; left: string; scale: number; zIndex: number }): string {
-  return `  {
-    src: "${asset.src}",
-    alt: "${asset.alt}",
-    width: ${asset.width},
-    height: ${asset.height},
+export const MOBILE_ASSETS: AssetConfig[] = [
+  {
+    src: "/art/Me.webp",
+    alt: "Me - Clay Figurine",
     position: {
-      top: "${values.top}",
-      left: "${values.left}",
-      zIndex: ${values.zIndex}
+      rowStart: 1.5,
+      rowEnd: 3.5,
+      colStart: 2.5,
+      colEnd: 4.5
     },
-    scale: ${values.scale},
+    scale: 0.4,
     animation: {
-      initialX: ${asset.animation.initialX},
-      initialY: ${asset.animation.initialY},
-      delay: ${asset.animation.delay},
-      direction: '${asset.animation.direction}',
-      parallaxSpeed: ${asset.animation.parallaxSpeed}
+      delay: 0,
+      parallaxSpeedX: 0.15,
+      parallaxSpeedY: 0.12,
+      breathingAmplitude: {
+        x: 2,
+        y: 2,
+        scale: 0.002
+      }
     }
-  }`;
-}
+  },
+  {
+    src: "/art/Map.webp",
+    alt: "Map App Icon",
+    position: {
+      rowStart: 1,
+      rowEnd: 2.5,
+      colStart: 2,
+      colEnd: 3.5
+    },
+    scale: 0.2,
+    animation: {
+      delay: 0.1,
+      parallaxSpeedX: 0.12,
+      parallaxSpeedY: 0.1,
+      breathingAmplitude: {
+        x: 1.5,
+        y: 1.5,
+        scale: 0.0015
+      }
+    }
+  },
+  {
+    src: "/art/Plane.webp",
+    alt: "Plane",
+    position: {
+      rowStart: 0.8,
+      rowEnd: 2,
+      colStart: 3.5,
+      colEnd: 4.8
+    },
+    scale: 0.22,
+    animation: {
+      delay: 0.15,
+      parallaxSpeedX: 0.18,
+      parallaxSpeedY: 0.15,
+      breathingAmplitude: {
+        x: 2,
+        y: 1.5,
+        scale: 0.0015
+      }
+    }
+  },
+  {
+    src: "/art/Guitar.webp",
+    alt: "Guitar",
+    position: {
+      rowStart: 2.5,
+      rowEnd: 4.5,
+      colStart: 1,
+      colEnd: 2.5
+    },
+    scale: 0.25,
+    animation: {
+      delay: 0.2,
+      parallaxSpeedX: 0.1,
+      parallaxSpeedY: 0.12,
+      breathingAmplitude: {
+        x: 1.5,
+        y: 2,
+        scale: 0.002
+      }
+    }
+  },
+  {
+    src: "/art/Gear1.webp",
+    alt: "Gear",
+    position: {
+      rowStart: 2,
+      rowEnd: 3.8,
+      colStart: 4,
+      colEnd: 5
+    },
+    scale: 0.22,
+    animation: {
+      delay: 0.25,
+      parallaxSpeedX: 0.08,
+      parallaxSpeedY: 0.1,
+      breathingAmplitude: {
+        x: 1.5,
+        y: 1,
+        scale: 0.002
+      }
+    }
+  },
+  {
+    src: "/art/Gear2.webp",
+    alt: "Small Gear",
+    position: {
+      rowStart: 3.5,
+      rowEnd: 5,
+      colStart: 3.5,
+      colEnd: 4.8
+    },
+    scale: 0.18,
+    animation: {
+      delay: 0.3,
+      parallaxSpeedX: 0.06,
+      parallaxSpeedY: 0.08,
+      breathingAmplitude: {
+        x: 1.5,
+        y: 1.5,
+        scale: 0.001
+      }
+    }
+  }
+];
 
-export function exportLayoutConfig(assets: AssetConfig[], assetValues: { [key: string]: { top: string; left: string; scale: number; zIndex: number } }): string {
-  const config = assets.map((asset) => {
-    // Create unique key using src and alt
-    const assetKey = `${asset.src}-${asset.alt}`;
-    const values = assetValues[assetKey] || {
-      top: asset.position.top,
-      left: asset.position.left,
-      scale: asset.scale,
-      zIndex: asset.position.zIndex
-    };
-    return generateAssetConfig(asset, values);
-  }).join(",\n");
-
-  return `export const ART_ASSETS: AssetConfig[] = [\n${config}\n];`;
-}
-
-// Responsive asset configurations for different breakpoints
 export const ASSET_CONFIGS = {
   mobile: {
     visible: true,
-    assets: [
-      // Me - centered in 180px container
-      {
-        src: "/art/Me.webp",
-        alt: "Me - Clay Figurine",
-        width: 120,
-        height: 120,
-        position: {
-          top: "85px",
-          left: "50%",
-          zIndex: 10
-        },
-        scale: 1.0,
-        animation: {
-          initialX: 0,
-          initialY: 0,
-          delay: 0,
-          direction: 'center' as const,
-          parallaxSpeed: 0.05
-        }
-      },
-      // Map - small accent near Me
-      {
-        src: "/art/Map.webp",
-        alt: "Map App Icon",
-        width: 26,
-        height: 26,
-        position: {
-          top: "50px",
-          left: "35%",
-          zIndex: 5
-        },
-        scale: 1.0,
-        animation: {
-          initialX: 0,
-          initialY: -3,
-          delay: 0.1,
-          direction: 'up' as const,
-          parallaxSpeed: 0.04
-        }
-      },
-      // Plane - small accent near Me
-      {
-        src: "/art/Plane.webp",
-        alt: "Plane",
-        width: 30,
-        height: 30,
-        position: {
-          top: "45px",
-          left: "65%",
-          zIndex: 5
-        },
-        scale: 1.0,
-        animation: {
-          initialX: 3,
-          initialY: -4,
-          delay: 0.15,
-          direction: 'right' as const,
-          parallaxSpeed: 0.06
-        }
-      },
-      // Guitar - small accent near Me
-      {
-        src: "/art/Guitar.webp",
-        alt: "Guitar",
-        width: 42,
-        height: 42,
-        position: {
-          top: "105px",
-          left: "18%",
-          zIndex: 5
-        },
-        scale: 1.0,
-        animation: {
-          initialX: -4,
-          initialY: 2,
-          delay: 0.2,
-          direction: 'left' as const,
-          parallaxSpeed: 0.08
-        }
-      },
-      // Gear - small accent near Me
-      {
-        src: "/art/Gear1.webp",
-        alt: "Gear",
-        width: 34,
-        height: 34,
-        position: {
-          top: "90px",
-          left: "75%",
-          zIndex: 5
-        },
-        scale: 1.0,
-        animation: {
-          initialX: 4,
-          initialY: 2,
-          delay: 0.25,
-          direction: 'right' as const,
-          parallaxSpeed: 0.06
-        }
-      },
-      // Small Gear - small accent near Me
-      {
-        src: "/art/Gear2.webp",
-        alt: "Small Gear",
-        width: 24,
-        height: 24,
-        position: {
-          top: "130px",
-          left: "70%",
-          zIndex: 6
-        },
-        scale: 1.0,
-        animation: {
-          initialX: 3,
-          initialY: 3,
-          delay: 0.3,
-          direction: 'right' as const,
-          parallaxSpeed: 0.04
-        }
-      }
-    ]
+    assets: MOBILE_ASSETS
   },
-   tablet: {
-     visible: true,
-     assets: [
-       {
-         src: "/art/Me.webp",
-         alt: "Me - Clay Figurine",
-         width: 320,
-         height: 320,
-         position: {
-           top: "25%",
-           left: "-5%",
-           zIndex: 3
-         },
-         scale: 1.0,
-         animation: {
-           initialX: 80,
-           initialY: -50,
-           delay: 0,
-           direction: 'left' as const,
-           parallaxSpeed: 0.3
-         }
-       },
-      {
-        src: "/art/Guitar.webp",
-        alt: "Guitar",
-        width: 280,
-        height: 280,
-        position: {
-          top: "36%",
-          left: "-20%",
-          zIndex: 1
-        },
-        scale: 0.6,
-        animation: {
-          initialX: -100,
-          initialY: 60,
-          delay: 0.1,
-          direction: 'left' as const,
-          parallaxSpeed: 0.35
-        }
-      },
-      {
-        src: "/art/Map.webp",
-        alt: "Map App Icon",
-        width: 240,
-        height: 240,
-        position: {
-          top: "17%",
-          left: "-10%",
-          zIndex: 2
-        },
-        scale: 0.55,
-        animation: {
-          initialX: -120,
-          initialY: -50,
-          delay: 0.15,
-          direction: 'left' as const,
-          parallaxSpeed: 0.25
-        }
-      },
-      {
-        src: "/art/Plane.webp",
-        alt: "Plane",
-        width: 250,
-        height: 250,
-        position: {
-          top: "15%",
-          left: "25%",
-          zIndex: 2
-        },
-        scale: 0.5,
-        animation: {
-          initialX: 150,
-          initialY: 80,
-          delay: 0.05,
-          direction: 'right' as const,
-          parallaxSpeed: 0.4
-        }
-      },
-      {
-        src: "/art/Gear1.webp",
-        alt: "Gear",
-        width: 180,
-        height: 180,
-        position: {
-          top: "45%",
-          left: "35%",
-          zIndex: 1
-        },
-        scale: 0.6,
-        animation: {
-          initialX: 100,
-          initialY: -30,
-          delay: 0.2,
-          direction: 'right' as const,
-          parallaxSpeed: 0.2
-        }
-      },
-      {
-        src: "/art/Gear2.webp",
-        alt: "Small Gear",
-        width: 150,
-        height: 150,
-        position: {
-          top: "42.6%",
-          left: "48%",
-          zIndex: 1
-        },
-        scale: 0.5,
-        animation: {
-          initialX: 120,
-          initialY: 40,
-          delay: 0.25,
-          direction: 'right' as const,
-          parallaxSpeed: 0.18
-        }
-      }
-    ]
+  tablet: {
+    visible: true,
+    assets: ART_ASSETS
   },
   desktop: {
     visible: true,
@@ -428,3 +303,73 @@ export const ASSET_CONFIGS = {
 export const getAssetsForBreakpoint = (breakpoint: 'mobile' | 'tablet' | 'desktop'): AssetConfig[] => {
   return ASSET_CONFIGS[breakpoint].assets;
 };
+
+export function generateGridAssetConfig(asset: AssetConfig, values: {
+  rowStart: number;
+  rowEnd: number;
+  colStart: number;
+  colEnd: number;
+  scale: number;
+  zIndex: number;
+  parallaxX: number;
+  parallaxY: number;
+  breathingX: number;
+  breathingY: number;
+  breathingScale: number;
+}): string {
+  return `  {
+    src: "${asset.src}",
+    alt: "${asset.alt}",
+    position: {
+      rowStart: ${values.rowStart.toFixed(2)},
+      rowEnd: ${values.rowEnd.toFixed(2)},
+      colStart: ${values.colStart.toFixed(2)},
+      colEnd: ${values.colEnd.toFixed(2)}
+    },
+    scale: ${values.scale.toFixed(2)},
+    animation: {
+      delay: ${asset.animation.delay},
+      parallaxSpeedX: ${values.parallaxX.toFixed(2)},
+      parallaxSpeedY: ${values.parallaxY.toFixed(2)},
+      breathingAmplitude: {
+        x: ${values.breathingX},
+        y: ${values.breathingY},
+        scale: ${values.breathingScale.toFixed(3)}
+      }
+    }
+  }`;
+}
+
+export function exportGridLayoutConfig(assets: AssetConfig[], assetValues: { [key: string]: {
+  rowStart: number;
+  rowEnd: number;
+  colStart: number;
+  colEnd: number;
+  scale: number;
+  zIndex: number;
+  parallaxX: number;
+  parallaxY: number;
+  breathingX: number;
+  breathingY: number;
+  breathingScale: number;
+} }): string {
+  const config = assets.map((asset) => {
+    const assetKey = `${asset.src}-${asset.alt}`;
+    const values = assetValues[assetKey] || {
+      rowStart: asset.position.rowStart,
+      rowEnd: asset.position.rowEnd,
+      colStart: asset.position.colStart,
+      colEnd: asset.position.colEnd,
+      scale: asset.scale,
+      zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
+      parallaxX: asset.animation.parallaxSpeedX,
+      parallaxY: asset.animation.parallaxSpeedY,
+      breathingX: asset.animation.breathingAmplitude.x,
+      breathingY: asset.animation.breathingAmplitude.y,
+      breathingScale: asset.animation.breathingAmplitude.scale
+    };
+    return generateGridAssetConfig(asset, values);
+  }).join(",\n");
+
+  return `export const ART_ASSETS: AssetConfig[] = [\n${config}\n];`;
+}

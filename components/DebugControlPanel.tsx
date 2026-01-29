@@ -5,45 +5,65 @@ import { Settings, ChevronUp, ChevronDown, Monitor, Smartphone, Terminal } from 
 import { getAssetsForBreakpoint, AssetConfig } from "@/lib/assets";
 import { useViewport } from "@/hooks/useViewport";
 
-interface DebugAssetValue {
-  top: number;
-  left: number;
+interface GridAssetValue {
+  rowStart: number;
+  rowEnd: number;
+  colStart: number;
+  colEnd: number;
   scale: number;
   zIndex: number;
+  parallaxX: number;
+  parallaxY: number;
+  breathingX: number;
+  breathingY: number;
+  breathingScale: number;
 }
 
 interface DebugControlPanelProps {
-  onValuesChange: (values: { [key: string]: DebugAssetValue }) => void;
+  onValuesChange: (values: { [key: string]: GridAssetValue }) => void;
 }
+
+const GRID_CONFIG = {
+  desktop: { columns: 12, rows: 12 },
+  tablet: { columns: 8, rows: 8 },
+  mobile: { columns: 5, rows: 5 }
+};
 
 const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange }) => {
   const { breakpoint } = useViewport();
   const [isExpanded, setIsExpanded] = useState(true);
-  const [viewMode, setViewMode] = useState<'mobile' | 'desktop'>('mobile');
-  const [assetValues, setAssetValues] = useState<{ [key: string]: DebugAssetValue }>({});
+  const [viewMode, setViewMode] = useState<'mobile' | 'desktop'>('desktop');
+  const [assetValues, setAssetValues] = useState<{ [key: string]: GridAssetValue }>({});
   const [selectedAsset, setSelectedAsset] = useState<string | null>(null);
 
   const assets = getAssetsForBreakpoint(viewMode === 'mobile' ? 'mobile' : 'desktop');
+  const gridConfig = GRID_CONFIG[viewMode === 'mobile' ? 'mobile' : 'desktop'];
 
   const initializeValues = useCallback(() => {
-    const initial: { [key: string]: DebugAssetValue } = {};
+    const initial: { [key: string]: GridAssetValue } = {};
     assets.forEach((asset) => {
       const key = `${asset.src}-${asset.alt}`;
-      const topValue = asset.position.top.includes('%')
-        ? parseFloat(asset.position.top.replace('%', ''))
-        : parseFloat(asset.position.top.replace('px', ''));
-      const leftValue = parseFloat(asset.position.left.replace('%', '').replace('px', ''));
+      const isMobile = viewMode === 'mobile';
+      const position = isMobile && asset.mobile ? asset.mobile.position : asset.position;
+      const scale = isMobile && asset.mobile ? asset.mobile.scale : asset.scale;
 
       initial[key] = {
-        top: isNaN(topValue) ? 0 : topValue,
-        left: isNaN(leftValue) ? 0 : leftValue,
-        scale: asset.scale,
-        zIndex: asset.position.zIndex
+        rowStart: position.rowStart,
+        rowEnd: position.rowEnd,
+        colStart: position.colStart,
+        colEnd: position.colEnd,
+        scale,
+        zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
+        parallaxX: asset.animation.parallaxSpeedX,
+        parallaxY: asset.animation.parallaxSpeedY,
+        breathingX: asset.animation.breathingAmplitude.x,
+        breathingY: asset.animation.breathingAmplitude.y,
+        breathingScale: asset.animation.breathingAmplitude.scale
       };
     });
     setAssetValues(initial);
     onValuesChange(initial);
-  }, [assets, onValuesChange]);
+  }, [assets, onValuesChange, viewMode]);
 
   useEffect(() => {
     initializeValues();
@@ -53,7 +73,7 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
     setViewMode(breakpoint === 'mobile' ? 'mobile' : 'desktop');
   }, [breakpoint]);
 
-  const updateValue = (assetKey: string, field: keyof DebugAssetValue, value: number) => {
+  const updateValue = (assetKey: string, field: keyof GridAssetValue, value: number) => {
     const newValues = {
       ...assetValues,
       [assetKey]: {
@@ -66,86 +86,40 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
   };
 
   const handleLogToConsole = () => {
-    const configOutput: { [key: string]: { top: string; left: string; scale: number; zIndex: number } } = {};
-
-    Object.entries(assetValues).forEach(([key, values]) => {
-      const asset = assets.find((a) => `${a.src}-${a.alt}` === key);
-      if (asset) {
-        const isPixelValue = asset.position.top.includes('px');
-        const topValue = isPixelValue ? `${values.top}px` : `${values.top}%`;
-        const leftValue = asset.position.left.includes('%') ? `${values.left}%` : `${values.left}px`;
-
-        configOutput[key] = {
-          top: topValue,
-          left: leftValue,
-          scale: values.scale,
-          zIndex: values.zIndex
-        };
-      }
-    });
-
-    console.log('\n========== ASSET CONFIGURATION ==========');
+    console.log('\n========== GRID ASSET CONFIGURATION ==========');
     console.log(`Mode: ${viewMode.toUpperCase()}`);
+    console.log(`Grid: ${gridConfig.columns}x${gridConfig.rows}`);
     console.log('=========================================\n');
 
-    if (viewMode === 'mobile') {
-      console.log('// Copy this to ASSET_CONFIGS.mobile.assets in lib/assets.ts');
-      console.log('');
-      assets.forEach((asset) => {
-        const key = `${asset.src}-${asset.alt}`;
-        const values = configOutput[key];
-        if (values) {
-          console.log(`  // ${asset.alt}`);
-          console.log(`  {
-    src: "${asset.src}",
-    alt: "${asset.alt}",
-    width: ${asset.width},
-    height: ${asset.height},
-    position: {
-      top: "${values.top}",
-      left: "${values.left}",
-      zIndex: ${values.zIndex}
-    },
-    scale: ${values.scale},
-    animation: {
-      initialX: ${asset.animation.initialX},
-      initialY: ${asset.animation.initialY},
-      delay: ${asset.animation.delay},
-      direction: '${asset.animation.direction}' as const,
-      parallaxSpeed: ${asset.animation.parallaxSpeed}
-    }
-  },`);
-        }
-      });
-    } else {
-      console.log('// Copy this to ART_ASSETS in lib/assets.ts (desktop)');
-      console.log('');
-      assets.forEach((asset) => {
-        const key = `${asset.src}-${asset.alt}`;
-        const values = configOutput[key];
-        if (values) {
-          console.log(`  {
-    src: "${asset.src}",
-    alt: "${asset.alt}",
-    width: ${asset.width},
-    height: ${asset.height},
-    position: {
-      top: "${values.top}",
-      left: "${values.left}",
-      zIndex: ${values.zIndex}
-    },
-    scale: ${values.scale},
-    animation: {
-      initialX: ${asset.animation.initialX},
-      initialY: ${asset.animation.initialY},
-      delay: ${asset.animation.delay},
-      direction: '${asset.animation.direction}' as const,
-      parallaxSpeed: ${asset.animation.parallaxSpeed}
-    }
-  },`);
-        }
-      });
-    }
+    console.log(`export const ${viewMode.toUpperCase()}_ASSETS: AssetConfig[] = [`);
+    assets.forEach((asset) => {
+      const key = `${asset.src}-${asset.alt}`;
+      const values = assetValues[key];
+      if (values) {
+        console.log(`  {`);
+        console.log(`    src: "${asset.src}",`);
+        console.log(`    alt: "${asset.alt}",`);
+        console.log(`    position: {`);
+        console.log(`      rowStart: ${values.rowStart.toFixed(2)},`);
+        console.log(`      rowEnd: ${values.rowEnd.toFixed(2)},`);
+        console.log(`      colStart: ${values.colStart.toFixed(2)},`);
+        console.log(`      colEnd: ${values.colEnd.toFixed(2)}`);
+        console.log(`    },`);
+        console.log(`    scale: ${values.scale.toFixed(2)},`);
+        console.log(`    animation: {`);
+        console.log(`      delay: ${asset.animation.delay},`);
+        console.log(`      parallaxSpeedX: ${values.parallaxX.toFixed(2)},`);
+        console.log(`      parallaxSpeedY: ${values.parallaxY.toFixed(2)},`);
+        console.log(`      breathingAmplitude: {`);
+        console.log(`        x: ${values.breathingX},`);
+        console.log(`        y: ${values.breathingY},`);
+        console.log(`        scale: ${values.breathingScale.toFixed(3)}`);
+        console.log(`      }`);
+        console.log(`    }`);
+        console.log(`  },`);
+      }
+    });
+    console.log(`];`);
 
     console.log('\n=========================================');
     console.log('Values logged to console. Copy the output above!');
@@ -156,6 +130,10 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
 
   const getAssetName = (key: string) => {
     return key.split('-').slice(1).join('-').replace(/\.webp$/, '');
+  };
+
+  const formatGridPosition = (values: GridAssetValue) => {
+    return `${values.rowStart.toFixed(1)}/${values.rowEnd.toFixed(1)} × ${values.colStart.toFixed(1)}/${values.colEnd.toFixed(1)}`;
   };
 
   if (!isExpanded) {
@@ -171,8 +149,7 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-[99999] w-80 max-h-[70vh] bg-zinc-900/95 backdrop-blur-md border border-zinc-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
-      {/* Header */}
+    <div className="fixed bottom-4 right-4 z-[99999] w-96 max-h-[70vh] bg-zinc-900/95 backdrop-blur-md border border-zinc-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
       <div className="flex items-center justify-between px-4 py-3 bg-zinc-800/80 border-b border-zinc-700">
         <div className="flex items-center gap-2">
           <Settings className="w-5 h-5 text-indigo-400" />
@@ -195,7 +172,6 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
         </div>
       </div>
 
-      {/* View Mode Toggle */}
       <div className="flex gap-1 p-3 border-b border-zinc-700">
         <button
           onClick={() => {
@@ -227,11 +203,22 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
         </button>
       </div>
 
-      {/* Asset List */}
       <div className="flex-1 overflow-y-auto p-3 space-y-2">
         {assets.map((asset) => {
           const key = `${asset.src}-${asset.alt}`;
-          const values = assetValues[key] || { top: 0, left: 0, scale: 1, zIndex: 1 };
+          const values = assetValues[key] || {
+            rowStart: 2,
+            rowEnd: 5,
+            colStart: 2,
+            colEnd: 5,
+            scale: 0.5,
+            zIndex: 1,
+            parallaxX: 0.2,
+            parallaxY: 0.2,
+            breathingX: 3,
+            breathingY: 3,
+            breathingScale: 0.003
+          };
           const isSelected = selectedAsset === key;
 
           return (
@@ -245,79 +232,197 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
                 }`}
               >
                 <span className="truncate">{getAssetName(key)}</span>
-                <span className="text-xs text-zinc-500">
-                  {values.top.toFixed(0)}%, {values.left.toFixed(0)}%
-                </span>
+                <span className="text-xs text-zinc-500">{formatGridPosition(values)}</span>
               </button>
 
               {isSelected && (
-                <div className="mt-2 p-3 bg-zinc-800/50 rounded-lg space-y-3">
-                  {/* Top */}
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-zinc-400">Top</span>
-                      <span className="text-indigo-400">{values.top.toFixed(1)}</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="-200"
-                      max="200"
-                      step="1"
-                      value={values.top}
-                      onChange={(e) => updateValue(key, 'top', parseFloat(e.target.value))}
-                      className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
-                    />
+                <div className="mt-2 p-3 bg-zinc-800/50 rounded-lg space-y-4">
+                  <div className="text-xs text-zinc-500 text-center pb-2 border-b border-zinc-700">
+                    Grid: {gridConfig.columns}×{gridConfig.rows}
                   </div>
 
-                  {/* Left */}
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-zinc-400">Left</span>
-                      <span className="text-indigo-400">{values.left.toFixed(1)}</span>
+                  <div className="space-y-3">
+                    <div className="text-xs font-medium text-zinc-400 uppercase tracking-wider">Position</div>
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-400">Row Start</span>
+                        <span className="text-indigo-400">{values.rowStart.toFixed(2)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max={gridConfig.rows}
+                        step="0.01"
+                        value={values.rowStart}
+                        onChange={(e) => updateValue(key, 'rowStart', parseFloat(e.target.value))}
+                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
+                      />
                     </div>
-                    <input
-                      type="range"
-                      min="-200"
-                      max="200"
-                      step="1"
-                      value={values.left}
-                      onChange={(e) => updateValue(key, 'left', parseFloat(e.target.value))}
-                      className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
-                    />
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-400">Row End</span>
+                        <span className="text-indigo-400">{values.rowEnd.toFixed(2)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max={gridConfig.rows}
+                        step="0.01"
+                        value={values.rowEnd}
+                        onChange={(e) => updateValue(key, 'rowEnd', parseFloat(e.target.value))}
+                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-400">Col Start</span>
+                        <span className="text-indigo-400">{values.colStart.toFixed(2)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max={gridConfig.columns}
+                        step="0.01"
+                        value={values.colStart}
+                        onChange={(e) => updateValue(key, 'colStart', parseFloat(e.target.value))}
+                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-400">Col End</span>
+                        <span className="text-indigo-400">{values.colEnd.toFixed(2)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max={gridConfig.columns}
+                        step="0.01"
+                        value={values.colEnd}
+                        onChange={(e) => updateValue(key, 'colEnd', parseFloat(e.target.value))}
+                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
+                      />
+                    </div>
                   </div>
 
-                  {/* Scale */}
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-zinc-400">Scale</span>
-                      <span className="text-indigo-400">{values.scale.toFixed(2)}</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="0.1"
-                      max="3"
-                      step="0.05"
-                      value={values.scale}
-                      onChange={(e) => updateValue(key, 'scale', parseFloat(e.target.value))}
-                      className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
-                    />
-                  </div>
+                  <div className="space-y-3">
+                    <div className="text-xs font-medium text-zinc-400 uppercase tracking-wider">Animation</div>
 
-                  {/* Z-Index */}
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-zinc-400">Z-Index</span>
-                      <span className="text-indigo-400">{values.zIndex}</span>
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-400">Scale</span>
+                        <span className="text-indigo-400">{values.scale.toFixed(2)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0.1"
+                        max="2"
+                        step="0.01"
+                        value={values.scale}
+                        onChange={(e) => updateValue(key, 'scale', parseFloat(e.target.value))}
+                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
+                      />
                     </div>
-                    <input
-                      type="range"
-                      min="0"
-                      max="20"
-                      step="1"
-                      value={values.zIndex}
-                      onChange={(e) => updateValue(key, 'zIndex', parseInt(e.target.value))}
-                      className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
-                    />
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-400">Z-Index</span>
+                        <span className="text-indigo-400">{values.zIndex}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="20"
+                        step="1"
+                        value={values.zIndex}
+                        onChange={(e) => updateValue(key, 'zIndex', parseInt(e.target.value))}
+                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-400">Parallax X</span>
+                        <span className="text-indigo-400">{values.parallaxX.toFixed(2)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value={values.parallaxX}
+                        onChange={(e) => updateValue(key, 'parallaxX', parseFloat(e.target.value))}
+                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-400">Parallax Y</span>
+                        <span className="text-indigo-400">{values.parallaxY.toFixed(2)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value={values.parallaxY}
+                        onChange={(e) => updateValue(key, 'parallaxY', parseFloat(e.target.value))}
+                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-400">Breathing X</span>
+                        <span className="text-indigo-400">{values.breathingX.toFixed(1)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="20"
+                        step="0.5"
+                        value={values.breathingX}
+                        onChange={(e) => updateValue(key, 'breathingX', parseFloat(e.target.value))}
+                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-400">Breathing Y</span>
+                        <span className="text-indigo-400">{values.breathingY.toFixed(1)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="20"
+                        step="0.5"
+                        value={values.breathingY}
+                        onChange={(e) => updateValue(key, 'breathingY', parseFloat(e.target.value))}
+                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-zinc-400">Breathing Scale</span>
+                        <span className="text-indigo-400">{values.breathingScale.toFixed(3)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="0.05"
+                        step="0.001"
+                        value={values.breathingScale}
+                        onChange={(e) => updateValue(key, 'breathingScale', parseFloat(e.target.value))}
+                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
+                      />
+                    </div>
                   </div>
                 </div>
               )}
@@ -326,7 +431,6 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
         })}
       </div>
 
-      {/* Footer */}
       <div className="p-3 border-t border-zinc-700 bg-zinc-800/50">
         <button
           onClick={handleLogToConsole}

@@ -60,7 +60,7 @@ const Hero: React.FC = () => {
         </ScrollReveal>
 
         {breakpoint === 'mobile' && (
-          <div className="h-[180px] shrink-0 relative flex items-center justify-center overflow-visible my-4">
+          <div className="w-[90vw] h-[90vw] shrink-0 relative flex items-center justify-center overflow-visible my-4 mx-auto">
             <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
           </div>
         )}

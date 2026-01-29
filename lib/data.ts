@@ -208,14 +208,14 @@ export const trustMetrics: TrustMetric[] = [
 ];
 
 export const partnerLogos = [
-  { name: "RingCentral", color: "text-red-400" },
-  { name: "DocuSign", color: "text-blue-400" },
-  { name: "Meta", color: "text-blue-500" },
-  { name: "Stripe", color: "text-indigo-400" },
-  { name: "Airtable", color: "text-teal-400" },
-  { name: "AWS", color: "text-orange-400" },
-  { name: "PostgreSQL", color: "text-cyan-400" },
-  { name: "OpenAI", color: "text-emerald-400" }
+  { name: "RingCentral", color: "text-red-600 dark:text-red-400" },
+  { name: "DocuSign", color: "text-blue-600 dark:text-blue-400" },
+  { name: "Meta", color: "text-blue-700 dark:text-blue-500" },
+  { name: "Stripe", color: "text-indigo-600 dark:text-indigo-400" },
+  { name: "Airtable", color: "text-teal-600 dark:text-teal-400" },
+  { name: "AWS", color: "text-orange-600 dark:text-orange-400" },
+  { name: "PostgreSQL", color: "text-cyan-700 dark:text-cyan-400" },
+  { name: "OpenAI", color: "text-emerald-600 dark:text-emerald-400" }
 ];
 
 // Icon type mapping for Services

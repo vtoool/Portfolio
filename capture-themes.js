@@ -19,8 +19,8 @@ async function captureThemeScreenshots() {
   });
   await page.reload();
   await page.waitForLoadState('networkidle');
-  await page.screenshot({ path: 'light-theme.png', fullPage: true });
-  console.log('Light theme screenshot saved to light-theme.png');
+  await page.screenshot({ path: 'light-theme-updated.png', fullPage: true });
+  console.log('Light theme screenshot saved to light-theme-updated.png');
   
   // Capture dark theme
   console.log('Capturing dark theme...');
@@ -30,8 +30,8 @@ async function captureThemeScreenshots() {
   });
   await page.reload();
   await page.waitForLoadState('networkidle');
-  await page.screenshot({ path: 'dark-theme.png', fullPage: true });
-  console.log('Dark theme screenshot saved to dark-theme.png');
+  await page.screenshot({ path: 'dark-theme-updated.png', fullPage: true });
+  console.log('Dark theme screenshot saved to dark-theme-updated.png');
   
   await browser.close();
   console.log('Done!');

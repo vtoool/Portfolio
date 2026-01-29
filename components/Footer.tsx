@@ -44,20 +44,20 @@ const Footer: React.FC = () => {
             <a
               href="https://github.com/vtoool"
               target="_blank"
-              className="text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-white transition-colors"
+              className="text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 rounded-lg"
             >
               <Github className="w-5 h-5" />
             </a>
             <a
               href="https://linkedin.com"
               target="_blank"
-              className="text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-white transition-colors"
+              className="text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 rounded-lg"
             >
               <Linkedin className="w-5 h-5" />
             </a>
             <a
               href="mailto:victor@cabin-story.com"
-              className="text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-white transition-colors"
+              className="text-zinc-500 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 rounded-lg"
             >
               <Mail className="w-5 h-5" />
             </a>

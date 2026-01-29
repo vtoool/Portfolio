@@ -13,11 +13,13 @@ export default function LanguageSwitcher() {
   return (
     <button
       onClick={switchLocale}
-      className="flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 text-xs font-medium text-zinc-300 hover:text-white transition-colors"
+      className="h-9 px-3 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 flex items-center gap-2 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
       aria-label="Switch language"
     >
-      <Globe className="w-3 h-3" />
-      <span className="uppercase">{locale}</span>
+      <Globe className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
+      <span className="text-xs font-medium text-zinc-700 dark:text-zinc-300 uppercase">
+        {locale}
+      </span>
     </button>
   );
 }

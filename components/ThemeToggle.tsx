@@ -15,10 +15,10 @@ export default function ThemeToggle() {
   if (!mounted) {
     return (
       <button
-        className="h-9 w-9 items-center justify-center rounded-lg border border-border bg-card hover:bg-accent transition-colors"
+        className="h-9 w-9 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 flex items-center justify-center"
         aria-label="Toggle theme"
       >
-        <div className="h-4 w-4" />
+        <div className="w-4 h-4" />
       </button>
     );
   }
@@ -28,25 +28,14 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="group relative h-9 w-9 items-center justify-center rounded-lg border border-border bg-card overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-md"
+      className="h-9 w-9 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 flex items-center justify-center hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
       aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
     >
-      <div className="relative h-4 w-4">
-        <Sun
-          className={`absolute inset-0 h-4 w-4 transition-all duration-300 ${
-            isDark
-              ? "rotate-90 scale-0 opacity-0 text-amber-500"
-              : "rotate-0 scale-100 opacity-100 text-amber-500"
-          }`}
-        />
-        <Moon
-          className={`absolute inset-0 h-4 w-4 transition-all duration-300 ${
-            isDark
-              ? "rotate-0 scale-100 opacity-100 text-indigo-400"
-              : "-rotate-90 scale-0 opacity-0 text-indigo-400"
-          }`}
-        />
-      </div>
+      {isDark ? (
+        <Sun className="w-4 h-4 text-amber-500" />
+      ) : (
+        <Moon className="w-4 h-4 text-zinc-700" />
+      )}
     </button>
   );
 }

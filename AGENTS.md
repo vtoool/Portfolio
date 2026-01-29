@@ -31,6 +31,36 @@ This document provides specialized instructions for AI agents working on this Ne
 - All data structures must be typed (Project, Service, Testimonial, etc.)
 - Import types from `@/types` directory (ensure they exist)
 
+### 4. Design System Guidelines
+
+#### Color System
+- **Never hardcode single-theme colors** - Use CSS variables or Tailwind's `dark:` modifier
+- **Test both themes** - Every color decision must work in light AND dark mode
+- **Contrast minimum**: 4.5:1 for text, 3:1 for UI components (WCAG AA)
+- **Avoid yellow/amber on light backgrounds** - Use dark gray (`text-zinc-700`) instead
+
+#### Theme Toggle Design Pattern
+- Use **single icon** that reflects current theme
+  - Light mode: Moon icon with `text-zinc-700` on white bg
+  - Dark mode: Sun icon with `text-amber-500` on dark bg
+- Center icons using `flex items-center justify-center` directly on button
+- Consistent sizing: `h-9 w-9` (36px square)
+- Use `rounded-lg` corners
+- Simple button without complex animations
+
+#### Language Switcher Design Pattern
+- Same color strategy as toggle buttons
+- Globe icon + language code text
+- Consistent sizing: `h-9 px-3` (36px height, appropriate width)
+- Both icon and text must adapt to theme
+- Use `text-xs font-medium` for text
+
+#### Component Contrast in Light Mode
+- Cards must not blend into white background
+- Use **subtle shadow** (`box-shadow: 0 2px 8px rgba(0,0,0,0.04)`) in light mode
+- Dark mode: Use border-based separation, no shadows
+- Test card visibility on both light and dark backgrounds
+
 ## Critical Knowledge Areas
 
 ### Animation System Architecture

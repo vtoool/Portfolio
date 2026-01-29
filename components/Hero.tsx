@@ -1,14 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowRight, Calendar, Code2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { MagneticButton } from "./MagneticButton";
 import FloatingAssets from "./FloatingAssets";
-import LayoutModePanel from "./LayoutModePanel";
-import PositionForm from "./PositionForm";
-import { partnerLogos } from "@/lib/data";
 import { useLanguage } from './LanguageContext';
 import { useViewport } from '@/hooks/useViewport';
 
@@ -16,10 +13,7 @@ const Hero: React.FC = () => {
   const { t, locale } = useLanguage();
   const { breakpoint, mounted } = useViewport();
   const [isLayoutMode, setIsLayoutMode] = useState(false);
-  const [editorMode, setEditorMode] = useState<'drag' | 'form'>('form');
-  const [assetValues, setAssetValues] = useState<{ [key: string]: any }>({});
 
-  // Avoid hydration mismatch by using safe defaults
   const safeBreakpoint = mounted ? breakpoint : 'desktop';
 
   useEffect(() => {
@@ -30,10 +24,6 @@ const Hero: React.FC = () => {
     }
   }, []);
 
-  const handleAssetValuesChange = useCallback((values: { [key: string]: any }) => {
-    setAssetValues(values);
-  }, []);
-
   const renderHeadline = () => {
     const headline = t('hero.headline');
     const highlight = t('hero.highlight');
@@ -42,7 +32,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col min-h-[95vh] md:min-h-[70vh] pt-24 md:pt-0 relative">
+    <section className="flex flex-col md:flex-row min-h-[95vh] md:min-h-[70vh] pt-24 md:pt-0 relative">
       <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
 
       <div className="flex-1 flex flex-col justify-start pt-8 md:pt-16 px-6 lg:px-12 text-center lg:text-left">
@@ -63,10 +53,9 @@ const Hero: React.FC = () => {
           </h1>
         </ScrollReveal>
 
-        {/* DEDICATED ASSETS SECTION - clear separation with fixed height */}
         {breakpoint === 'mobile' && (
-          <div className="h-[160px] shrink-0 relative flex items-center justify-center overflow-visible my-4">
-            <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
+          <div className="h-[180px] shrink-0 relative flex items-center justify-center overflow-visible my-4">
+            <FloatingAssets />
           </div>
         )}
 
@@ -101,69 +90,14 @@ const Hero: React.FC = () => {
         <div id="cta-trigger" className="h-1 w-full" />
       </div>
 
-      {/* Desktop: Side assets container */}
       {breakpoint !== 'mobile' && (
-        <div className={`
-          flex-[1] lg:order-1 lg:min-h-[60vh]
-          relative overflow-visible pl-8
-        `}>
-          <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
+        <div className="hidden md:flex flex-[1] items-center justify-end relative overflow-visible pr-8">
+          <FloatingAssets />
         </div>
       )}
 
       {isLayoutMode && (
-        <div
-          className="fixed bottom-6 left-6 z-[9999] max-w-md w-[calc(100%-3rem)]"
-          style={{
-            maxHeight: '85vh',
-            overflow: 'hidden',
-            touchAction: 'none'
-          }}
-          onWheel={(e) => e.stopPropagation()}
-          onTouchMove={(e) => e.stopPropagation()}
-        >
-          <div
-            className="h-full overflow-y-auto pr-2"
-            style={{
-              maxHeight: 'calc(85vh - 1.5rem)',
-              touchAction: 'none'
-            }}
-            onWheel={(e) => e.stopPropagation()}
-            onTouchMove={(e) => e.stopPropagation()}
-          >
-            <div className="mb-4 flex gap-2">
-            <button
-              onClick={() => setEditorMode('form')}
-              className={`px-4 py-2 rounded-xl font-bold transition-all ${
-                editorMode === 'form'
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-zinc-800/90 text-zinc-400 hover:bg-zinc-700'
-              }`}
-            >
-              {t('hero.formMode')}
-            </button>
-            <button
-              onClick={() => setEditorMode('drag')}
-              className={`px-4 py-2 rounded-xl font-bold transition-all ${
-                editorMode === 'drag'
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-zinc-800/90 text-zinc-400 hover:bg-zinc-700'
-              }`}
-            >
-              {t('hero.dragMode')}
-            </button>
-          </div>
-
-          {editorMode === 'form' ? (
-            <PositionForm onValuesChange={handleAssetValuesChange} />
-          ) : (
-            <LayoutModePanel
-              isVisible={isLayoutMode}
-              onClose={() => setIsLayoutMode(false)}
-              assetValues={assetValues}
-            />
-          )}
-          </div>
+        <div className="fixed bottom-6 left-6 z-[9999] hidden">
         </div>
       )}
     </section>

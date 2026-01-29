@@ -36,13 +36,13 @@ const getProjectClasses = (id: string) => {
       return {
         gridClass: "col-span-1 row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1",
         padding: "p-5 md:p-5 lg:p-5",
-        textSize: "text-xs md:text-xs lg:text-sm",
+        textSize: "text-sm md:text-xs lg:text-sm",
       };
     case "meta":
       return {
         gridClass: "col-span-1 row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1",
         padding: "p-5 md:p-5 lg:p-5",
-        textSize: "text-xs md:text-xs lg:text-sm",
+        textSize: "text-sm md:text-xs lg:text-sm",
       };
     case "gds":
       return {
@@ -54,7 +54,7 @@ const getProjectClasses = (id: string) => {
       return {
         gridClass: "col-span-1 row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1",
         padding: "p-5 md:p-5 lg:p-5",
-        textSize: "text-xs md:text-xs lg:text-sm",
+        textSize: "text-sm md:text-xs lg:text-sm",
       };
   }
 };

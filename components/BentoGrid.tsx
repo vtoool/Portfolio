@@ -13,7 +13,7 @@ const BentoGrid: React.FC = () => {
 
   return (
     <ScrollReveal direction="up" className="w-full">
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 auto-rows-fr gap-4 md:gap-3 grid-flow-dense px-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-fr gap-4 md:gap-3 grid-flow-dense px-1">
         {displayedProjects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}

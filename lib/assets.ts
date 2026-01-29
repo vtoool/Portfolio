@@ -178,109 +178,129 @@ export const ASSET_CONFIGS = {
   mobile: {
     visible: true,
     assets: [
-      // Me - main character (largest on mobile)
+      // Me - main character (larger, centered on mobile)
       {
         src: "/art/Me.webp",
         alt: "Me - Clay Figurine",
-        width: 140,
-        height: 140,
+        width: 200,
+        height: 200,
         position: {
-          top: "28%",
-          left: "5%",
+          top: "32%",
+          left: "50%",
           zIndex: 3
         },
         scale: 1.0,
         animation: {
-          initialX: 60,
-          initialY: -40,
+          initialX: 0,
+          initialY: 30,
           delay: 0,
+          direction: 'center' as const,
+          parallaxSpeed: 0.25
+        }
+      },
+      // Guitar - behind/left of Me (larger)
+      {
+        src: "/art/Guitar.webp",
+        alt: "Guitar",
+        width: 130,
+        height: 130,
+        position: {
+          top: "35%",
+          left: "15%",
+          zIndex: 1
+        },
+        scale: 1.0,
+        animation: {
+          initialX: -40,
+          initialY: 20,
+          delay: 0.1,
           direction: 'left' as const,
           parallaxSpeed: 0.3
         }
       },
-      // Guitar - creative (medium size)
-      {
-        src: "/art/Guitar.webp",
-        alt: "Guitar",
-        width: 100,
-        height: 100,
-        position: {
-          top: "38%",
-          left: "-5%",
-          zIndex: 1
-        },
-        scale: 1.0,
-        animation: {
-          initialX: -70,
-          initialY: 40,
-          delay: 0.1,
-          direction: 'left' as const,
-          parallaxSpeed: 0.35
-        }
-      },
-      // Map - travel/tech (small)
+      // Map - top center, above Me
       {
         src: "/art/Map.webp",
         alt: "Map App Icon",
-        width: 85,
-        height: 85,
+        width: 100,
+        height: 100,
         position: {
-          top: "20%",
-          left: "8%",
+          top: "18%",
+          left: "50%",
           zIndex: 2
         },
         scale: 1.0,
         animation: {
-          initialX: -80,
-          initialY: -40,
+          initialX: 0,
+          initialY: -30,
           delay: 0.15,
-          direction: 'left' as const,
-          parallaxSpeed: 0.25
+          direction: 'up' as const,
+          parallaxSpeed: 0.2
         }
       },
-      // Plane - travel icon (small)
+      // Plane - top right
       {
         src: "/art/Plane.webp",
         alt: "Plane",
-        width: 80,
-        height: 80,
+        width: 90,
+        height: 90,
         position: {
-          top: "18%",
-          left: "62%",
+          top: "22%",
+          left: "75%",
           zIndex: 2
         },
         scale: 1.0,
         animation: {
-          initialX: 100,
-          initialY: 60,
+          initialX: 50,
+          initialY: -25,
           delay: 0.2,
           direction: 'right' as const,
-          parallaxSpeed: 0.4
+          parallaxSpeed: 0.35
         }
       },
-      // Gear - engineering (small-medium)
+      // Gear1 - bottom right of Me
       {
         src: "/art/Gear1.webp",
         alt: "Gear",
-        width: 65,
-        height: 65,
+        width: 80,
+        height: 80,
         position: {
-          top: "46%",
-          left: "72%",
+          top: "45%",
+          left: "78%",
           zIndex: 1
         },
         scale: 1.0,
         animation: {
-          initialX: 70,
-          initialY: -20,
+          initialX: 40,
+          initialY: 15,
           delay: 0.25,
           direction: 'right' as const,
-          parallaxSpeed: 0.2
+          parallaxSpeed: 0.18
         }
-      }
-    ]
-  },
-  tablet: {
+      },
+      // Gear2 - bottom left, smaller
+      {
+        src: "/art/Gear2.webp",
+        alt: "Small Gear",
+        width: 60,
+        height: 60,
+        position: {
+          top: "48%",
+          left: "8%",
+          zIndex: 1
+        },
+        scale: 1.0,
+        animation: {
+          initialX: -30,
+          initialY: 25,
+          delay: 0.3,
+          direction: 'left' as const,
+          parallaxSpeed: 0.15
+        }
+       }
+     ]
+   },
+   tablet: {
     visible: true,
     assets: [
       {

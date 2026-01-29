@@ -13,6 +13,36 @@ This document provides specialized instructions for AI agents working on this Ne
 
 ## Core Operating Principles
 
+### Version Control Strategy (CRITICAL)
+
+**Before ANY work session:**
+1. Always run `git pull origin main` to get latest changes
+2. Run `git log --oneline -5` to understand recent commit history
+3. Create a new branch for non-trivial changes: `git checkout -b feature/my-change`
+
+**After completing work:**
+1. Commit changes with descriptive message: `git commit -m "fix: description of what was fixed"`
+2. Push to GitHub: `git push origin main` (or branch for work-in-progress)
+3. Deploy to Vercel: `npx vercel --prod --yes`
+
+**Commit Message Convention:**
+- Use prefix: `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`
+- Keep subject line under 50 characters
+- Be specific about what changed
+
+**Example:**
+```
+fix: restore desktop and mobile art layouts with debug panel removed
+
+- Desktop: Me at 49%, Plane at 227%, Gears at 244%, 295%
+- Mobile: Clustered assets with Me at top
+- Removed debug control panel completely
+```
+
+**Never leave uncommitted changes overnight** - always commit and push before ending a session.
+
+---
+
 ### 1. Visual Quality = Code Quality Balance
 - Every UI change must be visually analyzed before completion
 - Performance optimization is as important as visual polish
@@ -272,11 +302,10 @@ if (isMobile) {
 - **Headers**: Vercel.json configured with security headers
 
 ### Deployment Protocol
-1. **Test Changes**: Verify on localhost for basic functionality
-2. **Commit & Push**: `git add . && git commit -m "descriptive message" && git push`
-3. **Deploy Production**: `vercel --prod`
-4. **Verify Live**: Test on Vercel URL for accurate behavior
-5. **Visual Analysis**: Run visual feedback loop for UI changes
+1. **Commit & Push**: `git add . && git commit -m "message" && git push origin main`
+2. **Deploy Production**: `npx vercel --prod --yes`
+3. **Verify Live**: Test on Vercel URL for accurate behavior
+4. **Visual Analysis**: Run visual feedback loop for UI changes
 
 ### Build Verification
 ```bash

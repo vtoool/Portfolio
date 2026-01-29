@@ -269,19 +269,13 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
               width: asset.width,
               height: asset.height,
               zIndex: isLayoutMode && isDragging ? 9999 : currentValues.zIndex,
-              transform: 'translate(-50%, -50%)',
-              x: isMobile ? 0 : asset.animation.initialX,
-              y: isMobile ? 20 : asset.animation.initialY
+              transform: 'translate(-50%, -50%)'
             }}
             initial={{
-              x: isMobile ? 0 : asset.animation.initialX,
-              y: isMobile ? 20 : asset.animation.initialY,
               opacity: 0,
               filter: "blur(4px)"
             }}
             animate={{
-              x: 0,
-              y: 0,
               scale: isLayoutMode ? currentValues.scale : breathingAnimation.scale[1] * asset.scale,
               opacity: 1,
               filter: "blur(0px)"
@@ -308,6 +302,8 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
               height={asset.height}
               className="pointer-events-none select-none"
               style={{
+                width: 'auto',
+                height: 'auto',
                 filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.08)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.04))',
               }}
               priority={asset.animation.delay === 0}

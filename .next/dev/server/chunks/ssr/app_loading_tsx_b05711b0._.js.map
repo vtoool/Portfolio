@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/bujor/Desktop/Portfolio/app/loading.tsx"],"sourcesContent":["export default function Loading() {\n  return (\n    <div className=\"min-h-screen bg-zinc-950 flex items-center justify-center\">\n      <div className=\"text-center\">\n        <div className=\"relative mb-4\">\n          <div className=\"w-12 h-12 border-4 border-zinc-800 border-t-indigo-500 rounded-full animate-spin mx-auto\"></div>\n        </div>\n        <p className=\"text-zinc-400 text-sm animate-pulse\">\n          Loading...\n        </p>\n      </div>\n    </div>\n  );\n}"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACtB,qBACE,8OAAC;QAAI,WAAU;kBACb,cAAA,8OAAC;YAAI,WAAU;;8BACb,8OAAC;oBAAI,WAAU;8BACb,cAAA,8OAAC;wBAAI,WAAU;;;;;;;;;;;8BAEjB,8OAAC;oBAAE,WAAU;8BAAsC;;;;;;;;;;;;;;;;;AAM3D"}}]
-}

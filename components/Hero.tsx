@@ -42,23 +42,10 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className={`
-      flex ${safeBreakpoint === 'mobile' ? 'flex-col' : 'lg:flex-row'}
-      min-h-[80vh] md:min-h-[70vh] ${safeBreakpoint === 'mobile' ? 'pt-24' : 'pt-0'} relative
-    `}>
+    <section className="flex flex-col min-h-[95vh] md:min-h-[70vh] pt-24 md:pt-0 relative">
       <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
 
-      {/* Mobile: Overlay assets behind text content */}
-      {breakpoint === 'mobile' && (
-        <div className="absolute inset-0 overflow-visible pointer-events-none">
-          <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
-        </div>
-      )}
-
-      <div className={`
-        ${breakpoint === 'mobile' ? 'flex-1 order-1 relative z-10' : 'flex-[1.5]'}
-        flex flex-col justify-start pt-8 md:pt-16 px-6 lg:px-12 pb-8 text-center lg:text-left
-      `}>
+      <div className="flex-1 flex flex-col justify-start pt-8 md:pt-16 px-6 lg:px-12 text-center lg:text-left">
         <ScrollReveal direction="down" duration={0.6}>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100/80 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-4 backdrop-blur-md mx-auto lg:mx-0">
             <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
@@ -75,6 +62,13 @@ const Hero: React.FC = () => {
             ))}
           </h1>
         </ScrollReveal>
+
+        {/* DEDICATED ASSETS SECTION - clear separation with fixed height */}
+        {breakpoint === 'mobile' && (
+          <div className="h-[160px] shrink-0 relative flex items-center justify-center overflow-visible my-4">
+            <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
+          </div>
+        )}
 
         <ScrollReveal direction="up" delay={0.2}>
           <div className="max-w-2xl mx-auto lg:mx-0 bg-white/60 dark:bg-zinc-900/20 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 backdrop-blur-sm mt-6">

@@ -178,123 +178,123 @@ export const ASSET_CONFIGS = {
   mobile: {
     visible: true,
     assets: [
-      // Me - in headline area
+      // Me - BIG, CENTERED in 160px container
       {
         src: "/art/Me.webp",
         alt: "Me - Clay Figurine",
-        width: 100,
-        height: 100,
+        width: 120,
+        height: 120,
         position: {
-          top: "20%",
-          left: "78%",
-          zIndex: 60
+          top: "85px",
+          left: "50%",
+          zIndex: 10
         },
-        scale: 0.7,
+        scale: 1.0,
         animation: {
           initialX: 0,
           initialY: 0,
           delay: 0,
-          direction: 'right' as const,
-          parallaxSpeed: 0.04
+          direction: 'center' as const,
+          parallaxSpeed: 0.05
         }
       },
-      // Map - small accent above headline
+      // Map - small accent near upper left of Me
       {
         src: "/art/Map.webp",
         alt: "Map App Icon",
-        width: 32,
-        height: 32,
+        width: 26,
+        height: 26,
         position: {
-          top: "18%",
-          left: "25%",
-          zIndex: 55
+          top: "50px",
+          left: "35%",
+          zIndex: 5
         },
         scale: 1.0,
         animation: {
           initialX: 0,
-          initialY: -10,
+          initialY: -3,
           delay: 0.1,
           direction: 'up' as const,
-          parallaxSpeed: 0.05
+          parallaxSpeed: 0.04
         }
       },
-      // Plane - top right
+      // Plane - small accent near upper right of Me
       {
         src: "/art/Plane.webp",
         alt: "Plane",
-        width: 36,
-        height: 36,
+        width: 30,
+        height: 30,
         position: {
-          top: "22%",
-          left: "80%",
-          zIndex: 55
+          top: "45px",
+          left: "65%",
+          zIndex: 5
         },
         scale: 1.0,
         animation: {
-          initialX: 15,
-          initialY: -15,
+          initialX: 3,
+          initialY: -4,
           delay: 0.15,
           direction: 'right' as const,
-          parallaxSpeed: 0.08
-        }
-      },
-      // Guitar - below text card
-      {
-        src: "/art/Guitar.webp",
-        alt: "Guitar",
-        width: 50,
-        height: 50,
-        position: {
-          top: "55%",
-          left: "3%",
-          zIndex: 55
-        },
-        scale: 0.5,
-        animation: {
-          initialX: -5,
-          initialY: 3,
-          delay: 0.2,
-          direction: 'left' as const,
           parallaxSpeed: 0.06
         }
       },
-      // Gear1 - near CTA button
+      // Guitar - small accent near lower left of Me
       {
-        src: "/art/Gear1.webp",
-        alt: "Gear",
-        width: 32,
-        height: 32,
+        src: "/art/Guitar.webp",
+        alt: "Guitar",
+        width: 42,
+        height: 42,
         position: {
-          top: "75%",
-          left: "85%",
-          zIndex: 55
+          top: "105px",
+          left: "18%",
+          zIndex: 5
         },
         scale: 1.0,
         animation: {
-          initialX: 10,
-          initialY: 10,
+          initialX: -4,
+          initialY: 2,
+          delay: 0.2,
+          direction: 'left' as const,
+          parallaxSpeed: 0.08
+        }
+      },
+      // Gear1 - BIGGER gear on right side of Me
+      {
+        src: "/art/Gear1.webp",
+        alt: "Gear",
+        width: 34,
+        height: 34,
+        position: {
+          top: "90px",
+          left: "75%",
+          zIndex: 5
+        },
+        scale: 1.0,
+        animation: {
+          initialX: 4,
+          initialY: 2,
           delay: 0.25,
           direction: 'right' as const,
           parallaxSpeed: 0.06
         }
       },
-      // Gear2 - small accent bottom left
+      // Gear2 - SMALLER gear below Gear1
       {
         src: "/art/Gear2.webp",
         alt: "Small Gear",
         width: 24,
         height: 24,
         position: {
-          top: "78%",
-          left: "8%",
-          zIndex: 55
+          top: "130px",
+          left: "70%",
+          zIndex: 5
         },
         scale: 1.0,
         animation: {
-          initialX: -10,
-          initialY: 10,
+          initialX: 3,
+          initialY: 3,
           delay: 0.3,
-          direction: 'left' as const,
+          direction: 'right' as const,
           parallaxSpeed: 0.04
         }
       }

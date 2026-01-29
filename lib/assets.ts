@@ -166,7 +166,7 @@ export const MOBILE_ASSETS: AssetConfig[] = [
       colStart: 2,
       colEnd: 4
     },
-    scale: 1.2,
+    scale: 1.8,
     animation: {
       delay: 0,
       parallaxSpeedX: 0.15,
@@ -187,7 +187,7 @@ export const MOBILE_ASSETS: AssetConfig[] = [
       colStart: 1,
       colEnd: 2.5
     },
-    scale: 0.8,
+    scale: 1.2,
     animation: {
       delay: 0.1,
       parallaxSpeedX: 0.12,
@@ -208,7 +208,7 @@ export const MOBILE_ASSETS: AssetConfig[] = [
       colStart: 3.5,
       colEnd: 4.8
     },
-    scale: 0.9,
+    scale: 1.3,
     animation: {
       delay: 0.15,
       parallaxSpeedX: 0.18,
@@ -229,7 +229,7 @@ export const MOBILE_ASSETS: AssetConfig[] = [
       colStart: 1,
       colEnd: 2.5
     },
-    scale: 1.0,
+    scale: 1.5,
     animation: {
       delay: 0.2,
       parallaxSpeedX: 0.1,
@@ -250,7 +250,7 @@ export const MOBILE_ASSETS: AssetConfig[] = [
       colStart: 4,
       colEnd: 5
     },
-    scale: 0.8,
+    scale: 1.2,
     animation: {
       delay: 0.25,
       parallaxSpeedX: 0.08,
@@ -271,7 +271,7 @@ export const MOBILE_ASSETS: AssetConfig[] = [
       colStart: 3.5,
       colEnd: 4.8
     },
-    scale: 0.7,
+    scale: 1.0,
     animation: {
       delay: 0.3,
       parallaxSpeedX: 0.06,

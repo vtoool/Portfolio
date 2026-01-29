@@ -277,7 +277,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     width: '100%',
     height: '100%',
     position: 'relative' as const,
-    ...(isMobile && { aspectRatio: '1' })
+    ...(isMobile && { aspectRatio: '1', width: '100%', height: '100%' })
   }), [gridConfig, isMobile]);
 
   const GridOverlay = useMemo(() => {

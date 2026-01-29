@@ -178,124 +178,124 @@ export const ASSET_CONFIGS = {
   mobile: {
     visible: true,
     assets: [
-      // Me - CENTER of the 30vh asset container, large and prominent
+      // Me - CENTER of centered container, large focal point
       {
         src: "/art/Me.webp",
         alt: "Me - Clay Figurine",
-        width: 200,
-        height: 200,
+        width: 180,
+        height: 180,
         position: {
-          top: "50%",
+          top: "55%",
           left: "50%",
           zIndex: 3
         },
         scale: 1.0,
         animation: {
           initialX: 0,
-          initialY: 60,
+          initialY: 55,
           delay: 0,
           direction: 'center' as const,
-          parallaxSpeed: 0.15
+          parallaxSpeed: 0.12
         }
       },
-      // Map - top center, above Me
+      // Map - small accent above center
       {
         src: "/art/Map.webp",
         alt: "Map App Icon",
-        width: 50,
-        height: 50,
+        width: 45,
+        height: 45,
         position: {
-          top: "15%",
+          top: "20%",
           left: "50%",
           zIndex: 2
         },
         scale: 1.0,
         animation: {
           initialX: 0,
-          initialY: -45,
+          initialY: -50,
           delay: 0.1,
           direction: 'up' as const,
-          parallaxSpeed: 0.1
+          parallaxSpeed: 0.08
         }
       },
-      // Guitar - left side, behind Me
+      // Guitar - left side, framing Me
       {
         src: "/art/Guitar.webp",
         alt: "Guitar",
-        width: 120,
-        height: 120,
+        width: 110,
+        height: 110,
         position: {
-          top: "55%",
-          left: "10%",
+          top: "58%",
+          left: "15%",
           zIndex: 1
         },
         scale: 1.0,
         animation: {
-          initialX: -70,
-          initialY: 45,
+          initialX: -75,
+          initialY: 50,
           delay: 0.15,
           direction: 'left' as const,
-          parallaxSpeed: 0.2
+          parallaxSpeed: 0.18
         }
       },
       // Plane - top right
       {
         src: "/art/Plane.webp",
         alt: "Plane",
-        width: 55,
-        height: 55,
+        width: 50,
+        height: 50,
         position: {
-          top: "20%",
-          left: "85%",
+          top: "25%",
+          left: "80%",
           zIndex: 2
         },
         scale: 1.0,
         animation: {
-          initialX: 75,
-          initialY: -40,
+          initialX: 80,
+          initialY: -45,
           delay: 0.2,
           direction: 'right' as const,
-          parallaxSpeed: 0.25
+          parallaxSpeed: 0.22
         }
       },
-      // Gear1 - bottom right corner
+      // Gear1 - bottom right
       {
         src: "/art/Gear1.webp",
         alt: "Gear",
-        width: 50,
-        height: 50,
+        width: 45,
+        height: 45,
         position: {
-          top: "70%",
-          left: "88%",
+          top: "72%",
+          left: "82%",
           zIndex: 1
         },
         scale: 1.0,
         animation: {
-          initialX: 60,
-          initialY: 35,
+          initialX: 65,
+          initialY: 40,
           delay: 0.25,
           direction: 'right' as const,
-          parallaxSpeed: 0.12
+          parallaxSpeed: 0.1
         }
       },
-      // Gear2 - bottom left
+      // Gear2 - small accent bottom left
       {
         src: "/art/Gear2.webp",
         alt: "Small Gear",
-        width: 35,
-        height: 35,
+        width: 32,
+        height: 32,
         position: {
-          top: "72%",
-          left: "3%",
+          top: "75%",
+          left: "8%",
           zIndex: 1
         },
         scale: 1.0,
         animation: {
-          initialX: -50,
-          initialY: 50,
+          initialX: -55,
+          initialY: 55,
           delay: 0.3,
           direction: 'left' as const,
-          parallaxSpeed: 0.08
+          parallaxSpeed: 0.06
         }
       }
     ]

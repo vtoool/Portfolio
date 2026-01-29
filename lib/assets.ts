@@ -20,7 +20,7 @@ export interface AssetConfig {
 
 export const ART_ASSETS: AssetConfig[] = [
   {
-    src: "/art/Me.png",
+    src: "/art/Me.svg",
     alt: "Me - Clay Figurine",
     width: 400,
     height: 400,
@@ -39,7 +39,7 @@ export const ART_ASSETS: AssetConfig[] = [
     }
   },
   {
-    src: "/art/guitar.png",
+    src: "/art/guitar.svg",
     alt: "Guitar",
     width: 350,
     height: 350,
@@ -58,7 +58,7 @@ export const ART_ASSETS: AssetConfig[] = [
     }
   },
   {
-    src: "/art/map.png",
+    src: "/art/map.svg",
     alt: "Map App Icon",
     width: 280,
     height: 280,
@@ -77,7 +77,7 @@ export const ART_ASSETS: AssetConfig[] = [
     }
   },
   {
-    src: "/art/plane.png",
+    src: "/art/plane.svg",
     alt: "Plane",
     width: 300,
     height: 300,
@@ -96,7 +96,7 @@ export const ART_ASSETS: AssetConfig[] = [
     }
   },
   {
-    src: "/art/gear.png",
+    src: "/art/gear.svg",
     alt: "Gear",
     width: 220,
     height: 220,
@@ -115,7 +115,7 @@ export const ART_ASSETS: AssetConfig[] = [
     }
   },
   {
-    src: "/art/gear.png",
+    src: "/art/gear.svg",
     alt: "Small Gear",
     width: 180,
     height: 180,
@@ -180,7 +180,7 @@ export const ASSET_CONFIGS = {
     assets: [
       // Me - main character (largest on mobile)
       {
-        src: "/art/Me.png",
+        src: "/art/Me.svg",
         alt: "Me - Clay Figurine",
         width: 140,
         height: 140,
@@ -200,7 +200,7 @@ export const ASSET_CONFIGS = {
       },
       // Guitar - creative (medium size)
       {
-        src: "/art/guitar.png",
+        src: "/art/guitar.svg",
         alt: "Guitar",
         width: 100,
         height: 100,
@@ -220,7 +220,7 @@ export const ASSET_CONFIGS = {
       },
       // Map - travel/tech (small)
       {
-        src: "/art/map.png",
+        src: "/art/map.svg",
         alt: "Map App Icon",
         width: 85,
         height: 85,
@@ -240,7 +240,7 @@ export const ASSET_CONFIGS = {
       },
       // Plane - travel icon (small)
       {
-        src: "/art/plane.png",
+        src: "/art/plane.svg",
         alt: "Plane",
         width: 80,
         height: 80,
@@ -260,7 +260,7 @@ export const ASSET_CONFIGS = {
       },
       // Gear - engineering (small-medium)
       {
-        src: "/art/gear.png",
+        src: "/art/gear.svg",
         alt: "Gear",
         width: 65,
         height: 65,
@@ -284,7 +284,7 @@ export const ASSET_CONFIGS = {
     visible: true,
     assets: [
       {
-        src: "/art/Me.png",
+        src: "/art/Me.svg",
         alt: "Me - Clay Figurine",
         width: 320,
         height: 320,
@@ -303,7 +303,7 @@ export const ASSET_CONFIGS = {
         }
       },
       {
-        src: "/art/guitar.png",
+        src: "/art/guitar.svg",
         alt: "Guitar",
         width: 280,
         height: 280,
@@ -322,7 +322,7 @@ export const ASSET_CONFIGS = {
         }
       },
       {
-        src: "/art/map.png",
+        src: "/art/map.svg",
         alt: "Map App Icon",
         width: 240,
         height: 240,
@@ -341,7 +341,7 @@ export const ASSET_CONFIGS = {
         }
       },
       {
-        src: "/art/plane.png",
+        src: "/art/plane.svg",
         alt: "Plane",
         width: 250,
         height: 250,
@@ -360,7 +360,7 @@ export const ASSET_CONFIGS = {
         }
       },
       {
-        src: "/art/gear.png",
+        src: "/art/gear.svg",
         alt: "Gear",
         width: 180,
         height: 180,
@@ -379,7 +379,7 @@ export const ASSET_CONFIGS = {
         }
       },
       {
-        src: "/art/gear.png",
+        src: "/art/gear.svg",
         alt: "Small Gear",
         width: 150,
         height: 150,

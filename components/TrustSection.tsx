@@ -14,7 +14,7 @@ interface TestimonialCardProps {
 const TestimonialCard = React.memo<TestimonialCardProps>(({ testimonial, index }) => {
   return (
     <ScrollReveal key={testimonial.id} direction="up" delay={index * 0.1}>
-      <div className="bento-card p-5 relative group">
+      <div className="bento-card p-5 relative group bg-white dark:bg-zinc-950 shadow-sm dark:shadow-none shadow-zinc-200/50 dark:shadow-black/20 border border-zinc-200 dark:border-white/10 hover:shadow-lg dark:hover:shadow-xl hover:shadow-zinc-300/50 dark:hover:shadow-black/30 hover:border-zinc-300 dark:hover:border-white/20 transition-all duration-300">
         <div className="flex gap-1 mb-3">
           {Array.from({ length: testimonial.rating || 5 }).map((_, i) => (
             <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />

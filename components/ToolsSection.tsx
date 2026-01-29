@@ -16,11 +16,11 @@ const ToolsSection: React.FC = () => {
             {t('hero.toolsSection')}
           </p>
           <div className="marquee-container overflow-hidden relative">
-            <div className="marquee-content flex gap-8">
+            <div className="marquee-content flex gap-12">
               {partnerLogos.map((logo, index) => (
                 <span
                   key={`first-${logo.name}-${index}`}
-                  className={`text-lg font-bold tracking-tighter text-zinc-900 dark:text-white opacity-70 hover:opacity-100 transition-all duration-300 whitespace-nowrap ${logo.color}`}
+                  className={`text-base font-bold tracking-tight text-zinc-900 dark:text-white opacity-60 hover:opacity-100 transition-all duration-300 whitespace-nowrap ${logo.color}`}
                 >
                   {logo.name}
                 </span>
@@ -28,7 +28,7 @@ const ToolsSection: React.FC = () => {
               {partnerLogos.map((logo, index) => (
                 <span
                   key={`second-${logo.name}-${index}`}
-                  className={`text-lg font-bold tracking-tighter text-zinc-900 dark:text-white opacity-70 hover:opacity-100 transition-all duration-300 whitespace-nowrap ${logo.color}`}
+                  className={`text-base font-bold tracking-tight text-zinc-900 dark:text-white opacity-60 hover:opacity-100 transition-all duration-300 whitespace-nowrap ${logo.color}`}
                 >
                   {logo.name}
                 </span>

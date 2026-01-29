@@ -71,7 +71,7 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project }) => {
   return (
     <Link href={`/project/${project.id}`} className={cn(gridClass, "block h-full cursor-pointer pointer-events-auto")}>
       <TiltCard
-        className="bento-card relative rounded-3xl overflow-hidden group cursor-pointer w-full h-full"
+        className="bento-card relative rounded-3xl overflow-hidden group cursor-pointer w-full h-full bg-white dark:bg-zinc-950 shadow-sm dark:shadow-none shadow-zinc-200/50 dark:shadow-black/20 border border-zinc-200 dark:border-white/10 hover:shadow-xl dark:hover:shadow-2xl hover:shadow-zinc-300/50 dark:hover:shadow-black/40 hover:border-zinc-300 dark:hover:border-white/20 transition-all duration-500"
         intensity={15}
         speed={1000}
       >
@@ -82,7 +82,7 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project }) => {
               {project.tag}
             </span>
             {project.status && (
-              <span className="text-[9px] font-bold px-2 py-0.5 bg-emerald-100 dark:bg-emerald-950/30 rounded border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 uppercase">
+              <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 border border-emerald-200 dark:border-emerald-700/50 text-emerald-700 dark:text-emerald-400 uppercase tracking-wide">
                 {project.status}
               </span>
             )}
@@ -103,12 +103,12 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project }) => {
           <div className="flex-shrink-0 pt-4 border-t border-zinc-200 dark:border-white/5 mt-2">
             <div className="flex flex-wrap gap-2">
               {project.techStack.slice(0, 3).map((tech) => (
-                <span key={tech} className="text-[9px] font-medium text-zinc-500 dark:text-zinc-500 px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-900/50 group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/20 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors">
+                <span key={tech} className="text-[10px] font-semibold text-zinc-700 dark:text-zinc-300 px-2.5 py-1 rounded-lg bg-zinc-200 dark:bg-zinc-800/80 border border-zinc-300 dark:border-zinc-700 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/30 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 group-hover:border-indigo-300 dark:group-hover:border-indigo-700 transition-all duration-300">
                   {tech}
                 </span>
               ))}
               {project.techStack.length > 3 && (
-                <span className="text-[9px] font-medium text-zinc-400 dark:text-zinc-600 px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-900/50">
+                <span className="text-[10px] font-semibold text-zinc-500 dark:text-zinc-400 px-2.5 py-1 rounded-lg bg-zinc-200 dark:bg-zinc-800/80 border border-zinc-300 dark:border-zinc-700">
                   +{project.techStack.length - 3}
                 </span>
               )}

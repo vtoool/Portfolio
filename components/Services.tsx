@@ -9,9 +9,9 @@ import { TiltCard } from "./TiltCard";
 import { useLanguage } from "./LanguageContext";
 
 const iconMap: Record<string, React.ReactNode> = {
-  database: <Database className="w-5 h-5 text-indigo-400" />,
-  zap: <Zap className="w-5 h-5 text-amber-400" />,
-  rocket: <Rocket className="w-5 h-5 text-emerald-400" />,
+  database: <Database className="w-5 h-5 text-indigo-500" />,
+  zap: <Zap className="w-5 h-5 text-amber-500" />,
+  rocket: <Rocket className="w-5 h-5 text-emerald-500" />,
 };
 
 interface ServiceCardProps {
@@ -22,7 +22,7 @@ interface ServiceCardProps {
 const ServiceCard = React.memo<ServiceCardProps>(({ service, index }) => {
   return (
     <ScrollReveal key={index} direction="up" delay={index * 0.1}>
-      <TiltCard className="bento-card p-5 group h-full" intensity={4}>
+      <TiltCard className="bento-card p-5 group h-full bg-white dark:bg-zinc-950 shadow-sm dark:shadow-none shadow-zinc-200/50 dark:shadow-black/20 border border-zinc-200 dark:border-white/10 hover:shadow-lg dark:hover:shadow-xl hover:shadow-zinc-300/50 dark:hover:shadow-black/30 hover:border-zinc-300 dark:hover:border-white/20 transition-all duration-300" intensity={4}>
         <div className="flex items-center gap-3 mb-3">
           <div className="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center">
             {iconMap[service.iconType] || iconMap.database}

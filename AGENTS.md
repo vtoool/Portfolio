@@ -354,6 +354,49 @@ const messages = {
 - **Image Optimization**: Next.js Image component with proper sizing
 - **Font Optimization**: Next.js Font with proper subsets
 
+## Project Organization Standards
+
+### File & Directory Management
+- **Screenshots**: ALL screenshots must be saved to `.screenshots/` directory
+  - Never leave screenshots in the project root
+  - Use descriptive filenames: `feature-name-theme-viewport.png` (e.g., `hero-section-dark-mobile.png`)
+  - Delete temporary screenshots after visual analysis is complete
+  - Run `ls .screenshots/` before committing to verify no strays
+
+- **Test Artifacts**: Keep test-related files organized
+  - Playwright screenshots: `.screenshots/`
+  - Test reports: `.playwright-report/` (auto-generated)
+  - Coverage reports: `coverage/` (auto-generated)
+
+- **Configuration Files**: Keep in designated locations
+  - `.env*` files: NEVER commit (add to .gitignore)
+  - `.vercel/`: Auto-generated, do not manually edit
+  - `.next/`: Build output, never commit
+
+### Commit Hygiene
+- **Clean Working Directory**: Before committing, run:
+  ```bash
+  # Check for stray files in root
+  ls *.png *.jpg *.jpeg *.gif 2>/dev/null
+
+  # Verify screenshots are in correct folder
+  ls .screenshots/
+
+  # Check for untracked files
+  git status
+  ```
+
+- **Meaningful Commits**: Group related changes together
+  - Avoid mixing visual fixes with functional changes
+  - Separate screenshot commits from code commits when possible
+
+### Clean-Up Protocol
+After completing visual analysis or testing:
+1. Delete temporary screenshot files from `.screenshots/` if no longer needed
+2. Remove test scripts from project root
+3. Run `git status` to verify clean state
+4. Commit only necessary changes
+
 ## Continuous Improvement
 
 ### Review Protocols

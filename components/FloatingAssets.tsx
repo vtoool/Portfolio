@@ -58,12 +58,6 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     }
   }, []);
 
-  useEffect(() => {
-    if (onAssetValuesChange) {
-      onAssetValuesChange(assetValues);
-    }
-  }, [assetValues, onAssetValuesChange]);
-
   // Sync external assetValues with internal state
   useEffect(() => {
     if (externalAssetValues) {
@@ -272,7 +266,10 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
             style={{
               top: currentValues.top,
               left: currentValues.left,
+              width: asset.width,
+              height: asset.height,
               zIndex: isLayoutMode && isDragging ? 9999 : currentValues.zIndex,
+              transform: 'translate(-50%, -50%)',
               x: isMobile ? 0 : asset.animation.initialX,
               y: isMobile ? 20 : asset.animation.initialY
             }}
@@ -304,19 +301,17 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
               />
             )}
 
-            <div className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: '50%', top: '50%' }}>
-              <Image
-                src={asset.src}
-                alt={asset.alt}
-                width={asset.width}
-                height={asset.height}
-                className="pointer-events-none select-none"
-                style={{
-                  filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.08)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.04))',
-                }}
-                priority={asset.animation.delay === 0}
-              />
-            </div>
+            <Image
+              src={asset.src}
+              alt={asset.alt}
+              width={asset.width}
+              height={asset.height}
+              className="pointer-events-none select-none"
+              style={{
+                filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.08)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.04))',
+              }}
+              priority={asset.animation.delay === 0}
+            />
 
             {isLayoutMode && (
               <>

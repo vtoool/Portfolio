@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ArrowRight, Calendar, Code2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
@@ -30,9 +30,9 @@ const Hero: React.FC = () => {
     }
   }, []);
 
-  const handleAssetValuesChange = (values: { [key: string]: any }) => {
+  const handleAssetValuesChange = useCallback((values: { [key: string]: any }) => {
     setAssetValues(values);
-  };
+  }, []);
 
   const renderHeadline = () => {
     const headline = t('hero.headline');
@@ -48,8 +48,15 @@ const Hero: React.FC = () => {
     `}>
       <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
 
+      {/* Mobile: Overlay assets behind text content */}
+      {breakpoint === 'mobile' && (
+        <div className="absolute inset-0 overflow-visible pointer-events-none">
+          <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
+        </div>
+      )}
+
       <div className={`
-        ${safeBreakpoint === 'mobile' ? 'flex-1 order-1' : 'flex-[1.5]'}
+        ${breakpoint === 'mobile' ? 'flex-1 order-1 relative z-10' : 'flex-[1.5]'}
         flex flex-col justify-start pt-8 md:pt-16 px-6 lg:px-12 pb-8 text-center lg:text-left
       `}>
         <ScrollReveal direction="down" duration={0.6}>
@@ -100,12 +107,15 @@ const Hero: React.FC = () => {
         <div id="cta-trigger" className="h-1 w-full" />
       </div>
 
-      <div className={`
-        ${breakpoint === 'mobile' ? 'flex-1 order-2 min-h-[30vh]' : 'flex-[1] lg:order-1 lg:min-h-[60vh]'}
-        relative overflow-visible ${breakpoint === 'mobile' ? 'pl-0 flex justify-center' : 'pl-8'}
-      `}>
-        <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
-      </div>
+      {/* Desktop: Side assets container */}
+      {breakpoint !== 'mobile' && (
+        <div className={`
+          flex-[1] lg:order-1 lg:min-h-[60vh]
+          relative overflow-visible pl-8
+        `}>
+          <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
+        </div>
+      )}
 
       {isLayoutMode && (
         <div

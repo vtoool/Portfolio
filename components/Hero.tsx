@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ArrowRight, Calendar, Code2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { MagneticButton } from "./MagneticButton";
 import FloatingAssets from "./FloatingAssets";
+import DebugControlPanel from "./DebugControlPanel";
 import { useLanguage } from './LanguageContext';
 import { useViewport } from '@/hooks/useViewport';
 
@@ -13,6 +14,7 @@ const Hero: React.FC = () => {
   const { t, locale } = useLanguage();
   const { breakpoint, mounted } = useViewport();
   const [isLayoutMode, setIsLayoutMode] = useState(false);
+  const [assetValues, setAssetValues] = useState<{ [key: string]: any }>({});
 
   const safeBreakpoint = mounted ? breakpoint : 'desktop';
 
@@ -22,6 +24,10 @@ const Hero: React.FC = () => {
       const layoutMode = urlParams.get("layoutMode");
       setIsLayoutMode(layoutMode === "true");
     }
+  }, []);
+
+  const handleAssetValuesChange = useCallback((values: { [key: string]: any }) => {
+    setAssetValues(values);
   }, []);
 
   const renderHeadline = () => {
@@ -55,7 +61,7 @@ const Hero: React.FC = () => {
 
         {breakpoint === 'mobile' && (
           <div className="h-[180px] shrink-0 relative flex items-center justify-center overflow-visible my-4">
-            <FloatingAssets />
+            <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
           </div>
         )}
 
@@ -92,14 +98,11 @@ const Hero: React.FC = () => {
 
       {breakpoint !== 'mobile' && (
         <div className="hidden md:flex flex-[1] items-center justify-end relative overflow-visible pr-8">
-          <FloatingAssets />
+          <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
         </div>
       )}
 
-      {isLayoutMode && (
-        <div className="fixed bottom-6 left-6 z-[9999] hidden">
-        </div>
-      )}
+      <DebugControlPanel onValuesChange={handleAssetValuesChange} />
     </section>
   );
 };

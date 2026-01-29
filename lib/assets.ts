@@ -25,11 +25,11 @@ export const ART_ASSETS: AssetConfig[] = [
     width: 400,
     height: 400,
     position: {
-      top: "136%",
-      left: "49%",
+      top: "25%",
+      left: "-20%",
       zIndex: 3
     },
-    scale: 1.25,
+    scale: 1.3,
     animation: {
       initialX: 80,
       initialY: -50,
@@ -44,8 +44,8 @@ export const ART_ASSETS: AssetConfig[] = [
     width: 350,
     height: 350,
     position: {
-      top: "247%",
-      left: "-75%",
+      top: "36%",
+      left: "-43%",
       zIndex: 1
     },
     scale: 0.65,
@@ -63,11 +63,11 @@ export const ART_ASSETS: AssetConfig[] = [
     width: 280,
     height: 280,
     position: {
-      top: "107%",
-      left: "-10%",
+      top: "17%",
+      left: "-30%",
       zIndex: 2
     },
-    scale: 0.5,
+    scale: 0.6,
     animation: {
       initialX: -120,
       initialY: -50,
@@ -82,8 +82,8 @@ export const ART_ASSETS: AssetConfig[] = [
     width: 300,
     height: 300,
     position: {
-      top: "71%",
-      left: "227%",
+      top: "15%",
+      left: "25%",
       zIndex: 2
     },
     scale: 0.52,
@@ -101,8 +101,8 @@ export const ART_ASSETS: AssetConfig[] = [
     width: 220,
     height: 220,
     position: {
-      top: "334%",
-      left: "244%",
+      top: "45%",
+      left: "35%",
       zIndex: 1
     },
     scale: 0.65,
@@ -120,11 +120,11 @@ export const ART_ASSETS: AssetConfig[] = [
     width: 180,
     height: 180,
     position: {
-      top: "312%",
-      left: "295%",
+      top: "42.6%",
+      left: "48%",
       zIndex: 1
     },
-    scale: 0.65,
+    scale: 0.55,
     animation: {
       initialX: 120,
       initialY: 40,
@@ -178,18 +178,18 @@ export const ASSET_CONFIGS = {
   mobile: {
     visible: true,
     assets: [
-      // Me - Clay Figurine
+      // Me - centered in 180px container
       {
         src: "/art/Me.webp",
         alt: "Me - Clay Figurine",
-        width: 250,
-        height: 250,
+        width: 120,
+        height: 120,
         position: {
-          top: "-54px",
-          left: "30%",
+          top: "85px",
+          left: "50%",
           zIndex: 10
         },
-        scale: 1,
+        scale: 1.0,
         animation: {
           initialX: 0,
           initialY: 0,
@@ -198,18 +198,18 @@ export const ASSET_CONFIGS = {
           parallaxSpeed: 0.05
         }
       },
-      // Map App Icon
+      // Map - small accent near Me
       {
         src: "/art/Map.webp",
         alt: "Map App Icon",
-        width: 90,
-        height: 90,
+        width: 26,
+        height: 26,
         position: {
-          top: "-6px",
-          left: "43%",
+          top: "50px",
+          left: "35%",
           zIndex: 5
         },
-        scale: 0.9,
+        scale: 1.0,
         animation: {
           initialX: 0,
           initialY: -3,
@@ -218,18 +218,18 @@ export const ASSET_CONFIGS = {
           parallaxSpeed: 0.04
         }
       },
-      // Plane
+      // Plane - small accent near Me
       {
         src: "/art/Plane.webp",
         alt: "Plane",
-        width: 95,
-        height: 95,
+        width: 30,
+        height: 30,
         position: {
-          top: "-12px",
-          left: "192%",
+          top: "45px",
+          left: "65%",
           zIndex: 5
         },
-        scale: 1.1,
+        scale: 1.0,
         animation: {
           initialX: 3,
           initialY: -4,
@@ -238,18 +238,18 @@ export const ASSET_CONFIGS = {
           parallaxSpeed: 0.06
         }
       },
-      // Guitar
+      // Guitar - small accent near Me
       {
         src: "/art/Guitar.webp",
         alt: "Guitar",
-        width: 110,
-        height: 110,
+        width: 42,
+        height: 42,
         position: {
-          top: "59px",
-          left: "30%",
+          top: "105px",
+          left: "18%",
           zIndex: 5
         },
-        scale: 1,
+        scale: 1.0,
         animation: {
           initialX: -4,
           initialY: 2,
@@ -258,18 +258,18 @@ export const ASSET_CONFIGS = {
           parallaxSpeed: 0.08
         }
       },
-      // Gear
+      // Gear - small accent near Me
       {
         src: "/art/Gear1.webp",
         alt: "Gear",
-        width: 70,
-        height: 70,
+        width: 34,
+        height: 34,
         position: {
-          top: "118px",
-          left: "179%",
+          top: "90px",
+          left: "75%",
           zIndex: 5
         },
-        scale: 1.1,
+        scale: 1.0,
         animation: {
           initialX: 4,
           initialY: 2,
@@ -278,18 +278,18 @@ export const ASSET_CONFIGS = {
           parallaxSpeed: 0.06
         }
       },
-      // Small Gear
+      // Small Gear - small accent near Me
       {
         src: "/art/Gear2.webp",
         alt: "Small Gear",
-        width: 60,
-        height: 60,
+        width: 24,
+        height: 24,
         position: {
-          top: "101px",
-          left: "202%",
+          top: "130px",
+          left: "70%",
           zIndex: 6
         },
-        scale: 1,
+        scale: 1.0,
         animation: {
           initialX: 3,
           initialY: 3,

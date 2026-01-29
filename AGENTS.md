@@ -397,6 +397,161 @@ Before deploying ANY changes:
 4. Update error detection plan if needed
 5. Verify fix with `npm run build` before redeploying
 
+### SSR/Hydration Prevention (CRITICAL)
+
+**THESE RULES ARE NON-NEGOTIABLE** - Violation will cause production errors.
+
+#### Rule 1: Never Access Browser APIs During SSR
+Any code that touches `window`, `document`, `localStorage`, or `sessionStorage` MUST be guarded:
+
+```typescript
+// ❌ WRONG - Will crash during SSR
+useEffect(() => {
+  const theme = localStorage.getItem('theme');
+  document.documentElement.classList.add('dark');
+}, []);
+
+// ✅ CORRECT - SSR-safe pattern
+const [mounted, setMounted] = useState(false);
+
+useEffect(() => {
+  setMounted(true);
+  const theme = localStorage.getItem('theme');
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark');
+  }
+}, []);
+
+if (!mounted) {
+  return <Placeholder />;
+}
+```
+
+#### Rule 2: Always Use Library Hooks for Theme Switching
+**NEVER** manipulate `document.documentElement.classList` directly:
+
+```typescript
+// ❌ WRONG - Direct DOM manipulation
+onClick={() => {
+  const isDark = document.documentElement.classList.contains('dark');
+  if (isDark) {
+    document.documentElement.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
+  }
+}}
+
+// ✅ CORRECT - Use next-themes useTheme hook
+import { useTheme } from "next-themes";
+
+const { theme, setTheme } = useTheme();
+// ...
+onClick={() => setTheme(isDark ? "light" : "dark")}
+```
+
+#### Rule 3: Guard ALL LocalStorage Access
+Not just initial reads - guard every access:
+
+```typescript
+// ❌ WRONG - setLocale function not guarded
+const setLocale = (newLocale: Locale) => {
+  setLocaleState(newLocale);
+  localStorage.setItem('locale', newLocale); // Will crash SSR
+};
+
+// ✅ CORRECT - Guarded setLocale
+const setLocale = (newLocale: Locale) => {
+  setLocaleState(newLocale);
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('locale', newLocale);
+  }
+};
+```
+
+#### Rule 4: Provide Safe Defaults for Conditional Rendering
+Never render `undefined` values during SSR:
+
+```typescript
+// ❌ WRONG - breakpoint undefined during SSR
+<div className={`${breakpoint === 'mobile' ? 'flex-col' : 'lg:flex-row'}`}>
+
+// ✅ CORRECT - Safe default
+const { breakpoint, mounted } = useViewport();
+const safeBreakpoint = mounted ? breakpoint : 'desktop';
+<div className={`${safeBreakpoint === 'mobile' ? 'flex-col' : 'lg:flex-row'}`}>
+```
+
+#### Rule 5: Use Mounted State Guards for All Client Components
+Every client component that depends on browser APIs needs a mounted guard:
+
+```typescript
+const [mounted, setMounted] = useState(false);
+
+useEffect(() => {
+  setMounted(true);
+}, []);
+
+// Render safe placeholder until mounted
+if (!mounted) {
+  return <div className="opacity-0">{children}</div>;
+}
+
+return <>{children}</>;
+```
+
+#### Pre-Commit SSR Checklist
+Before ANY commit, verify:
+
+1. **Grep for unguarded browser API access:**
+   ```bash
+   grep -r "localStorage\." components/ --include="*.tsx" | grep -v "typeof window"
+   ```
+   Should return NO results.
+
+2. **Grep for direct DOM manipulation:**
+   ```bash
+   grep -r "document\.documentElement" components/ --include="*.tsx"
+   ```
+   Should return NO results (except in theme-provider.tsx).
+
+3. **Verify mounted guards:**
+   - Check all components using `useLanguage`, `useTheme`, or `useViewport` have mounted guards.
+
+#### Automatic SSR Validation
+Run this command before committing:
+```bash
+npm run build && echo "Build passed - SSR safe"
+```
+
+If build fails, DO NOT deploy. Fix the SSR issues first.
+
+#### Component Template
+Use this template for all new client components:
+
+```typescript
+"use client";
+
+import { useState, useEffect } from 'react';
+
+export function MyComponent() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    // Initialize browser-dependent logic here
+  }, []);
+
+  if (!mounted) {
+    return <div>{/* Safe SSR placeholder */}</div>;
+  }
+
+  return (
+    <div>
+      {/* Actual component content */}
+    </div>
+  );
+}
+```
+
 ## Project Organization Standards
 
 ### File & Directory Management

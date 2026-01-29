@@ -53,20 +53,64 @@ npx tsc --noEmit
 **Symptoms:**
 - "Hydration failed because initial UI doesn't match"
 - Content flickers on load
+- "An error occurred in the Server Components render"
 
 **Common Causes:**
 - Using random values (Math.random, Date.now) in JSX
 - Browser-specific code running during SSR
 - Conditional rendering based on browser-only state
+- Direct DOM manipulation (document.documentElement.classList)
+- localStorage access without SSR guards
 
 **Detection:**
 ```bash
 # Check console during development
 npm run dev
 # Open browser console and check for warnings
+
+# Check for unguarded localStorage access
+grep -r "localStorage\." components/ --include="*.tsx" | grep -v "typeof window"
+
+# Check for direct DOM manipulation
+grep -r "document\.documentElement" components/ --include="*.tsx" | grep -v "theme-provider"
 ```
 
-### 2.3 Import Errors
+### 2.3 Theme Toggle Errors
+
+**Symptoms:**
+- Hydration mismatch on theme toggle
+- White flash on page load
+- Theme not persisting correctly
+
+**Common Causes:**
+- Using direct DOM manipulation for theme switching
+- Not using next-themes useTheme hook
+- Missing mounted guard on theme toggle component
+
+**Detection:**
+```bash
+# Check for direct DOM manipulation in ThemeToggle
+grep -A5 -B5 "document\.documentElement" components/ThemeToggle.tsx
+
+# Should return NO results - use useTheme hook instead
+```
+
+**Prevention:**
+```typescript
+// ✅ CORRECT - Use useTheme hook
+import { useTheme } from "next-themes";
+const { theme, setTheme } = useTheme();
+// ...
+onClick={() => setTheme(isDark ? "light" : "dark")}
+
+// ❌ WRONG - Direct DOM manipulation
+onClick={() => {
+  document.documentElement.classList.add('dark');
+  localStorage.setItem('theme', 'dark');
+}}
+```
+
+### 2.4 Import Errors
 
 **Symptoms:**
 - "Module not found"
@@ -179,6 +223,40 @@ npx vercel --prod
 
 # Check deployment status
 curl -s -o /dev/null -w "%{http_code}" https://your-url
+```
+
+## 8. SSR Validation Commands (MANDATORY before commit)
+
+Run these commands to catch SSR issues before they reach production:
+
+```bash
+# Check for unguarded localStorage access (should return NO results)
+echo "=== Checking for unguarded localStorage ==="
+UNGARDED=$(grep -r "localStorage\." components/ --include="*.tsx" | grep -v "typeof window" | grep -v "components/theme-provider")
+if [ -n "$UNGARDED" ]; then
+  echo "ERROR: Found unguarded localStorage access:"
+  echo "$UNGARDED"
+  exit 1
+else
+  echo "✅ No unguarded localStorage access found"
+fi
+
+# Check for direct DOM manipulation (should return NO results)
+echo "=== Checking for direct DOM manipulation ==="
+DOM_MANIP=$(grep -r "document\.documentElement" components/ --include="*.tsx" | grep -v "theme-provider")
+if [ -n "$DOM_MANIP" ]; then
+  echo "ERROR: Found direct DOM manipulation:"
+  echo "$DOM_MANIP"
+  exit 1
+else
+  echo "✅ No direct DOM manipulation found"
+fi
+
+# Run build to verify SSR safety
+echo "=== Building to verify SSR safety ==="
+npm run build
+
+echo "✅ All SSR checks passed!"
 ```
 
 ---

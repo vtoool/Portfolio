@@ -42,7 +42,7 @@ interface DragState {
 const GRID_CONFIG = {
   desktop: { columns: 12, rows: 12 },
   tablet: { columns: 8, rows: 8 },
-  mobile: { columns: 5, rows: 5 }
+  mobile: { columns: 5, rows: 5, aspectRatio: '1/1' }
 };
 
 const STORAGE_KEY = 'grid-asset-values';
@@ -50,12 +50,14 @@ const STORAGE_KEY = 'grid-asset-values';
 const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, assetValues: externalAssetValues }) => {
   const scrollY = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const gridContainerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const [isLayoutMode, setIsLayoutMode] = useState(false);
   const [dragState, setDragState] = useState<DragState | null>(null);
   const [localAssetValues, setLocalAssetValues] = useState<{ [key: string]: GridAssetValue }>({});
   const [mounted, setMounted] = useState(false);
+  const [gridDimensions, setGridDimensions] = useState({ cellWidth: 0, cellHeight: 0 });
 
   const { breakpoint } = useViewport();
 
@@ -65,6 +67,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
 
   const assetsToRender = getAssetsForCurrentBreakpoint();
   const gridConfig = useMemo(() => GRID_CONFIG[breakpoint === 'tablet' ? 'tablet' : breakpoint], [breakpoint]);
+  const isMobile = breakpoint === 'mobile';
 
   useEffect(() => {
     setMounted(true);
@@ -84,6 +87,22 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (!gridContainerRef.current) return;
+
+    const updateGridDimensions = () => {
+      const rect = gridContainerRef.current!.getBoundingClientRect();
+      setGridDimensions({
+        cellWidth: rect.width / gridConfig.columns,
+        cellHeight: rect.height / gridConfig.rows
+      });
+    };
+
+    updateGridDimensions();
+    window.addEventListener('resize', updateGridDimensions);
+    return () => window.removeEventListener('resize', updateGridDimensions);
+  }, [gridConfig, assetsToRender, breakpoint]);
 
   const getAssetDefaults = useCallback((asset: AssetConfig, breakpoint: string): GridAssetValue => {
     const isMobile = breakpoint === 'mobile';
@@ -162,7 +181,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
   }, []);
 
   const handleMouseDown = useCallback((e: React.MouseEvent, asset: AssetConfig, action: 'move' | 'resize', direction?: string) => {
-    if (!isLayoutMode || !containerRef.current) return;
+    if (!isLayoutMode || !gridContainerRef.current) return;
     e.preventDefault();
     e.stopPropagation();
 
@@ -184,9 +203,9 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
   }, [isLayoutMode, computedAssetValues]);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!dragState || !containerRef.current) return;
+    if (!dragState || !gridContainerRef.current) return;
 
-    const containerRect = containerRef.current.getBoundingClientRect();
+    const containerRect = gridContainerRef.current.getBoundingClientRect();
     const cellWidth = containerRect.width / gridConfig.columns;
     const cellHeight = containerRect.height / gridConfig.rows;
 
@@ -257,43 +276,55 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     gridTemplateRows: `repeat(${gridConfig.rows}, 1fr)`,
     width: '100%',
     height: '100%',
-    position: 'relative' as const
-  }), [gridConfig]);
+    position: 'relative' as const,
+    ...(isMobile && { aspectRatio: '1' })
+  }), [gridConfig, isMobile]);
 
   const GridOverlay = useMemo(() => {
     if (!isLayoutMode) return null;
 
-    const rows = Array.from({ length: gridConfig.rows }, (_, i) => i + 1);
-    const cols = Array.from({ length: gridConfig.columns }, (_, i) => i + 1);
+    const cells = [];
+    for (let row = 1; row <= gridConfig.rows; row++) {
+      for (let col = 1; col <= gridConfig.columns; col++) {
+        cells.push(
+          <div
+            key={`cell-${row}-${col}`}
+            style={{
+              gridRow: `${row} / ${row + 1}`,
+              gridColumn: `${col} / ${col + 1}`,
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              backgroundColor: 'transparent'
+            }}
+          />
+        );
+      }
+    }
 
     return (
       <div
-        className="absolute inset-0 pointer-events-none z-50"
         style={{
+          position: 'absolute',
+          inset: 0,
           display: 'grid',
           gridTemplateColumns: `repeat(${gridConfig.columns}, 1fr)`,
           gridTemplateRows: `repeat(${gridConfig.rows}, 1fr)`,
           width: '100%',
-          height: '100%'
+          height: '100%',
+          pointerEvents: 'none',
+          zIndex: 100
         }}
       >
-        {rows.map(row => (
-          <React.Fragment key={`row-${row}`}>
-            {cols.map(col => (
-              <div
-                key={`cell-${row}-${col}`}
-                className="border border-white/20"
-                style={{
-                  gridRow: `${row} / ${row + 1}`,
-                  gridColumn: `${col} / ${col + 1}`
-                }}
-              />
-            ))}
-          </React.Fragment>
-        ))}
+        {cells}
       </div>
     );
   }, [isLayoutMode, gridConfig]);
+
+  const getAssetSize = (values: GridAssetValue) => {
+    const cellWidth = gridDimensions.cellWidth || 100;
+    const cellHeight = gridDimensions.cellHeight || 100;
+    const baseSize = Math.min(cellWidth, cellHeight);
+    return baseSize * values.scale;
+  };
 
   if (!mounted) {
     return <div className="w-full h-full" />;
@@ -304,10 +335,8 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
       <div ref={containerRef} style={gridStyle}>
         {assetsToRender.map((asset) => {
           const assetKey = `${asset.src}-${asset.alt}`;
-          const isMobile = breakpoint === 'mobile';
-          const position = isMobile && asset.mobile ? asset.mobile.position : asset.position;
-          const scale = isMobile && asset.mobile ? asset.mobile.scale : asset.scale;
           const values = computedAssetValues[assetKey];
+          const assetSize = getAssetSize(values);
 
           return (
             <div
@@ -316,21 +345,22 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
                 gridRow: `${values.rowStart} / ${values.rowEnd}`,
                 gridColumn: `${values.colStart} / ${values.colEnd}`,
                 zIndex: values.zIndex,
-                position: 'relative' as const
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}
             >
               <Image
                 src={asset.src}
                 alt={asset.alt}
-                width={200}
-                height={200}
+                width={assetSize}
+                height={assetSize}
                 className="pointer-events-none select-none"
                 style={{
-                  width: '100%',
-                  height: 'auto',
-                  aspectRatio: '1',
-                  objectFit: 'contain',
-                  transform: `scale(${values.scale})`
+                  width: assetSize,
+                  height: assetSize,
+                  objectFit: 'contain'
                 }}
                 priority={asset.animation.delay === 0}
               />
@@ -344,11 +374,11 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
 
   return (
     <div ref={containerRef} className="relative w-full h-full overflow-visible">
-      <div className="absolute inset-0" style={gridStyle}>
+      <div ref={gridContainerRef} style={gridStyle}>
         {assetsToRender.map((asset) => {
           const assetKey = `${asset.src}-${asset.alt}`;
-          const isMobile = breakpoint === 'mobile';
           const values = computedAssetValues[assetKey];
+          const assetSize = getAssetSize(values);
 
           const isDragging = dragState?.assetSrc === assetKey;
 
@@ -367,7 +397,10 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
                 gridRow: `${values.rowStart} / ${values.rowEnd}`,
                 gridColumn: `${values.colStart} / ${values.colEnd}`,
                 zIndex: isLayoutMode && isDragging ? 9999 : values.zIndex,
-                position: 'relative' as const,
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 transform: `translate(${parallaxOffsetX}px, ${parallaxOffsetY}px)`
               }}
               initial={{
@@ -391,21 +424,25 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
             >
               {isLayoutMode && (
                 <div
-                  className="absolute inset-0 border-2 border-indigo-500/50 rounded-xl pointer-events-none"
-                  style={{ zIndex: -1 }}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    border: '2px solid rgba(99, 102, 241, 0.5)',
+                    borderRadius: '0.75rem',
+                    zIndex: -1
+                  }}
                 />
               )}
 
               <Image
                 src={asset.src}
                 alt={asset.alt}
-                width={200}
-                height={200}
+                width={assetSize}
+                height={assetSize}
                 className="pointer-events-none select-none"
                 style={{
-                  width: '100%',
-                  height: 'auto',
-                  aspectRatio: '1',
+                  width: assetSize,
+                  height: assetSize,
                   objectFit: 'contain',
                   filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.08)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.04))'
                 }}

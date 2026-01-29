@@ -354,6 +354,49 @@ const messages = {
 - **Image Optimization**: Next.js Image component with proper sizing
 - **Font Optimization**: Next.js Font with proper subsets
 
+## Error Prevention & Detection
+
+### Pre-Deployment Checklist (MANDATORY)
+Before deploying ANY changes:
+
+1. **TypeScript Compilation**
+   ```bash
+   npm run build
+   ```
+
+2. **Run Tests**
+   ```bash
+   npm run test:run
+   ```
+
+3. **Verify Local Development**
+   ```bash
+   npm run dev
+   ```
+
+4. **Full Pre-Deploy Check**
+   ```bash
+   npm run build && npm run test:run && echo "All checks passed!"
+   ```
+
+### Critical Rules for Next.js App Router
+- **NEVER add `"use client"` to `app/page.tsx`** - Root page must remain a server component
+- Keep server/client boundaries clear
+- Pass data from server pages to client components via props
+- All client components should be in `/components/` directory
+
+### Error Detection Resources
+- **Error Detection Plan**: `.logs/error-detection-plan.md`
+- **Error Log**: `.logs/error-log.md`
+- **Deployment History**: `.logs/error-log.md`
+
+### When Errors Occur
+1. Capture error details (screenshot, console logs, build output)
+2. Document in `.logs/error-log.md`
+3. Apply fix following the error detection plan
+4. Update error detection plan if needed
+5. Verify fix with `npm run build` before redeploying
+
 ## Project Organization Standards
 
 ### File & Directory Management

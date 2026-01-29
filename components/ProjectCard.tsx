@@ -4,9 +4,9 @@ import React from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { Project } from "@/types";
-import Link from "next/link";
 import { TiltCard } from "./TiltCard";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface ProjectCardProps {
   project: Project;
@@ -15,42 +15,36 @@ interface ProjectCardProps {
 const getProjectClasses = (id: string) => {
   switch (id) {
     case "pfcrm":
-      // Flagship: Mobile full width tall, Tablet 2x1, Desktop 2x2
       return {
         gridClass: "col-span-1 row-span-2 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2",
         padding: "p-5 md:p-6 lg:p-7",
         textSize: "text-base md:text-lg lg:text-xl",
       };
     case "cabin":
-      // CabinStory: Mobile full width tall, Tablet 2x1, Desktop 2x2
       return {
         gridClass: "col-span-1 row-span-2 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2",
         padding: "p-5 md:p-6 lg:p-7",
         textSize: "text-sm md:text-base lg:text-lg",
       };
     case "chef":
-      // Chef De Chef: Mobile full width medium, Tablet 1x2, Desktop 1x2
       return {
         gridClass: "col-span-1 row-span-2 md:col-span-1 md:row-span-2 lg:col-span-1 lg:row-span-2",
         padding: "p-5 md:p-5 lg:p-6",
         textSize: "text-sm md:text-sm lg:text-base",
       };
     case "faresnap":
-      // FareSnap: Mobile half width, Tablet half width, Desktop 1x1
       return {
         gridClass: "col-span-1 row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1",
         padding: "p-5 md:p-5 lg:p-5",
         textSize: "text-xs md:text-xs lg:text-sm",
       };
     case "meta":
-      // Meta: Mobile half width, Tablet half width, Desktop 1x1
       return {
         gridClass: "col-span-1 row-span-1 md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1",
         padding: "p-5 md:p-5 lg:p-5",
         textSize: "text-xs md:text-xs lg:text-sm",
       };
     case "gds":
-      // GDS: Mobile full width tall, Tablet 2x1, Desktop 2x2
       return {
         gridClass: "col-span-1 row-span-2 md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2",
         padding: "p-5 md:p-6 lg:p-7",
@@ -67,10 +61,16 @@ const getProjectClasses = (id: string) => {
 
 const ProjectCard = React.memo<ProjectCardProps>(({ project }) => {
   const { gridClass, padding, textSize } = getProjectClasses(project.id);
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/project/${project.id}`);
+  };
 
   return (
-    <Link href={`/project/${project.id}`} className={cn(gridClass, "block h-full cursor-pointer pointer-events-auto")}>
+    <div className={cn(gridClass, "block h-full")}>
       <TiltCard
+        onClick={handleClick}
         className="bento-card relative rounded-3xl overflow-hidden group cursor-pointer w-full h-full bg-white dark:bg-zinc-950 shadow-sm dark:shadow-none shadow-zinc-200/50 dark:shadow-black/20 border border-zinc-200 dark:border-white/10 hover:shadow-xl dark:hover:shadow-2xl hover:shadow-zinc-300/50 dark:hover:shadow-black/40 hover:border-zinc-300 dark:hover:border-white/20 transition-all duration-500"
         intensity={15}
         speed={1000}
@@ -134,7 +134,7 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project }) => {
           <div className="absolute inset-0 z-0 bg-gradient-to-br from-zinc-50 dark:from-zinc-900 to-zinc-100 dark:to-zinc-950 group-hover:to-indigo-50 dark:group-hover:to-indigo-950/20 transition-colors duration-500" />
         )}
       </TiltCard>
-    </Link>
+    </div>
   );
 });
 

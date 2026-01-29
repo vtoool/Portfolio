@@ -41,12 +41,6 @@ export function TiltCard({
     setPosition({ x: 0, y: 0 });
   }, []);
 
-  const handleClick = useCallback((e: React.MouseEvent) => {
-    if (onClick) {
-      onClick();
-    }
-  }, [onClick]);
-
   const x = useSpring(position.x, { stiffness: 150, damping: 15 });
   const y = useSpring(position.y, { stiffness: 150, damping: 15 });
 
@@ -58,7 +52,7 @@ export function TiltCard({
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
+      onClick={onClick}
       style={{
         rotateX,
         rotateY,

@@ -71,6 +71,7 @@ export function ScrollRevealEnhanced({
         window.removeEventListener("scroll", handleScroll);
       };
     }
+    return undefined;
   }, [useParallax, y, x, config.parallaxSpeed, config.direction]);
 
   // Generate animation variants

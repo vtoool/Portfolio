@@ -78,11 +78,11 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project }) => {
         <div className={cn("flex flex-col h-full z-20 relative", padding)}>
           {/* Header */}
           <div className="flex items-center gap-2 flex-wrap flex-shrink-0 mb-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-950/40 border border-white/10 text-[10px] font-semibold text-zinc-300 uppercase tracking-wider backdrop-blur-md">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100/60 dark:bg-zinc-950/40 border border-zinc-200 dark:border-white/10 text-[10px] font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider backdrop-blur-md">
               {project.tag}
             </span>
             {project.status && (
-              <span className="text-[9px] font-bold px-2 py-0.5 bg-emerald-950/30 rounded border border-emerald-500/20 text-emerald-400 uppercase">
+              <span className="text-[9px] font-bold px-2 py-0.5 bg-emerald-100 dark:bg-emerald-950/30 rounded border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 uppercase">
                 {project.status}
               </span>
             )}
@@ -90,25 +90,25 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project }) => {
 
           {/* Title & Desc */}
           <div className="flex-1 min-h-0">
-            <h3 className={cn("font-bold text-white flex items-center gap-2 group-hover:text-indigo-300 transition-colors", textSize)}>
+            <h3 className={cn("font-bold text-zinc-900 dark:text-white flex items-center gap-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors", textSize)}>
               {project.title}
               <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
             </h3>
-            <p className="text-zinc-400 text-xs mt-3 leading-relaxed line-clamp-2">
+            <p className="text-zinc-500 dark:text-zinc-400 text-xs mt-3 leading-relaxed line-clamp-2">
               {project.shortDescription}
             </p>
           </div>
 
           {/* Tech Stack */}
-          <div className="flex-shrink-0 pt-4 border-t border-white/5 mt-2">
+          <div className="flex-shrink-0 pt-4 border-t border-zinc-200 dark:border-white/5 mt-2">
             <div className="flex flex-wrap gap-2">
               {project.techStack.slice(0, 3).map((tech) => (
-                <span key={tech} className="text-[9px] font-medium text-zinc-500 px-2 py-0.5 rounded bg-zinc-900/50 group-hover:bg-indigo-900/20 group-hover:text-indigo-300 transition-colors">
+                <span key={tech} className="text-[9px] font-medium text-zinc-500 dark:text-zinc-500 px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-900/50 group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/20 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors">
                   {tech}
                 </span>
               ))}
               {project.techStack.length > 3 && (
-                <span className="text-[9px] font-medium text-zinc-600 px-2 py-0.5 rounded bg-zinc-900/50">
+                <span className="text-[9px] font-medium text-zinc-400 dark:text-zinc-600 px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-900/50">
                   +{project.techStack.length - 3}
                 </span>
               )}
@@ -127,11 +127,11 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project }) => {
               priority={project.featured}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-zinc-950 via-white/60 dark:via-zinc-950/60 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
         ) : (
-          <div className="absolute inset-0 z-0 bg-gradient-to-br from-zinc-900 to-zinc-950 group-hover:to-indigo-950/20 transition-colors duration-500" />
+          <div className="absolute inset-0 z-0 bg-gradient-to-br from-zinc-50 dark:from-zinc-900 to-zinc-100 dark:to-zinc-950 group-hover:to-indigo-50 dark:group-hover:to-indigo-950/20 transition-colors duration-500" />
         )}
       </TiltCard>
     </Link>

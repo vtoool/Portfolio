@@ -1,0 +1,1 @@
+0:{"buildId":"t7Jd3nTLOYqg16opj5A8S","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false},"staleTime":300}

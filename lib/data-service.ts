@@ -33,6 +33,7 @@ const transformProject = (dbProject: any): Project => ({
 
 // Helper to transform database row to Service type
 const transformService = (dbService: any): Service => ({
+  id: dbService.id,
   title: dbService.title,
   description: dbService.description,
   iconType: dbService.icon_type,
@@ -51,6 +52,7 @@ const transformTestimonial = (dbTestimonial: any): Testimonial => ({
 
 // Helper to transform database row to TrustMetric type
 const transformTrustMetric = (dbMetric: any): TrustMetric => ({
+  id: dbMetric.id,
   label: dbMetric.label,
   value: dbMetric.value,
   description: dbMetric.description,

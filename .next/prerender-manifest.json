@@ -1,1 +1,61 @@
-{"version":4,"routes":{},"dynamicRoutes":{},"notFoundRoutes":[],"preview":{"previewModeId":"da40291c39b7659323c91be23848442c","previewModeSigningKey":"5300cf3c50efd9fb6674d20adf31491e30553a281a7678ed68c765014e4cb9a9","previewModeEncryptionKey":"15bbf364a26cfbbdab0d59c30eb60d51ee9899f4d6941239bdba03274fd2033c"}}
+{
+  "version": 4,
+  "routes": {
+    "/_global-error": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/_global-error",
+      "dataRoute": "/_global-error.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/_not-found": {
+      "initialStatus": 404,
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/_not-found",
+      "dataRoute": "/_not-found.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    }
+  },
+  "dynamicRoutes": {},
+  "notFoundRoutes": [],
+  "preview": {
+    "previewModeId": "c1d1bd30da0ed3db42e7833bab9e93b4",
+    "previewModeSigningKey": "b7b8e84355363684bc07029ce2518075d0740ce572d0889d5577d10ce0882edd",
+    "previewModeEncryptionKey": "bbcf565069d1e77ffa664d042436a94f1c626d07b33c21e82ee86423859346b1"
+  }
+}

@@ -1,82 +1,49 @@
-import { ImageProps } from "next/image";
+// Animation system type definitions
 
-/**
- * Art Asset Interface
- * Manages individual art assets with Next.js optimization
- */
+export interface AnimationConfig {
+  type?: "fade" | "slide" | "scale" | "parallax" | "rotate" | "bounce" | "flip";
+  direction?: "up" | "down" | "left" | "right" | "center";
+  duration?: number;
+  delay?: number;
+  triggerOnce?: boolean;
+  threshold?: number;
+  rootMargin?: string;
+  parallaxSpeed?: number;
+  distance?: number;
+  scale?: number;
+  opacity?: number;
+  rotate?: number;
+  stiffness?: number;
+  damping?: number;
+  intensity?: number;
+  scaleFrom?: number;
+  scaleTo?: number;
+  rotateAngle?: number;
+  easing?: string;
+  reducedMotion?: boolean;
+}
+
 export interface ArtAsset {
   id: string;
   src: string;
   alt: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   blurDataURL?: string;
-  priority?: boolean;
   placeholder?: "blur" | "empty";
   sizes?: string;
+  priority?: boolean;
   quality?: number;
-  format?: "auto" | "webp" | "png" | "jpg";
-}
-
-/**
- * Animation Configuration
- * Controls animation behavior and performance
- */
-export interface AnimationConfig {
-  type: "fade" | "slide" | "scale" | "parallax" | "rotate" | "sequence" | "bounce" | "flip";
-  direction?: "up" | "down" | "left" | "right" | "center";
-  duration?: number;
-  delay?: number;
-  easing?: string;
-  intensity?: number;
-  stagger?: number;
-  loop?: boolean;
-  yOffset?: number;
-  xOffset?: number;
-  rotateAngle?: number;
-  scaleFrom?: number;
-  scaleTo?: number;
+  initialX?: number;
+  initialY?: number;
   parallaxSpeed?: number;
-  sequence?: AnimationStep[];
-  threshold?: number;
-  rootMargin?: string;
-  triggerOnce?: boolean;
-  reducedMotion?: boolean;
+  blurAmount?: number;
+  opacity?: number;
+  scale?: number;
+  rotate?: number;
+  delay?: number;
 }
 
-/**
- * Individual animation step for sequences
- */
-export interface AnimationStep {
-  delay: number;
-  duration: number;
-  type: AnimationConfig["type"];
-  intensity?: number;
-}
-
-/**
- * Performance Monitoring
- */
-export interface PerformanceMetrics {
-  fps: number;
-  memoryUsage?: number;
-  animationFrame?: number;
-  lastFrameTime?: number;
-}
-
-/**
- * Scroll Trigger Options
- */
-export interface ScrollTriggerOptions {
-  threshold?: number;
-  rootMargin?: string;
-  triggerOnce?: boolean;
-  debug?: boolean;
-}
-
-/**
- * Enhanced ScrollReveal Props
- */
 export interface ScrollRevealEnhancedProps {
   children: React.ReactNode;
   config: AnimationConfig;
@@ -87,13 +54,51 @@ export interface ScrollRevealEnhancedProps {
   performanceMode?: boolean;
 }
 
-/**
- * Animation Context
- */
-export interface AnimationContext {
-  isAnimating: boolean;
-  isInView: boolean;
-  progress: number;
-  metrics: PerformanceMetrics;
-  reduceMotion: boolean;
+export interface FloatingAsset extends ArtAsset {
+  id: string;
+  name: string;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+export interface FloatingAssetsProps {
+  assets: FloatingAsset[];
+  className?: string;
+  debug?: boolean;
+  performanceMode?: boolean;
+}
+
+export interface ScrollRevealProps {
+  children: React.ReactNode;
+  direction?: "up" | "down" | "left" | "right";
+  delay?: number;
+  duration?: number;
+  className?: string;
+  as?: keyof JSX.IntrinsicElements;
+  triggerOnce?: boolean;
+}
+
+// Animation performance monitoring
+export interface AnimationPerformanceMetrics {
+  componentId: string;
+  animationType: string;
+  startTime: number;
+  endTime: number;
+  duration: number;
+  frameDrops: number;
+  memoryUsage?: number;
+  scrollPerformance?: {
+    totalScrolls: number;
+    averageScrollSpeed: number;
+    maxScrollSpeed: number;
+  };
+}
+
+export interface PerformanceMonitorContext {
+  metrics: AnimationPerformanceMetrics[];
+  isMonitoring: boolean;
+  startMonitoring: () => void;
+  stopMonitoring: () => void;
+  clearMetrics: () => void;
+  getMetrics: (componentId?: string) => AnimationPerformanceMetrics[];
 }

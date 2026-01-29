@@ -26,6 +26,12 @@ const mockProject: Project = {
   techStack: ['React', 'TypeScript'],
   gridSize: 'medium',
   visual: '/test-image.jpg',
+  status: 'Live',
+  featured: true,
+  situation: 'Business context',
+  task: 'What needed to be done',
+  action: 'Technical implementation',
+  result: 'Measurable outcomes',
 };
 
 describe('ProjectCard', () => {

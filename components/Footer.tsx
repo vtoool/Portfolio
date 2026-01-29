@@ -7,14 +7,14 @@ import { MagneticButton } from "./MagneticButton";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="w-full max-w-5xl px-4 md:px-6 pt-12 pb-8 space-y-12 border-t border-zinc-900/50 bg-gradient-to-b from-transparent to-zinc-950/50">
+    <footer className="w-full max-w-5xl px-4 md:px-6 pt-12 pb-8 space-y-12 border-t border-zinc-200 dark:border-zinc-900/50 bg-gradient-to-b from-transparent to-zinc-100/50 dark:to-zinc-950/50">
       <ScrollReveal direction="up">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
           <div className="space-y-4">
-            <h2 className="text-xl md:text-2xl font-bold text-zinc-100">
+            <h2 className="text-xl md:text-2xl font-bold text-zinc-900 dark:text-zinc-100">
               Ready to automate your growth?
             </h2>
-            <p className="text-zinc-400">
+            <p className="text-zinc-600 dark:text-zinc-400">
               Let's discuss how we can streamline your operations and build tools that scale with your business.
             </p>
           </div>
@@ -35,8 +35,8 @@ const Footer: React.FC = () => {
       </ScrollReveal>
 
       <ScrollReveal direction="up" delay={0.1}>
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-6 border-t border-zinc-900/50">
-          <div className="text-zinc-500 text-sm">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-6 border-t border-zinc-200 dark:border-zinc-900/50">
+          <div className="text-zinc-500 dark:text-zinc-500 text-sm">
             © {new Date().getFullYear()} Victor Bujor. All rights reserved.
           </div>
 
@@ -44,20 +44,20 @@ const Footer: React.FC = () => {
             <a
               href="https://github.com/vtoool"
               target="_blank"
-              className="text-zinc-400 hover:text-white transition-colors"
+              className="text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-white transition-colors"
             >
               <Github className="w-5 h-5" />
             </a>
             <a
               href="https://linkedin.com"
               target="_blank"
-              className="text-zinc-400 hover:text-white transition-colors"
+              className="text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-white transition-colors"
             >
               <Linkedin className="w-5 h-5" />
             </a>
             <a
               href="mailto:victor@cabin-story.com"
-              className="text-zinc-400 hover:text-white transition-colors"
+              className="text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-white transition-colors"
             >
               <Mail className="w-5 h-5" />
             </a>

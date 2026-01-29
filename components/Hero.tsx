@@ -50,16 +50,16 @@ const Hero: React.FC = () => {
         flex flex-col justify-start pt-8 md:pt-16 px-6 lg:px-12 pb-8 text-center lg:text-left
       `}>
         <ScrollReveal direction="down" duration={0.6}>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 text-xs font-medium text-zinc-300 mb-4 backdrop-blur-md mx-auto lg:mx-0">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100/80 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-4 backdrop-blur-md mx-auto lg:mx-0">
             <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
             {t('hero.availability')}
           </div>
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={0.1}>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white max-w-2xl mx-auto lg:mx-0 leading-[1.2]">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white max-w-2xl mx-auto lg:mx-0 leading-[1.2]">
             {renderHeadline().split('Revenue Engines.').map((part, i) => i === 0 ? part : (
-              <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
+              <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-emerald-500 dark:from-indigo-400 dark:to-emerald-400">
                 Revenue Engines.
               </span>
             ))}
@@ -67,8 +67,8 @@ const Hero: React.FC = () => {
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={0.2}>
-          <div className="max-w-2xl mx-auto lg:mx-0 bg-zinc-900/20 border border-zinc-800 rounded-2xl p-8 backdrop-blur-sm mt-6">
-            <p className="text-zinc-300 text-sm md:text-base leading-[1.6]">
+          <div className="max-w-2xl mx-auto lg:mx-0 bg-white/60 dark:bg-zinc-900/20 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 backdrop-blur-sm mt-6">
+            <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-[1.6]">
               {t('hero.aboutMe')}
             </p>
           </div>

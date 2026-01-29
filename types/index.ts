@@ -1,33 +1,29 @@
-import React from "react";
+// Core portfolio data types
 
 export interface Project {
   id: string;
   title: string;
   tag: string;
+  shortDescription: string;
   description: string;
-  shortDescription: string; // For card preview
   techStack: string[];
-  visual?: string;
-  status?: string;
+  visual: string; // URL to project image
+  status: string;
   gridSize: "large" | "medium" | "small";
-
-  // STAR Method for project storytelling
-  situation?: string;  // The problem/challenge
-  task?: string;       // What was needed
-  action?: string;     // What was built (technical)
-  result?: string;     // Quantified outcome
-
-  // Additional fields
+  featured: boolean;
   liveUrl?: string;
-  githubUrl?: string;
-  featured?: boolean;  // Highlight on homepage
+  situation: string; // Business context
+  task: string;      // What needed to be done
+  action: string;    // Technical implementation
+  result: string;    // Measurable outcomes
 }
 
 export interface Service {
+  id: string;
   title: string;
   description: string;
-  iconType: string;  // "database" | "zap" | "rocket"
-  features: string[]; // List of what included
+  iconType: string;
+  features: string[];
 }
 
 export interface Testimonial {
@@ -35,13 +31,18 @@ export interface Testimonial {
   name: string;
   role: string;
   company: string;
-  avatar?: string;
   content: string;
   rating?: number;
+  avatar?: string;
 }
 
 export interface TrustMetric {
-  label: string;
+  id: string;
   value: string;
-  description: string;
+  label: string;
+  description?: string;
 }
+
+// Re-export all types for easy importing
+export * from './animation';
+export * from './database';

@@ -31,6 +31,7 @@ export const projects: Project[] = [
     visual: "https://picsum.photos/seed/chef/800/1000",
     status: "Live",
     gridSize: "medium",
+    featured: false,
     liveUrl: "https://chefdechef.example.com",
     situation: "A dance instruction company was managing bookings through Google Forms and manual WhatsApp messages. Double-bookings were common, payment tracking was a nightmare, and clients frequently missed their sessions.",
     task: "Create a self-service booking portal with automated reminders, integrated payments, and an admin dashboard for staff management.",
@@ -46,6 +47,7 @@ export const projects: Project[] = [
     techStack: ["React", "Chrome Extension API", "Manifest V3", "Local Storage"],
     visual: "https://picsum.photos/seed/faresnap/600/400",
     status: "Live",
+    featured: false,
     gridSize: "small",
     liveUrl: "https://chrome.google.com/webstore/detail/faresnap",
     situation: "Travel agents constantly switch between airline websites, fare comparison tools, and their own notes. Capturing fares for client proposals is repetitive and error-prone.",
@@ -62,6 +64,7 @@ export const projects: Project[] = [
     techStack: ["Python", "FastAPI", "Meta Graph API", "PostgreSQL"],
     visual: "https://picsum.photos/seed/meta/800/600",
     status: "Live",
+    featured: false,
     gridSize: "small",
     liveUrl: "https://meta-automator.example.com",
     situation: "A marketing agency receives 500+ Meta inbox messages daily across multiple accounts. Manually categorizing urgent vs. non-urgent messages was overwhelming and led to response delays on important leads.",
@@ -95,6 +98,7 @@ export const projects: Project[] = [
     techStack: ["TypeScript", "SVG", "React"],
     visual: "https://picsum.photos/seed/gds/800/400",
     status: "Live",
+    featured: false,
     gridSize: "small",
     liveUrl: "https://gds-tools.example.com",
     situation: "Travel agents constantly need simple tools that don't exist elsewhere - random name generators for training, seat map visualizers, timezone converters, and more. They resort to Google searches and mediocre online tools.",
@@ -106,6 +110,7 @@ export const projects: Project[] = [
 
 export const services: Service[] = [
   {
+    id: "crm-tools",
     title: "Custom CRMs & Internal Tools",
     description: "Stop using spreadsheets. I build internal tools that fit your specific sales process, reducing manual entry and data fragmentation.",
     iconType: "database",
@@ -119,6 +124,7 @@ export const services: Service[] = [
     ]
   },
   {
+    id: "api-integrations",
     title: "API Integrations & Automation",
     description: "Connect your isolated tools so data flows automatically. Real-time sync for better insights and fewer manual handoffs.",
     iconType: "zap",
@@ -132,6 +138,7 @@ export const services: Service[] = [
     ]
   },
   {
+    id: "saas-mvps",
     title: "SaaS MVPs & Web Apps",
     description: "From idea to deployed product. I build fast, scalable Minimum Viable Products using modern tech stacks.",
     iconType: "rocket",
@@ -175,21 +182,25 @@ export const testimonials: Testimonial[] = [
 
 export const trustMetrics: TrustMetric[] = [
   {
+    id: "projects-delivered",
     label: "Projects Delivered",
     value: "50+",
     description: "Successful project completions"
   },
   {
+    id: "hours-saved",
     label: "Hours Saved",
     value: "10K+",
     description: "Client operational hours saved"
   },
   {
+    id: "client-roi",
     label: "Client ROI",
     value: "500%",
     description: "Average return on project investment"
   },
   {
+    id: "response-time",
     label: "Response Time",
     value: "<2hrs",
     description: "Average reply time during projects"

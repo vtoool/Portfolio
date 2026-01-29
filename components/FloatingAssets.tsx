@@ -190,6 +190,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
         document.removeEventListener("mouseup", handleMouseUp);
       };
     }
+    return undefined;
   }, [dragState]);
 
   if (prefersReducedMotion) {

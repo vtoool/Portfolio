@@ -13,7 +13,7 @@ import { useLanguage } from './LanguageContext';
 import { useViewport } from '@/hooks/useViewport';
 
 const Hero: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const { breakpoint } = useViewport();
   const [isLayoutMode, setIsLayoutMode] = useState(false);
   const [editorMode, setEditorMode] = useState<'drag' | 'form'>('form');
@@ -57,7 +57,7 @@ const Hero: React.FC = () => {
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={0.1}>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white max-w-2xl mx-auto lg:mx-0 leading-[1.2]">
+          <h1 className={`text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white max-w-2xl mx-auto lg:mx-0 leading-[1.2] ${locale === 'ro' ? 'lg:text-4xl' : 'lg:text-5xl'}`}>
             {renderHeadline().split('Revenue Engines.').map((part, i) => i === 0 ? part : (
               <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-emerald-500 dark:from-indigo-400 dark:to-emerald-400">
                 Revenue Engines.
@@ -133,7 +133,7 @@ const Hero: React.FC = () => {
                   : 'bg-zinc-800/90 text-zinc-400 hover:bg-zinc-700'
               }`}
             >
-              Form Mode
+              {t('hero.formMode')}
             </button>
             <button
               onClick={() => setEditorMode('drag')}
@@ -143,7 +143,7 @@ const Hero: React.FC = () => {
                   : 'bg-zinc-800/90 text-zinc-400 hover:bg-zinc-700'
               }`}
             >
-              Drag Mode
+              {t('hero.dragMode')}
             </button>
           </div>
 

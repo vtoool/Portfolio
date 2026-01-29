@@ -4,6 +4,7 @@ import React from "react";
 import { Star, Play } from "lucide-react";
 import { ScrollReveal } from "./ScrollReveal";
 import { testimonials, trustMetrics } from "@/lib/data";
+import { useLanguage } from "./LanguageContext";
 
 interface TestimonialCardProps {
   testimonial: typeof testimonials[0];
@@ -28,12 +29,12 @@ const TestimonialCard = React.memo<TestimonialCardProps>(({ testimonial, index }
           <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-700 dark:text-zinc-300 text-xs font-bold">
             {testimonial.name.split(" ").map((n) => n[0]).join("")}
           </div>
-          <div>
+            <div>
             <div className="font-medium text-zinc-900 dark:text-zinc-200 text-xs">
               {testimonial.name}
             </div>
             <div className="text-[10px] text-zinc-500 dark:text-zinc-500">
-              {testimonial.role}
+              {testimonial.role}{testimonial.company ? `, ${testimonial.company}` : ''}
             </div>
           </div>
         </div>
@@ -45,6 +46,37 @@ const TestimonialCard = React.memo<TestimonialCardProps>(({ testimonial, index }
 TestimonialCard.displayName = 'TestimonialCard';
 
 const TrustSection: React.FC = () => {
+  const { t, locale } = useLanguage();
+
+  const romanianTestimonials = [
+    {
+      id: "1",
+      name: "Alexandru Popescu",
+      role: "Fondator",
+      company: "Agenție Marketing Digital",
+      content: "Victor nu doar că ne-a construit un instrument - a înțeles business-ul nostru și a creat exact ce aveam nevoie. CRM-ul pe care l-a creat a transformat procesul nostru de vânzări. Închidem cu 30% mai multe oferte acum.",
+      rating: 5
+    },
+    {
+      id: "2",
+      name: "Maria Ionescu",
+      role: "Director Operațiuni",
+      company: "Luxury Travel România",
+      content: "În sfârșit, un dezvoltator care vorbește business, nu doar cod. Victor a înțeles imediat punctele noastre dureroase și a livrat o soluție pe care echipa noastră chiar vrea să o folosească. Automatizarea pe care a construit-o ne economisește peste 20 de ore pe săptămână.",
+      rating: 5
+    },
+    {
+      id: "3",
+      name: "Andrei Georgescu",
+      role: "CEO",
+      company: "Startup SaaS B2B",
+      content: "Colaborarea cu Victor a fost diferită de alți dezvoltatori. A pus întrebările potrivite, a contestat presupunerile noastre și a livrat un produs care a depășit specificațiile. Automatizarea Meta Graph a valorat de 10 ori mai mult decât onorariul său.",
+      rating: 5
+    }
+  ];
+
+  const displayedTestimonials = locale === 'ro' ? romanianTestimonials : testimonials;
+
   return (
     <section className="relative">
       {/* Trust Metrics */}
@@ -67,14 +99,14 @@ const TrustSection: React.FC = () => {
       <ScrollReveal direction="up" delay={0.1}>
         <div className="text-center mb-8">
           <h2 className="text-xl md:text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
-            What Clients Say
+            {t('trust.title')}
           </h2>
         </div>
       </ScrollReveal>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        {testimonials.map((testimonial, index) => (
-          <TestimonialCard key={testimonial.id} testimonial={testimonial} index={index} />
+        {displayedTestimonials.map((testimonial, index) => (
+          <TestimonialCard key={testimonial.id} testimonial={testimonial as typeof testimonials[0]} index={index} />
         ))}
       </div>
 

@@ -7,6 +7,7 @@ import TrustSection from "@/components/TrustSection";
 import Footer from "@/components/Footer";
 import ToolsSection from "@/components/ToolsSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { useLanguage } from "@/components/LanguageContext";
 
 // Simple section label - no purple, just clean
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -22,6 +23,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 export const dynamic = 'force-dynamic';
 
 export default function Home() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen relative overflow-x-hidden">
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-full border-x border-zinc-200 dark:border-zinc-900/50 pointer-events-none z-0" />
@@ -35,13 +37,13 @@ export default function Home() {
           {/* Portfolio Section */}
           <section id="portfolio" className="space-y-4 relative bg-white dark:bg-zinc-950 py-8 rounded-2xl border border-zinc-100 dark:border-zinc-900/50">
             <ScrollReveal direction="up">
-              <SectionLabel>Portfolio</SectionLabel>
+              <SectionLabel>{t('portfolio.sectionLabel')}</SectionLabel>
               <div className="space-y-4 text-center max-w-2xl mx-auto">
                 <h2 className="text-xl md:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-                  Featured Work
+                  {t('portfolio.featuredWork')}
                 </h2>
                 <p className="text-zinc-500 dark:text-zinc-500 text-sm">
-                  A selection of internal tools, automation systems, and SaaS products.
+                  {t('portfolio.featuredWorkDesc')}
                 </p>
               </div>
             </ScrollReveal>
@@ -51,7 +53,7 @@ export default function Home() {
           {/* Services Section */}
           <section id="services" className="space-y-6 relative bg-white dark:bg-zinc-950 py-8 rounded-2xl border border-zinc-100 dark:border-zinc-900/50">
             <ScrollReveal direction="up">
-              <SectionLabel>Services</SectionLabel>
+              <SectionLabel>{t('services.sectionLabel')}</SectionLabel>
             </ScrollReveal>
             <Services />
           </section>
@@ -59,7 +61,7 @@ export default function Home() {
           {/* About Section */}
           <section id="about" className="relative bg-white dark:bg-zinc-950 py-8 rounded-2xl border border-zinc-100 dark:border-zinc-900/50">
             <ScrollReveal direction="up">
-              <SectionLabel>About</SectionLabel>
+              <SectionLabel>{t('about.sectionLabel')}</SectionLabel>
             </ScrollReveal>
             <TrustSection />
           </section>

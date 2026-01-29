@@ -4,18 +4,20 @@ import React from "react";
 import { Github, Linkedin, Mail, ArrowRight } from "lucide-react";
 import { ScrollReveal } from "./ScrollReveal";
 import { MagneticButton } from "./MagneticButton";
+import { useLanguage } from "./LanguageContext";
 
 const Footer: React.FC = () => {
+  const { t } = useLanguage();
   return (
     <footer className="w-full max-w-5xl px-4 md:px-6 pt-12 pb-8 space-y-12 border-t border-zinc-200 dark:border-zinc-900/50 bg-gradient-to-b from-transparent to-zinc-100/50 dark:to-zinc-950/50">
       <ScrollReveal direction="up">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
           <div className="space-y-4">
             <h2 className="text-xl md:text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-              Ready to automate your growth?
+              {t('trust.readyToAutomate')}
             </h2>
             <p className="text-zinc-600 dark:text-zinc-400">
-              Let's discuss how we can streamline your operations and build tools that scale with your business.
+              {t('trust.discussText')}
             </p>
           </div>
 
@@ -24,11 +26,11 @@ const Footer: React.FC = () => {
               variant="primary"
               href="mailto:victor@cabin-story.com"
             >
-              Book a Call
+              {t('trust.bookCall')}
               <ArrowRight className="w-4 h-4" />
             </MagneticButton>
             <MagneticButton variant="secondary" href="mailto:victor@cabin-story.com">
-              Hire Me
+              {t('trust.hireMe')}
             </MagneticButton>
           </div>
         </div>

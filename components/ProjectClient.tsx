@@ -7,6 +7,7 @@ import { ArrowLeft, ExternalLink, ArrowRight, CheckCircle, Target, Zap, Trending
 import Link from "next/link";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { MagneticButton } from "@/components/MagneticButton";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface ProjectClientProps {
   project: Project;
@@ -20,6 +21,7 @@ const starSteps = [
 ];
 
 const ProjectClient: React.FC<ProjectClientProps> = ({ project }) => {
+  const { t } = useLanguage();
   return (
     <main className="pt-20 pb-12 px-4 max-w-3xl mx-auto text-zinc-100">
         <ScrollReveal direction="up">
@@ -28,7 +30,7 @@ const ProjectClient: React.FC<ProjectClientProps> = ({ project }) => {
             className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-8 group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Portfolio
+            {t('project.backToPortfolio')}
           </Link>
         </ScrollReveal>
 
@@ -80,7 +82,7 @@ const ProjectClient: React.FC<ProjectClientProps> = ({ project }) => {
         <ScrollReveal direction="up" delay={0.3}>
           <div className="mt-12">
             <h3 className="text-sm font-bold text-zinc-100 uppercase tracking-widest mb-4">
-              Tech Stack
+              {t('project.techStack')}
             </h3>
             <div className="flex flex-wrap gap-2">
               {project.techStack.map((tech) => (
@@ -99,7 +101,7 @@ const ProjectClient: React.FC<ProjectClientProps> = ({ project }) => {
         {project.situation && (
           <ScrollReveal direction="up" delay={0.4} className="mt-16">
             <h3 className="text-2xl font-bold text-zinc-100 mb-8">
-              The Story
+              {t('project.theStory')}
             </h3>
             <div className="space-y-6">
               {starSteps.map((step) => {
@@ -136,17 +138,17 @@ const ProjectClient: React.FC<ProjectClientProps> = ({ project }) => {
         <ScrollReveal direction="up" delay={0.5}>
           <div className="mt-12 p-5 md:p-6 rounded-xl bg-gradient-to-br from-indigo-950/30 to-emerald-950/30 border border-zinc-800 text-center">
             <h3 className="text-lg md:text-xl font-bold text-zinc-100 mb-2">
-              Ready to build something similar?
+              {t('project.readyToBuild')}
             </h3>
             <p className="text-zinc-400 mb-8 max-w-xl mx-auto">
-              Let&apos;s discuss how we can apply these principles to your business and create a revenue engine tailored to your needs.
+              {t('project.applyPrinciples')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <MagneticButton
                 variant="primary"
                 href="mailto:victor@cabin-story.com"
               >
-                Book a Discovery Call
+                {t('project.bookDiscoveryCall')}
                 <ArrowRight className="w-4 h-4" />
               </MagneticButton>
               {project.liveUrl && (
@@ -154,7 +156,7 @@ const ProjectClient: React.FC<ProjectClientProps> = ({ project }) => {
                   variant="secondary"
                   href={project.liveUrl}
                 >
-                  Visit Live Site
+                  {t('project.visitLiveSite')}
                   <ExternalLink className="w-4 h-4" />
                 </MagneticButton>
               )}

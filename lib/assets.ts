@@ -178,124 +178,124 @@ export const ASSET_CONFIGS = {
   mobile: {
     visible: true,
     assets: [
-      // Me - CENTER of centered container, large focal point
+      // Me - CENTER, anchor point at 50% 50%
       {
         src: "/art/Me.webp",
         alt: "Me - Clay Figurine",
-        width: 180,
-        height: 180,
+        width: 160,
+        height: 160,
         position: {
-          top: "55%",
+          top: "50%",
           left: "50%",
           zIndex: 3
         },
         scale: 1.0,
         animation: {
           initialX: 0,
-          initialY: 55,
+          initialY: 0,
           delay: 0,
           direction: 'center' as const,
-          parallaxSpeed: 0.12
+          parallaxSpeed: 0.08
         }
       },
-      // Map - small accent above center
+      // Map - small accent above Me
       {
         src: "/art/Map.webp",
         alt: "Map App Icon",
-        width: 45,
-        height: 45,
+        width: 36,
+        height: 36,
         position: {
-          top: "20%",
+          top: "28%",
           left: "50%",
           zIndex: 2
         },
         scale: 1.0,
         animation: {
           initialX: 0,
-          initialY: -50,
+          initialY: -15,
           delay: 0.1,
           direction: 'up' as const,
-          parallaxSpeed: 0.08
+          parallaxSpeed: 0.06
         }
       },
-      // Guitar - left side, framing Me
-      {
-        src: "/art/Guitar.webp",
-        alt: "Guitar",
-        width: 110,
-        height: 110,
-        position: {
-          top: "58%",
-          left: "15%",
-          zIndex: 1
-        },
-        scale: 1.0,
-        animation: {
-          initialX: -75,
-          initialY: 50,
-          delay: 0.15,
-          direction: 'left' as const,
-          parallaxSpeed: 0.18
-        }
-      },
-      // Plane - top right
+      // Plane - top right of Me
       {
         src: "/art/Plane.webp",
         alt: "Plane",
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         position: {
-          top: "25%",
-          left: "80%",
+          top: "30%",
+          left: "72%",
           zIndex: 2
         },
         scale: 1.0,
         animation: {
-          initialX: 80,
-          initialY: -45,
-          delay: 0.2,
-          direction: 'right' as const,
-          parallaxSpeed: 0.22
-        }
-      },
-      // Gear1 - bottom right
-      {
-        src: "/art/Gear1.webp",
-        alt: "Gear",
-        width: 45,
-        height: 45,
-        position: {
-          top: "72%",
-          left: "82%",
-          zIndex: 1
-        },
-        scale: 1.0,
-        animation: {
-          initialX: 65,
-          initialY: 40,
-          delay: 0.25,
+          initialX: 20,
+          initialY: -20,
+          delay: 0.15,
           direction: 'right' as const,
           parallaxSpeed: 0.1
         }
       },
-      // Gear2 - small accent bottom left
+      // Guitar - left of Me
       {
-        src: "/art/Gear2.webp",
-        alt: "Small Gear",
-        width: 32,
-        height: 32,
+        src: "/art/Guitar.webp",
+        alt: "Guitar",
+        width: 90,
+        height: 90,
         position: {
-          top: "75%",
-          left: "8%",
+          top: "52%",
+          left: "20%",
           zIndex: 1
         },
         scale: 1.0,
         animation: {
-          initialX: -55,
-          initialY: 55,
+          initialX: -25,
+          initialY: 10,
+          delay: 0.2,
+          direction: 'left' as const,
+          parallaxSpeed: 0.12
+        }
+      },
+      // Gear1 - bottom right of Me
+      {
+        src: "/art/Gear1.webp",
+        alt: "Gear",
+        width: 38,
+        height: 38,
+        position: {
+          top: "68%",
+          left: "70%",
+          zIndex: 1
+        },
+        scale: 1.0,
+        animation: {
+          initialX: 15,
+          initialY: 18,
+          delay: 0.25,
+          direction: 'right' as const,
+          parallaxSpeed: 0.08
+        }
+      },
+      // Gear2 - bottom left of Me
+      {
+        src: "/art/Gear2.webp",
+        alt: "Small Gear",
+        width: 28,
+        height: 28,
+        position: {
+          top: "65%",
+          left: "28%",
+          zIndex: 1
+        },
+        scale: 1.0,
+        animation: {
+          initialX: -20,
+          initialY: 15,
           delay: 0.3,
           direction: 'left' as const,
-          parallaxSpeed: 0.06
+          parallaxSpeed: 0.05
         }
       }
     ]

@@ -273,7 +273,8 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
               top: currentValues.top,
               left: currentValues.left,
               zIndex: isLayoutMode && isDragging ? 9999 : currentValues.zIndex,
-              scale: isLayoutMode ? currentValues.scale : breathingAnimation.scale[1] * asset.scale
+              x: isMobile ? 0 : asset.animation.initialX,
+              y: isMobile ? 20 : asset.animation.initialY
             }}
             initial={{
               x: isMobile ? 0 : asset.animation.initialX,
@@ -303,17 +304,19 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
               />
             )}
 
-            <Image
-              src={asset.src}
-              alt={asset.alt}
-              width={asset.width}
-              height={asset.height}
-              className="pointer-events-none select-none"
-              style={{
-                filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.08)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.04))',
-              }}
-              priority={asset.animation.delay === 0}
-            />
+            <div className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: '50%', top: '50%' }}>
+              <Image
+                src={asset.src}
+                alt={asset.alt}
+                width={asset.width}
+                height={asset.height}
+                className="pointer-events-none select-none"
+                style={{
+                  filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.08)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.04))',
+                }}
+                priority={asset.animation.delay === 0}
+              />
+            </div>
 
             {isLayoutMode && (
               <>

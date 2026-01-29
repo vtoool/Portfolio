@@ -60,7 +60,7 @@ export function TiltCard({
         perspective: 1000,
       }}
       className={cn(
-        "relative transition-all duration-200 ease-out will-change-transform",
+        "relative transition-all duration-200 ease-out will-change-transform pointer-events-none",
         className
       )}
     >
@@ -69,7 +69,7 @@ export function TiltCard({
           transform: "translateZ(50px)",
           transformStyle: "preserve-3d"
         }}
-        className="h-full w-full"
+        className="h-full w-full pointer-events-auto"
       >
         {children}
       </div>

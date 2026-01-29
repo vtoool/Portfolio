@@ -69,7 +69,7 @@ const ProjectCard = React.memo<ProjectCardProps>(({ project }) => {
   const { gridClass, padding, textSize } = getProjectClasses(project.id);
 
   return (
-    <Link href={`/project/${project.id}`} className={cn(gridClass, "block h-full")}>
+    <Link href={`/project/${project.id}`} className={cn(gridClass, "block h-full cursor-pointer pointer-events-auto")}>
       <TiltCard
         className="bento-card relative rounded-3xl overflow-hidden group cursor-pointer w-full h-full"
         intensity={15}

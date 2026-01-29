@@ -41,6 +41,12 @@ export function TiltCard({
     setPosition({ x: 0, y: 0 });
   }, []);
 
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    if (onClick) {
+      onClick();
+    }
+  }, [onClick]);
+
   const x = useSpring(position.x, { stiffness: 150, damping: 15 });
   const y = useSpring(position.y, { stiffness: 150, damping: 15 });
 
@@ -52,7 +58,7 @@ export function TiltCard({
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onClick={onClick}
+      onClick={handleClick}
       style={{
         rotateX,
         rotateY,
@@ -60,7 +66,7 @@ export function TiltCard({
         perspective: 1000,
       }}
       className={cn(
-        "relative transition-all duration-200 ease-out will-change-transform pointer-events-none",
+        "relative transition-all duration-200 ease-out will-change-transform cursor-pointer",
         className
       )}
     >
@@ -69,7 +75,7 @@ export function TiltCard({
           transform: "translateZ(50px)",
           transformStyle: "preserve-3d"
         }}
-        className="h-full w-full pointer-events-auto"
+        className="h-full w-full"
       >
         {children}
       </div>

@@ -33,7 +33,7 @@ export default function Home() {
           <ToolsSection />
 
           {/* Portfolio Section */}
-          <section id="portfolio" className="space-y-4 relative bg-white dark:bg-zinc-950 py-8 rounded-2xl border border-zinc-100 dark:border-zinc-900/50">
+          <section id="portfolio" className="space-y-5 relative bg-white dark:bg-zinc-950 py-8 px-5 md:py-8 md:px-6 rounded-2xl border border-zinc-100 dark:border-zinc-900/50">
             <ScrollReveal direction="up">
               <SectionLabel>Portfolio</SectionLabel>
               <div className="space-y-4 text-center max-w-2xl mx-auto">

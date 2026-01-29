@@ -108,7 +108,7 @@ const Navbar: React.FC = () => {
             className="hidden sm:flex bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 px-4 py-2 rounded-full text-xs font-bold hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors items-center gap-2"
           >
             <Mail className="w-3 h-3" />
-            {t('letsTalk')}
+            {t("let'sTalk")}
           </a>
           <button
             className="md:hidden p-2 text-zinc-500 dark:text-zinc-400"
@@ -165,7 +165,7 @@ const Navbar: React.FC = () => {
                   className="inline-flex items-center gap-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 px-6 py-3 rounded-full text-sm font-bold"
                 >
                   <Mail className="w-4 h-4" />
-                  {t('letsTalk')}
+                  {t("let'sTalk")}
                 </a>
               </motion.div>
             </div>

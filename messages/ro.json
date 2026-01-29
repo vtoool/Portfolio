@@ -3,7 +3,7 @@
     "portfolio": "Portofoliu",
     "services": "Servicii",
     "about": "Despre",
-    "letsTalk": "Să Discutăm"
+    "let'sTalk": "Să Discutăm"
   },
   "hero": {
     "availability": "Disponibil pentru proiecte noi",
@@ -43,5 +43,11 @@
     "applyPrinciples": "Hai să discutăm cum putem aplica aceste principii pentru business-ul tău și să creăm un motor de venituri personalizat nevoilor tale.",
     "bookDiscoveryCall": "Rezervă o Discuție de Descoperire",
     "visitLiveSite": "Vizitează Site-ul"
+  },
+  "trustMetrics": {
+    "projectsDelivered": "Proiecte Completate",
+    "hoursSaved": "Ore Salvate",
+    "clientROI": "ROI",
+    "responseTime": "Răspund în"
   }
 }

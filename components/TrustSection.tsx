@@ -75,14 +75,22 @@ const TrustSection: React.FC = () => {
     }
   ];
 
+  const romanianTrustMetrics = [
+    { id: "projects-delivered", label: "Proiecte Completate", value: "50+", description: "Proiecte finalizate cu succes" },
+    { id: "hours-saved", label: "Ore Salvate", value: "10K+", description: "Ore operaționale salvate pentru clienți" },
+    { id: "client-roi", label: "ROI", value: "500%", description: "Rentabilitate medie a investiției" },
+    { id: "response-time", label: "Răspund în", value: "<2h", description: "Timp mediu de răspuns în timpul proiectelor" }
+  ];
+
   const displayedTestimonials = locale === 'ro' ? romanianTestimonials : testimonials;
+  const displayedMetrics = locale === 'ro' ? romanianTrustMetrics : trustMetrics;
 
   return (
     <section className="relative">
       {/* Trust Metrics */}
       <ScrollReveal direction="up" className="mb-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {trustMetrics.map((metric) => (
+          {displayedMetrics.map((metric) => (
             <div key={metric.label} className="text-center">
               <div className="text-2xl md:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-1">
                 {metric.value}

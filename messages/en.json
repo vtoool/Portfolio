@@ -3,7 +3,7 @@
     "portfolio": "Portfolio",
     "services": "Services",
     "about": "About",
-    "letsTalk": "Let's Talk"
+    "let'sTalk": "Let's Talk"
   },
   "hero": {
     "availability": "Available for new projects",
@@ -43,5 +43,11 @@
     "applyPrinciples": "Let's discuss how we can apply these principles to your business and create a revenue engine tailored to your needs.",
     "bookDiscoveryCall": "Book a Discovery Call",
     "visitLiveSite": "Visit Live Site"
+  },
+  "trustMetrics": {
+    "projectsDelivered": "Projects Delivered",
+    "hoursSaved": "Hours Saved",
+    "clientROI": "Client ROI",
+    "responseTime": "Response Time"
   }
 }

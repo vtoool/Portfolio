@@ -17,7 +17,7 @@ const enMessages = {
     portfolio: "Portfolio",
     services: "Services",
     about: "About",
-    letsTalk: "Let's Talk"
+    "let'sTalk": "Let's Talk"
   },
   hero: {
     availability: "Available for new projects",
@@ -56,6 +56,12 @@ const enMessages = {
     applyPrinciples: "Let's discuss how we can apply these principles to your business and create a revenue engine tailored to your needs.",
     bookDiscoveryCall: "Book a Discovery Call",
     visitLiveSite: "Visit Live Site"
+  },
+  trustMetrics: {
+    projectsDelivered: "Projects Delivered",
+    hoursSaved: "Hours Saved",
+    clientROI: "Client ROI",
+    responseTime: "Response Time"
   }
 };
 
@@ -64,7 +70,7 @@ const roMessages = {
     portfolio: "Portofoliu",
     services: "Servicii",
     about: "Despre",
-    letsTalk: "Să Discutăm"
+    "let'sTalk": "Să Discutăm"
   },
   hero: {
     availability: "Disponibil pentru proiecte noi",
@@ -103,6 +109,12 @@ const roMessages = {
     applyPrinciples: "Hai să discutăm cum putem aplica aceste principii pentru business-ul tău și să creăm un motor de venituri personalizat nevoilor tale.",
     bookDiscoveryCall: "Rezervă o Discuție de Descoperire",
     visitLiveSite: "Vizitează Site-ul"
+  },
+  trustMetrics: {
+    projectsDelivered: "Proiecte Completate",
+    hoursSaved: "Ore Salvate",
+    clientROI: "ROI",
+    responseTime: "Răspund în"
   }
 };
 

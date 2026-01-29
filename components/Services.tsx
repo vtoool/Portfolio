@@ -4,7 +4,9 @@ import React from "react";
 import { Database, Zap, Rocket, Check } from "lucide-react";
 import { ScrollReveal } from "./ScrollReveal";
 import { services } from "@/lib/data";
+import { roServices } from "@/lib/data.services.ro";
 import { TiltCard } from "./TiltCard";
+import { useLanguage } from "./LanguageContext";
 
 const iconMap: Record<string, React.ReactNode> = {
   database: <Database className="w-5 h-5 text-indigo-400" />,
@@ -50,9 +52,12 @@ const ServiceCard = React.memo<ServiceCardProps>(({ service, index }) => {
 ServiceCard.displayName = 'ServiceCard';
 
 const Services: React.FC = () => {
+  const { locale } = useLanguage();
+  const displayedServices = locale === 'ro' ? roServices : services;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-      {services.map((service, idx) => (
+      {displayedServices.map((service, idx) => (
         <ServiceCard key={service.title} service={service} index={idx} />
       ))}
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Settings, ChevronUp, ChevronDown, Monitor, Smartphone, Terminal } from "lucide-react";
 import { getAssetsForBreakpoint, AssetConfig } from "@/lib/assets";
 import { useViewport } from "@/hooks/useViewport";
@@ -29,51 +29,80 @@ const GRID_CONFIG = {
   mobile: { columns: 5, rows: 5 }
 };
 
+const STORAGE_KEY = 'grid-asset-values';
+
 const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange }) => {
   const { breakpoint } = useViewport();
   const [isExpanded, setIsExpanded] = useState(true);
   const [viewMode, setViewMode] = useState<'mobile' | 'desktop'>('desktop');
   const [assetValues, setAssetValues] = useState<{ [key: string]: GridAssetValue }>({});
   const [selectedAsset, setSelectedAsset] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const assets = getAssetsForBreakpoint(viewMode === 'mobile' ? 'mobile' : 'desktop');
-  const gridConfig = GRID_CONFIG[viewMode === 'mobile' ? 'mobile' : 'desktop'];
+  const gridConfig = useMemo(() => GRID_CONFIG[viewMode === 'mobile' ? 'mobile' : 'desktop'], [viewMode]);
+
+  const getAssetDefaults = useCallback((asset: AssetConfig, isMobile: boolean): GridAssetValue => {
+    const position = isMobile && asset.mobile ? asset.mobile.position : asset.position;
+    const scale = isMobile && asset.mobile ? asset.mobile.scale : asset.scale;
+
+    return {
+      rowStart: position.rowStart,
+      rowEnd: position.rowEnd,
+      colStart: position.colStart,
+      colEnd: position.colEnd,
+      scale,
+      zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
+      parallaxX: asset.animation.parallaxSpeedX,
+      parallaxY: asset.animation.parallaxSpeedY,
+      breathingX: asset.animation.breathingAmplitude.x,
+      breathingY: asset.animation.breathingAmplitude.y,
+      breathingScale: asset.animation.breathingAmplitude.scale
+    };
+  }, []);
 
   const initializeValues = useCallback(() => {
     const initial: { [key: string]: GridAssetValue } = {};
+
     assets.forEach((asset) => {
       const key = `${asset.src}-${asset.alt}`;
-      const isMobile = viewMode === 'mobile';
-      const position = isMobile && asset.mobile ? asset.mobile.position : asset.position;
-      const scale = isMobile && asset.mobile ? asset.mobile.scale : asset.scale;
-
-      initial[key] = {
-        rowStart: position.rowStart,
-        rowEnd: position.rowEnd,
-        colStart: position.colStart,
-        colEnd: position.colEnd,
-        scale,
-        zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
-        parallaxX: asset.animation.parallaxSpeedX,
-        parallaxY: asset.animation.parallaxSpeedY,
-        breathingX: asset.animation.breathingAmplitude.x,
-        breathingY: asset.animation.breathingAmplitude.y,
-        breathingScale: asset.animation.breathingAmplitude.scale
-      };
+      initial[key] = getAssetDefaults(asset, viewMode === 'mobile');
     });
+
     setAssetValues(initial);
     onValuesChange(initial);
-  }, [assets, onValuesChange, viewMode]);
+  }, [assets, getAssetDefaults, viewMode, onValuesChange]);
 
   useEffect(() => {
-    initializeValues();
-  }, [initializeValues]);
+    setMounted(true);
+
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          setAssetValues(parsed);
+          onValuesChange(parsed);
+        } catch (e) {
+          initializeValues();
+        }
+      } else {
+        initializeValues();
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      initializeValues();
+    }
+  }, [viewMode, mounted, initializeValues]);
 
   useEffect(() => {
     setViewMode(breakpoint === 'mobile' ? 'mobile' : 'desktop');
   }, [breakpoint]);
 
-  const updateValue = (assetKey: string, field: keyof GridAssetValue, value: number) => {
+  const updateValue = useCallback((assetKey: string, field: keyof GridAssetValue, value: number) => {
     const newValues = {
       ...assetValues,
       [assetKey]: {
@@ -83,9 +112,13 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
     };
     setAssetValues(newValues);
     onValuesChange(newValues);
-  };
 
-  const handleLogToConsole = () => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newValues));
+    }
+  }, [assetValues, onValuesChange]);
+
+  const handleLogToConsole = useCallback(() => {
     console.log('\n========== GRID ASSET CONFIGURATION ==========');
     console.log(`Mode: ${viewMode.toUpperCase()}`);
     console.log(`Grid: ${gridConfig.columns}x${gridConfig.rows}`);
@@ -126,15 +159,19 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
     console.log('=========================================\n');
 
     alert('Configuration logged to console! Press F12 to view.');
-  };
+  }, [assets, assetValues, viewMode, gridConfig]);
 
-  const getAssetName = (key: string) => {
+  const getAssetName = useCallback((key: string) => {
     return key.split('-').slice(1).join('-').replace(/\.webp$/, '');
-  };
+  }, []);
 
-  const formatGridPosition = (values: GridAssetValue) => {
+  const formatGridPosition = useCallback((values: GridAssetValue) => {
     return `${values.rowStart.toFixed(1)}/${values.rowEnd.toFixed(1)} × ${values.colStart.toFixed(1)}/${values.colEnd.toFixed(1)}`;
-  };
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   if (!isExpanded) {
     return (
@@ -206,19 +243,7 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
       <div className="flex-1 overflow-y-auto p-3 space-y-2">
         {assets.map((asset) => {
           const key = `${asset.src}-${asset.alt}`;
-          const values = assetValues[key] || {
-            rowStart: 2,
-            rowEnd: 5,
-            colStart: 2,
-            colEnd: 5,
-            scale: 0.5,
-            zIndex: 1,
-            parallaxX: 0.2,
-            parallaxY: 0.2,
-            breathingX: 3,
-            breathingY: 3,
-            breathingScale: 0.003
-          };
+          const values = assetValues[key] || getAssetDefaults(asset, viewMode === 'mobile');
           const isSelected = selectedAsset === key;
 
           return (

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import { motion, useMotionValue, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { AssetConfig, getAssetsForBreakpoint } from "@/lib/assets";
@@ -45,6 +45,8 @@ const GRID_CONFIG = {
   mobile: { columns: 5, rows: 5 }
 };
 
+const STORAGE_KEY = 'grid-asset-values';
+
 const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, assetValues: externalAssetValues }) => {
   const scrollY = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,7 +54,8 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
 
   const [isLayoutMode, setIsLayoutMode] = useState(false);
   const [dragState, setDragState] = useState<DragState | null>(null);
-  const [assetValues, setAssetValues] = useState<{ [key: string]: GridAssetValue }>({});
+  const [localAssetValues, setLocalAssetValues] = useState<{ [key: string]: GridAssetValue }>({});
+  const [mounted, setMounted] = useState(false);
 
   const { breakpoint } = useViewport();
 
@@ -61,21 +64,70 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
   }, [breakpoint]);
 
   const assetsToRender = getAssetsForCurrentBreakpoint();
-  const gridConfig = GRID_CONFIG[breakpoint === 'tablet' ? 'tablet' : breakpoint];
+  const gridConfig = useMemo(() => GRID_CONFIG[breakpoint === 'tablet' ? 'tablet' : breakpoint], [breakpoint]);
 
   useEffect(() => {
+    setMounted(true);
     if (typeof window !== "undefined") {
       const urlParams = new URLSearchParams(window.location.search);
       const layoutMode = urlParams.get("layoutMode");
       setIsLayoutMode(layoutMode === "true");
+
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          setLocalAssetValues(parsed);
+        } catch (e) {
+          console.error('Failed to parse stored asset values');
+        }
+      }
     }
   }, []);
 
+  const getAssetDefaults = useCallback((asset: AssetConfig, breakpoint: string): GridAssetValue => {
+    const isMobile = breakpoint === 'mobile';
+    const position = isMobile && asset.mobile ? asset.mobile.position : asset.position;
+    const scale = isMobile && asset.mobile ? asset.mobile.scale : asset.scale;
+
+    return {
+      rowStart: position.rowStart,
+      rowEnd: position.rowEnd,
+      colStart: position.colStart,
+      colEnd: position.colEnd,
+      scale,
+      zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
+      parallaxX: asset.animation.parallaxSpeedX,
+      parallaxY: asset.animation.parallaxSpeedY,
+      breathingX: asset.animation.breathingAmplitude.x,
+      breathingY: asset.animation.breathingAmplitude.y,
+      breathingScale: asset.animation.breathingAmplitude.scale
+    };
+  }, []);
+
+  const computedAssetValues = useMemo(() => {
+    const result: { [key: string]: GridAssetValue } = {};
+
+    assetsToRender.forEach(asset => {
+      const key = `${asset.src}-${asset.alt}`;
+
+      if (externalAssetValues && externalAssetValues[key]) {
+        result[key] = externalAssetValues[key];
+      } else if (localAssetValues[key]) {
+        result[key] = localAssetValues[key];
+      } else {
+        result[key] = getAssetDefaults(asset, breakpoint);
+      }
+    });
+
+    return result;
+  }, [assetsToRender, externalAssetValues, localAssetValues, breakpoint, getAssetDefaults]);
+
   useEffect(() => {
-    if (externalAssetValues) {
-      setAssetValues(externalAssetValues);
+    if (mounted && onAssetValuesChange) {
+      onAssetValuesChange(computedAssetValues);
     }
-  }, [externalAssetValues]);
+  }, [computedAssetValues, onAssetValuesChange, mounted]);
 
   useEffect(() => {
     if (prefersReducedMotion) return;
@@ -103,29 +155,19 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     return () => window.removeEventListener("scroll", onScroll);
   }, [scrollY, prefersReducedMotion]);
 
+  const saveToLocalStorage = useCallback((values: { [key: string]: GridAssetValue }) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+    }
+  }, []);
+
   const handleMouseDown = useCallback((e: React.MouseEvent, asset: AssetConfig, action: 'move' | 'resize', direction?: string) => {
     if (!isLayoutMode || !containerRef.current) return;
     e.preventDefault();
     e.stopPropagation();
 
     const assetKey = `${asset.src}-${asset.alt}`;
-
-    const assetBreakpoint = asset.mobile && breakpoint === 'mobile' ? 'mobile' : 'desktop';
-    const gridCols = GRID_CONFIG[assetBreakpoint].columns;
-
-    const currentValues = assetValues[assetKey] || {
-      rowStart: asset.position.rowStart,
-      rowEnd: asset.position.rowEnd,
-      colStart: asset.position.colStart,
-      colEnd: asset.position.colEnd,
-      scale: asset.mobile && breakpoint === 'mobile' ? asset.mobile.scale : asset.scale,
-      zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
-      parallaxX: asset.animation.parallaxSpeedX,
-      parallaxY: asset.animation.parallaxSpeedY,
-      breathingX: asset.animation.breathingAmplitude.x,
-      breathingY: asset.animation.breathingAmplitude.y,
-      breathingScale: asset.animation.breathingAmplitude.scale
-    };
+    const currentValues = computedAssetValues[assetKey];
 
     setDragState({
       assetSrc: assetKey,
@@ -139,38 +181,37 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
       action,
       direction
     });
-  }, [isLayoutMode, assetValues, breakpoint]);
+  }, [isLayoutMode, computedAssetValues]);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!dragState || !containerRef.current) return;
 
-    const assetBreakpoint = dragState.assetSrc.includes('mobile') ? 'mobile' : 'desktop';
-    const gridCols = GRID_CONFIG[assetBreakpoint].columns;
-    const gridRows = GRID_CONFIG[assetBreakpoint].rows;
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const cellWidth = containerRect.width / gridConfig.columns;
+    const cellHeight = containerRect.height / gridConfig.rows;
 
     if (dragState.action === 'move') {
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const cellWidth = containerRect.width / gridCols;
-      const cellHeight = containerRect.height / gridRows;
-
       const deltaX = (e.clientX - dragState.startX) / cellWidth;
       const deltaY = (e.clientY - dragState.startY) / cellHeight;
 
-      const newColStart = Math.max(0, Math.min(gridCols - 1, dragState.startColStart + deltaX));
-      const newColEnd = Math.max(newColStart + 0.5, Math.min(gridCols, dragState.startColEnd + deltaX));
-      const newRowStart = Math.max(0, Math.min(gridRows - 1, dragState.startRowStart + deltaY));
-      const newRowEnd = Math.max(newRowStart + 0.5, Math.min(gridRows, dragState.startRowEnd + deltaY));
+      const newColStart = Math.max(0, Math.min(gridConfig.columns - 1, dragState.startColStart + deltaX));
+      const newColEnd = Math.max(newColStart + 0.5, Math.min(gridConfig.columns, dragState.startColEnd + deltaX));
+      const newRowStart = Math.max(0, Math.min(gridConfig.rows - 1, dragState.startRowStart + deltaY));
+      const newRowEnd = Math.max(newRowStart + 0.5, Math.min(gridConfig.rows, dragState.startRowEnd + deltaY));
 
-      setAssetValues(prev => ({
-        ...prev,
+      const updatedValues = {
+        ...computedAssetValues,
         [dragState.assetSrc]: {
-          ...prev[dragState.assetSrc] || getDefaultGridValue(dragState.assetSrc),
+          ...computedAssetValues[dragState.assetSrc],
           rowStart: newRowStart,
           rowEnd: newRowEnd,
           colStart: newColStart,
           colEnd: newColEnd
         }
-      }));
+      };
+
+      setLocalAssetValues(updatedValues);
+      saveToLocalStorage(updatedValues);
     } else if (dragState.action === 'resize') {
       const deltaX = e.clientX - dragState.startX;
       const deltaY = e.clientY - dragState.startY;
@@ -181,33 +222,22 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
 
       const newScale = Math.max(0.1, Math.min(3, dragState.startScale + (scaleChange * scaleMultiplier)));
 
-      setAssetValues(prev => ({
-        ...prev,
+      const updatedValues = {
+        ...computedAssetValues,
         [dragState.assetSrc]: {
-          ...prev[dragState.assetSrc] || getDefaultGridValue(dragState.assetSrc),
+          ...computedAssetValues[dragState.assetSrc],
           scale: newScale
         }
-      }));
+      };
+
+      setLocalAssetValues(updatedValues);
+      saveToLocalStorage(updatedValues);
     }
-  }, [dragState]);
+  }, [dragState, gridConfig, computedAssetValues, saveToLocalStorage]);
 
   const handleMouseUp = useCallback(() => {
     setDragState(null);
   }, []);
-
-  const getDefaultGridValue = (assetKey: string): GridAssetValue => ({
-    rowStart: 2,
-    rowEnd: 5,
-    colStart: 2,
-    colEnd: 5,
-    scale: 0.5,
-    zIndex: 1,
-    parallaxX: 0.2,
-    parallaxY: 0.2,
-    breathingX: 3,
-    breathingY: 3,
-    breathingScale: 0.003
-  });
 
   useEffect(() => {
     if (dragState) {
@@ -221,37 +251,71 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     return undefined;
   }, [dragState, handleMouseMove, handleMouseUp]);
 
-  useEffect(() => {
-    if (onAssetValuesChange) {
-      onAssetValuesChange(assetValues);
-    }
-  }, [assetValues, onAssetValuesChange]);
-
-  const getGridStyle = () => ({
+  const gridStyle = useMemo(() => ({
     display: 'grid' as const,
     gridTemplateColumns: `repeat(${gridConfig.columns}, 1fr)`,
     gridTemplateRows: `repeat(${gridConfig.rows}, 1fr)`,
     width: '100%',
     height: '100%',
     position: 'relative' as const
-  });
+  }), [gridConfig]);
+
+  const GridOverlay = useMemo(() => {
+    if (!isLayoutMode) return null;
+
+    const rows = Array.from({ length: gridConfig.rows }, (_, i) => i + 1);
+    const cols = Array.from({ length: gridConfig.columns }, (_, i) => i + 1);
+
+    return (
+      <div
+        className="absolute inset-0 pointer-events-none z-50"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${gridConfig.columns}, 1fr)`,
+          gridTemplateRows: `repeat(${gridConfig.rows}, 1fr)`,
+          width: '100%',
+          height: '100%'
+        }}
+      >
+        {rows.map(row => (
+          <React.Fragment key={`row-${row}`}>
+            {cols.map(col => (
+              <div
+                key={`cell-${row}-${col}`}
+                className="border border-white/20"
+                style={{
+                  gridRow: `${row} / ${row + 1}`,
+                  gridColumn: `${col} / ${col + 1}`
+                }}
+              />
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
+    );
+  }, [isLayoutMode, gridConfig]);
+
+  if (!mounted) {
+    return <div className="w-full h-full" />;
+  }
 
   if (prefersReducedMotion) {
     return (
-      <div ref={containerRef} style={getGridStyle()}>
+      <div ref={containerRef} style={gridStyle}>
         {assetsToRender.map((asset) => {
           const assetKey = `${asset.src}-${asset.alt}`;
           const isMobile = breakpoint === 'mobile';
           const position = isMobile && asset.mobile ? asset.mobile.position : asset.position;
           const scale = isMobile && asset.mobile ? asset.mobile.scale : asset.scale;
+          const values = computedAssetValues[assetKey];
 
           return (
             <div
               key={asset.src}
               style={{
-                gridRow: `${position.rowStart} / ${position.rowEnd}`,
-                gridColumn: `${position.colStart} / ${position.colEnd}`,
-                zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
+                gridRow: `${values.rowStart} / ${values.rowEnd}`,
+                gridColumn: `${values.colStart} / ${values.colEnd}`,
+                zIndex: values.zIndex,
                 position: 'relative' as const
               }}
             >
@@ -266,57 +330,44 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
                   height: 'auto',
                   aspectRatio: '1',
                   objectFit: 'contain',
-                  transform: `scale(${scale})`
+                  transform: `scale(${values.scale})`
                 }}
                 priority={asset.animation.delay === 0}
               />
             </div>
           );
         })}
+        {GridOverlay}
       </div>
     );
   }
 
   return (
     <div ref={containerRef} className="relative w-full h-full overflow-visible">
-      <div className="absolute inset-0" style={getGridStyle()}>
-        {assetsToRender.map((asset, assetIndex) => {
+      <div className="absolute inset-0" style={gridStyle}>
+        {assetsToRender.map((asset) => {
           const assetKey = `${asset.src}-${asset.alt}`;
           const isMobile = breakpoint === 'mobile';
-          const position = isMobile && asset.mobile ? asset.mobile.position : asset.position;
-          const scale = isMobile && asset.mobile ? asset.mobile.scale : asset.scale;
-          const currentValues = assetValues[assetKey] || {
-            rowStart: position.rowStart,
-            rowEnd: position.rowEnd,
-            colStart: position.colStart,
-            colEnd: position.colEnd,
-            scale,
-            zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
-            parallaxX: asset.animation.parallaxSpeedX,
-            parallaxY: asset.animation.parallaxSpeedY,
-            breathingX: asset.animation.breathingAmplitude.x,
-            breathingY: asset.animation.breathingAmplitude.y,
-            breathingScale: asset.animation.breathingAmplitude.scale
-          };
+          const values = computedAssetValues[assetKey];
 
           const isDragging = dragState?.assetSrc === assetKey;
 
-          const parallaxOffsetX = scrollY.get() * currentValues.parallaxX;
-          const parallaxOffsetY = scrollY.get() * currentValues.parallaxY;
+          const parallaxOffsetX = scrollY.get() * values.parallaxX;
+          const parallaxOffsetY = scrollY.get() * values.parallaxY;
 
-          const breathingX = [0, currentValues.breathingX * (isMobile ? 0.4 : 1)];
-          const breathingY = [0, currentValues.breathingY * (isMobile ? 0.4 : 1) * -1];
-          const breathingScale = [1, 1 + currentValues.breathingScale];
+          const breathingX = [0, values.breathingX * (isMobile ? 0.4 : 1)];
+          const breathingY = [0, values.breathingY * (isMobile ? 0.4 : 1) * -1];
+          const breathingScale = [1, 1 + values.breathingScale];
 
           return (
             <motion.div
-              key={`${asset.src}-${assetIndex}`}
+              key={`${asset.src}-${asset.alt}`}
               className={`floating-asset transform-gpu ${isLayoutMode ? "cursor-move" : ""}`}
               style={{
-                gridRow: `${currentValues.rowStart} / ${currentValues.rowEnd}`,
-                gridColumn: `${currentValues.colStart} / ${currentValues.colEnd}`,
-                zIndex: isLayoutMode && isDragging ? 9999 : currentValues.zIndex,
-                position: 'relative',
+                gridRow: `${values.rowStart} / ${values.rowEnd}`,
+                gridColumn: `${values.colStart} / ${values.colEnd}`,
+                zIndex: isLayoutMode && isDragging ? 9999 : values.zIndex,
+                position: 'relative' as const,
                 transform: `translate(${parallaxOffsetX}px, ${parallaxOffsetY}px)`
               }}
               initial={{
@@ -326,7 +377,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
               animate={{
                 x: breathingX,
                 y: breathingY,
-                scale: isLayoutMode ? currentValues.scale : breathingScale[1] * currentValues.scale,
+                scale: isLayoutMode ? values.scale : breathingScale[1] * values.scale,
                 opacity: 1,
                 filter: "blur(0px)"
               }}
@@ -393,6 +444,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
             </motion.div>
           );
         })}
+        {GridOverlay}
       </div>
     </div>
   );

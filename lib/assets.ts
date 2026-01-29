@@ -178,124 +178,124 @@ export const ASSET_CONFIGS = {
   mobile: {
     visible: true,
     assets: [
-      // Me - CENTERED, largest, main focal point
+      // Me - ABSOLUTE CENTER, main focal point
       {
         src: "/art/Me.webp",
         alt: "Me - Clay Figurine",
-        width: 220,
-        height: 220,
+        width: 240,
+        height: 240,
         position: {
-          top: "35%",
+          top: "38%",
           left: "50%",
           zIndex: 3
         },
         scale: 1.0,
         animation: {
           initialX: 0,
-          initialY: 40,
+          initialY: 50,
           delay: 0,
           direction: 'center' as const,
-          parallaxSpeed: 0.2
+          parallaxSpeed: 0.18
         }
       },
-      // Map - directly above Me (not covering, just above)
+      // Map - small accent above center
       {
         src: "/art/Map.webp",
         alt: "Map App Icon",
-        width: 70,
-        height: 70,
+        width: 55,
+        height: 55,
         position: {
-          top: "16%",
+          top: "18%",
           left: "50%",
           zIndex: 2
         },
         scale: 1.0,
         animation: {
           initialX: 0,
-          initialY: -35,
+          initialY: -40,
           delay: 0.1,
           direction: 'up' as const,
-          parallaxSpeed: 0.15
+          parallaxSpeed: 0.12
         }
       },
-      // Guitar - behind Me to the left (framing, not covering)
+      // Guitar - left of Me, behind
       {
         src: "/art/Guitar.webp",
         alt: "Guitar",
-        width: 140,
-        height: 140,
+        width: 150,
+        height: 150,
         position: {
-          top: "38%",
-          left: "8%",
+          top: "42%",
+          left: "15%",
           zIndex: 1
         },
         scale: 1.0,
         animation: {
-          initialX: -50,
-          initialY: 25,
+          initialX: -60,
+          initialY: 35,
           delay: 0.15,
           direction: 'left' as const,
-          parallaxSpeed: 0.25
+          parallaxSpeed: 0.22
         }
       },
-      // Plane - top right, balanced with Guitar
+      // Plane - right of Me
       {
         src: "/art/Plane.webp",
         alt: "Plane",
-        width: 75,
-        height: 75,
+        width: 60,
+        height: 60,
         position: {
-          top: "20%",
-          left: "80%",
+          top: "22%",
+          left: "82%",
           zIndex: 2
         },
         scale: 1.0,
         animation: {
-          initialX: 55,
-          initialY: -30,
+          initialX: 65,
+          initialY: -35,
           delay: 0.2,
           direction: 'right' as const,
-          parallaxSpeed: 0.3
+          parallaxSpeed: 0.28
         }
       },
-      // Gear1 - bottom right, balanced with Guitar
+      // Gear1 - bottom right corner
       {
         src: "/art/Gear1.webp",
         alt: "Gear",
-        width: 65,
-        height: 65,
+        width: 55,
+        height: 55,
         position: {
-          top: "48%",
-          left: "85%",
+          top: "52%",
+          left: "88%",
           zIndex: 1
         },
         scale: 1.0,
         animation: {
-          initialX: 45,
-          initialY: 20,
+          initialX: 55,
+          initialY: 25,
           delay: 0.25,
           direction: 'right' as const,
-          parallaxSpeed: 0.15
+          parallaxSpeed: 0.14
         }
       },
-      // Gear2 - small accent near Guitar
+      // Gear2 - bottom left, small
       {
         src: "/art/Gear2.webp",
         alt: "Small Gear",
-        width: 45,
-        height: 45,
+        width: 40,
+        height: 40,
         position: {
-          top: "52%",
-          left: "3%",
+          top: "55%",
+          left: "5%",
           zIndex: 1
         },
         scale: 1.0,
         animation: {
-          initialX: -35,
-          initialY: 30,
+          initialX: -45,
+          initialY: 40,
           delay: 0.3,
           direction: 'left' as const,
-          parallaxSpeed: 0.12
+          parallaxSpeed: 0.1
         }
       }
     ]

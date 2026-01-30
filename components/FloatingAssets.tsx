@@ -56,6 +56,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
   const [isLayoutMode, setIsLayoutMode] = useState(false);
   const [dragState, setDragState] = useState<DragState | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [currentValues, setCurrentValues] = useState<{ [key: string]: GridAssetValue }>({});
 
   const { breakpoint } = useViewport();
 
@@ -75,6 +76,13 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
       setIsLayoutMode(layoutMode === "true");
     }
   }, []);
+
+  // Sync external values when they change
+  useEffect(() => {
+    if (externalAssetValues && Object.keys(externalAssetValues).length > 0) {
+      setCurrentValues(externalAssetValues);
+    }
+  }, [externalAssetValues]);
 
   const getAssetDefaults = useCallback((asset: AssetConfig, breakpoint: string): GridAssetValue => {
     const isMobile = breakpoint === 'mobile';
@@ -102,7 +110,9 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     assetsToRender.forEach(asset => {
       const key = `${asset.src}-${asset.alt}`;
 
-      if (externalAssetValues && externalAssetValues[key]) {
+      if (currentValues && currentValues[key]) {
+        result[key] = currentValues[key];
+      } else if (externalAssetValues && externalAssetValues[key]) {
         result[key] = externalAssetValues[key];
       } else {
         result[key] = getAssetDefaults(asset, breakpoint);
@@ -110,7 +120,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     });
 
     return result;
-  }, [assetsToRender, externalAssetValues, breakpoint, getAssetDefaults]);
+  }, [assetsToRender, currentValues, externalAssetValues, breakpoint, getAssetDefaults]);
 
   useEffect(() => {
     if (mounted && onAssetValuesChange && computedAssetValues) {
@@ -193,6 +203,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
         }
       };
 
+      setCurrentValues(newValues);
       onAssetValuesChange?.(newValues);
     } else if (dragState.action === 'resize') {
       const deltaX = e.clientX - dragState.startX;
@@ -212,6 +223,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
         }
       };
 
+      setCurrentValues(newValues);
       onAssetValuesChange?.(newValues);
     }
   }, [dragState, gridConfig, computedAssetValues, onAssetValuesChange]);

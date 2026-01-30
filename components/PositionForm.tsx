@@ -3,47 +3,21 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Copy, Check } from "lucide-react";
-import { ART_ASSETS, AssetConfig, exportGridLayoutConfig } from "@/lib/assets";
-
-interface GridAssetValue {
-  rowStart: number;
-  rowEnd: number;
-  colStart: number;
-  colEnd: number;
-  scale: number;
-  zIndex: number;
-  parallaxX: number;
-  parallaxY: number;
-  breathingX: number;
-  breathingY: number;
-  breathingScale: number;
-}
+import { ART_ASSETS, AssetConfig, AssetValues, getAssetDefaults, exportLayoutConfig } from "@/lib/assets";
 
 interface PositionFormProps {
-  onValuesChange?: (values: { [key: string]: GridAssetValue }) => void;
+  onValuesChange?: (values: { [key: string]: AssetValues }) => void;
 }
 
 export function PositionForm({ onValuesChange }: PositionFormProps) {
-  const [assetValues, setAssetValues] = useState<{ [key: string]: GridAssetValue }>({});
+  const [assetValues, setAssetValues] = useState<{ [key: string]: AssetValues }>({});
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    const initial: { [key: string]: GridAssetValue } = {};
+    const initial: { [key: string]: AssetValues } = {};
     ART_ASSETS.forEach((asset) => {
       const key = `${asset.src}-${asset.alt}`;
-      initial[key] = {
-        rowStart: asset.position.rowStart,
-        rowEnd: asset.position.rowEnd,
-        colStart: asset.position.colStart,
-        colEnd: asset.position.colEnd,
-        scale: asset.scale,
-        zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
-        parallaxX: asset.animation.parallaxSpeedX,
-        parallaxY: asset.animation.parallaxSpeedY,
-        breathingX: asset.animation.breathingAmplitude.x,
-        breathingY: asset.animation.breathingAmplitude.y,
-        breathingScale: asset.animation.breathingAmplitude.scale
-      };
+      initial[key] = getAssetDefaults(asset, false);
     });
     setAssetValues(initial);
   }, []);
@@ -54,24 +28,12 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
     }
   }, [assetValues, onValuesChange]);
 
-  const updateValue = (asset: AssetConfig, field: keyof GridAssetValue, value: number) => {
+  const updateValue = (asset: AssetConfig, field: keyof AssetValues, value: number) => {
     const assetKey = `${asset.src}-${asset.alt}`;
     setAssetValues(prev => ({
       ...prev,
       [assetKey]: {
-        ...prev[assetKey] || {
-          rowStart: asset.position.rowStart,
-          rowEnd: asset.position.rowEnd,
-          colStart: asset.position.colStart,
-          colEnd: asset.position.colEnd,
-          scale: asset.scale,
-          zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
-          parallaxX: asset.animation.parallaxSpeedX,
-          parallaxY: asset.animation.parallaxSpeedY,
-          breathingX: asset.animation.breathingAmplitude.x,
-          breathingY: asset.animation.breathingAmplitude.y,
-          breathingScale: asset.animation.breathingAmplitude.scale
-        },
+        ...(prev[assetKey] || getAssetDefaults(asset, false)),
         [field]: value
       }
     }));
@@ -88,14 +50,14 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
   };
 
   const exportAllConfiguration = () => {
-    const fullConfig = exportGridLayoutConfig(ART_ASSETS, assetValues);
+    const fullConfig = exportLayoutConfig(ART_ASSETS, assetValues);
     copyToClipboard(fullConfig, -1);
   };
 
   return (
     <div className="bg-zinc-900/95 border border-indigo-500/50 rounded-2xl p-4 backdrop-blur-xl shadow-2xl max-w-4xl w-full">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-bold text-white">Position Form Editor (Grid-Based)</h3>
+        <h3 className="text-lg font-bold text-white">Position Form Editor</h3>
         <button
           onClick={exportAllConfiguration}
           className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-emerald-500 text-white font-bold rounded-xl hover:from-indigo-600 hover:to-emerald-600 transition-all flex items-center gap-2"
@@ -107,19 +69,7 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
       <div className="space-y-4">
         {ART_ASSETS.map((asset, index) => {
           const assetKey = `${asset.src}-${asset.alt}`;
-          const values = assetValues[assetKey] || {
-            rowStart: asset.position.rowStart,
-            rowEnd: asset.position.rowEnd,
-            colStart: asset.position.colStart,
-            colEnd: asset.position.colEnd,
-            scale: asset.scale,
-            zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
-            parallaxX: asset.animation.parallaxSpeedX,
-            parallaxY: asset.animation.parallaxSpeedY,
-            breathingX: asset.animation.breathingAmplitude.x,
-            breathingY: asset.animation.breathingAmplitude.y,
-            breathingScale: asset.animation.breathingAmplitude.scale
-          };
+          const values = assetValues[assetKey] || getAssetDefaults(asset, false);
 
           return (
             <motion.div
@@ -134,7 +84,7 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
                 <button
                   onClick={() =>
                     copyToClipboard(
-                      `row: ${values.rowStart.toFixed(1)}/${values.rowEnd.toFixed(1)}, col: ${values.colStart.toFixed(1)}/${values.colEnd.toFixed(1)}, scale: ${values.scale.toFixed(2)}`,
+                      `x: ${values.x.toFixed(1)}, y: ${values.y.toFixed(1)}, scale: ${values.scale.toFixed(2)}`,
                       index
                     )
                   }
@@ -150,58 +100,30 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-zinc-400 mb-1">Row Start</label>
+                  <label className="block text-xs font-medium text-zinc-400 mb-1">X Position (%)</label>
                   <input
                     type="number"
                     step="0.01"
                     min="0"
-                    max="12"
-                    value={values.rowStart}
-                    onChange={(e) => updateValue(asset, 'rowStart', parseFloat(e.target.value))}
+                    max="100"
+                    value={values.x}
+                    onChange={(e) => updateValue(asset, 'x', parseFloat(e.target.value))}
                     className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
-                    placeholder="2.5"
+                    placeholder="45.0"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-zinc-400 mb-1">Row End</label>
+                  <label className="block text-xs font-medium text-zinc-400 mb-1">Y Position (%)</label>
                   <input
                     type="number"
                     step="0.01"
                     min="0"
-                    max="12"
-                    value={values.rowEnd}
-                    onChange={(e) => updateValue(asset, 'rowEnd', parseFloat(e.target.value))}
+                    max="100"
+                    value={values.y}
+                    onChange={(e) => updateValue(asset, 'y', parseFloat(e.target.value))}
                     className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
-                    placeholder="6.0"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-zinc-400 mb-1">Col Start</label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    max="12"
-                    value={values.colStart}
-                    onChange={(e) => updateValue(asset, 'colStart', parseFloat(e.target.value))}
-                    className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
-                    placeholder="4.0"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-zinc-400 mb-1">Col End</label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    max="12"
-                    value={values.colEnd}
-                    onChange={(e) => updateValue(asset, 'colEnd', parseFloat(e.target.value))}
-                    className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
-                    placeholder="8.0"
+                    placeholder="20.0"
                   />
                 </div>
 
@@ -210,10 +132,11 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
                   <input
                     type="number"
                     step="0.01"
+                    min="0"
                     value={values.scale}
                     onChange={(e) => updateValue(asset, 'scale', parseFloat(e.target.value))}
                     className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
-                    placeholder="0.65"
+                    placeholder="2.4"
                   />
                 </div>
 
@@ -255,11 +178,39 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
                     placeholder="0.25"
                   />
                 </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-zinc-400 mb-1">Breathing X</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    max="20"
+                    value={values.breathingX}
+                    onChange={(e) => updateValue(asset, 'breathingX', parseFloat(e.target.value))}
+                    className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
+                    placeholder="8"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-zinc-400 mb-1">Breathing Y</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    max="20"
+                    value={values.breathingY}
+                    onChange={(e) => updateValue(asset, 'breathingY', parseFloat(e.target.value))}
+                    className="w-full px-3 py-2 bg-zinc-900 border border-zinc-600 rounded-lg text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
+                    placeholder="6"
+                  />
+                </div>
               </div>
 
               <div className="mt-3 pt-3 border-t border-zinc-700">
                 <p className="text-xs text-zinc-500 font-mono">
-                  Grid: {values.rowStart.toFixed(1)}/{values.rowEnd.toFixed(1)} × {values.colStart.toFixed(1)}/{values.colEnd.toFixed(1)} | Scale: {values.scale.toFixed(2)} | Z: {values.zIndex}
+                  X: {values.x.toFixed(1)}% | Y: {values.y.toFixed(1)}% | Scale: {values.scale.toFixed(2)} | Z: {values.zIndex}
                 </p>
               </div>
             </motion.div>
@@ -269,7 +220,7 @@ export function PositionForm({ onValuesChange }: PositionFormProps) {
 
       <div className="mt-3 pt-3 border-t border-zinc-700">
         <p className="text-xs text-zinc-400 text-center">
-          Grid-based positioning: rowStart/rowEnd × colStart/colEnd | Use decimal values for fine-tuning (e.g., 2.004 / 5.84)
+          X/Y positioning as percentage (0-100) | Adjust values for fine-tuning asset positions
         </p>
       </div>
     </div>

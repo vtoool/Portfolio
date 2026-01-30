@@ -1,14 +1,12 @@
-export interface GridPosition {
-  rowStart: number;
-  rowEnd: number;
-  colStart: number;
-  colEnd: number;
+export interface AssetPosition {
+  x: number; // 0-100, horizontal position as percentage
+  y: number; // 0-100, vertical position as percentage
 }
 
 export interface AssetConfig {
   src: string;
   alt: string;
-  position: GridPosition;
+  position: AssetPosition;
   scale: number;
   zIndexOverride?: number;
   animation: {
@@ -22,20 +20,19 @@ export interface AssetConfig {
     };
   };
   mobile?: {
-    position: GridPosition;
+    position: AssetPosition;
     scale: number;
   };
 }
 
+// Desktop assets - positioned using X/Y percentages
 export const ART_ASSETS: AssetConfig[] = [
   {
     src: "/art/Me.webp",
     alt: "Me - Clay Figurine",
     position: {
-      rowStart: 0.5,
-      rowEnd: 3.0,
-      colStart: 5,
-      colEnd: 9
+      x: 45,
+      y: 20
     },
     scale: 2.4,
     animation: {
@@ -53,10 +50,8 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Guitar.webp",
     alt: "Guitar",
     position: {
-      rowStart: 0.8,
-      rowEnd: 3.0,
-      colStart: 2.5,
-      colEnd: 5
+      x: 20,
+      y: 25
     },
     scale: 1.9,
     animation: {
@@ -74,10 +69,8 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Map.webp",
     alt: "Map App Icon",
     position: {
-      rowStart: 0.2,
-      rowEnd: 2.0,
-      colStart: 4,
-      colEnd: 6
+      x: 35,
+      y: 10
     },
     scale: 1.4,
     animation: {
@@ -95,10 +88,8 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Plane.webp",
     alt: "Plane",
     position: {
-      rowStart: 0.2,
-      rowEnd: 2.0,
-      colStart: 8.5,
-      colEnd: 11
+      x: 75,
+      y: 15
     },
     scale: 1.5,
     animation: {
@@ -116,10 +107,8 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Gear1.webp",
     alt: "Gear",
     position: {
-      rowStart: 2.0,
-      rowEnd: 3.8,
-      colStart: 9,
-      colEnd: 11.5
+      x: 80,
+      y: 55
     },
     scale: 1.6,
     animation: {
@@ -137,10 +126,8 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Gear2.webp",
     alt: "Small Gear",
     position: {
-      rowStart: 2.5,
-      rowEnd: 3.8,
-      colStart: 10.5,
-      colEnd: 12
+      x: 90,
+      y: 65
     },
     scale: 1.0,
     animation: {
@@ -156,15 +143,14 @@ export const ART_ASSETS: AssetConfig[] = [
   }
 ];
 
+// Mobile assets
 export const MOBILE_ASSETS: AssetConfig[] = [
   {
     src: "/art/Me.webp",
     alt: "Me - Clay Figurine",
     position: {
-      rowStart: 1.2,
-      rowEnd: 3.2,
-      colStart: 1.8,
-      colEnd: 3.8
+      x: 50,
+      y: 40
     },
     scale: 1.5,
     animation: {
@@ -182,10 +168,8 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Guitar.webp",
     alt: "Guitar",
     position: {
-      rowStart: 1.8,
-      rowEnd: 3.5,
-      colStart: 0.3,
-      colEnd: 1.8
+      x: 15,
+      y: 55
     },
     scale: 1.2,
     animation: {
@@ -203,10 +187,8 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Map.webp",
     alt: "Map App Icon",
     position: {
-      rowStart: 0.5,
-      rowEnd: 1.8,
-      colStart: 0.5,
-      colEnd: 1.8
+      x: 20,
+      y: 15
     },
     scale: 1.0,
     animation: {
@@ -224,10 +206,8 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Plane.webp",
     alt: "Plane",
     position: {
-      rowStart: 0.3,
-      rowEnd: 1.6,
-      colStart: 3.3,
-      colEnd: 4.6
+      x: 80,
+      y: 20
     },
     scale: 1.2,
     animation: {
@@ -245,10 +225,8 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Gear1.webp",
     alt: "Gear",
     position: {
-      rowStart: 2.0,
-      rowEnd: 3.5,
-      colStart: 3.5,
-      colEnd: 4.7
+      x: 75,
+      y: 60
     },
     scale: 1.0,
     animation: {
@@ -266,10 +244,8 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Gear2.webp",
     alt: "Small Gear",
     position: {
-      rowStart: 2.8,
-      rowEnd: 3.8,
-      colStart: 4,
-      colEnd: 4.8
+      x: 85,
+      y: 75
     },
     scale: 0.7,
     animation: {
@@ -304,11 +280,9 @@ export const getAssetsForBreakpoint = (breakpoint: 'mobile' | 'tablet' | 'deskto
   return ASSET_CONFIGS[breakpoint].assets;
 };
 
-export function generateGridAssetConfig(asset: AssetConfig, values: {
-  rowStart: number;
-  rowEnd: number;
-  colStart: number;
-  colEnd: number;
+export interface AssetValues {
+  x: number;
+  y: number;
   scale: number;
   zIndex: number;
   parallaxX: number;
@@ -316,15 +290,32 @@ export function generateGridAssetConfig(asset: AssetConfig, values: {
   breathingX: number;
   breathingY: number;
   breathingScale: number;
-}): string {
+}
+
+export function getAssetDefaults(asset: AssetConfig, isMobile: boolean): AssetValues {
+  const position = isMobile && asset.mobile ? asset.mobile.position : asset.position;
+  const scale = isMobile && asset.mobile ? asset.mobile.scale : asset.scale;
+
+  return {
+    x: position.x,
+    y: position.y,
+    scale,
+    zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
+    parallaxX: asset.animation.parallaxSpeedX,
+    parallaxY: asset.animation.parallaxSpeedY,
+    breathingX: asset.animation.breathingAmplitude.x,
+    breathingY: asset.animation.breathingAmplitude.y,
+    breathingScale: asset.animation.breathingAmplitude.scale
+  };
+}
+
+export function generateAssetConfig(asset: AssetConfig, values: AssetValues): string {
   return `  {
     src: "${asset.src}",
     alt: "${asset.alt}",
     position: {
-      rowStart: ${values.rowStart.toFixed(2)},
-      rowEnd: ${values.rowEnd.toFixed(2)},
-      colStart: ${values.colStart.toFixed(2)},
-      colEnd: ${values.colEnd.toFixed(2)}
+      x: ${values.x.toFixed(1)},
+      y: ${values.y.toFixed(1)}
     },
     scale: ${values.scale.toFixed(2)},
     animation: {
@@ -340,35 +331,14 @@ export function generateGridAssetConfig(asset: AssetConfig, values: {
   }`;
 }
 
-export function exportGridLayoutConfig(assets: AssetConfig[], assetValues: { [key: string]: {
-  rowStart: number;
-  rowEnd: number;
-  colStart: number;
-  colEnd: number;
-  scale: number;
-  zIndex: number;
-  parallaxX: number;
-  parallaxY: number;
-  breathingX: number;
-  breathingY: number;
-  breathingScale: number;
-} }): string {
+export function exportLayoutConfig(
+  assets: AssetConfig[], 
+  assetValues: { [key: string]: AssetValues }
+): string {
   const config = assets.map((asset) => {
     const assetKey = `${asset.src}-${asset.alt}`;
-    const values = assetValues[assetKey] || {
-      rowStart: asset.position.rowStart,
-      rowEnd: asset.position.rowEnd,
-      colStart: asset.position.colStart,
-      colEnd: asset.position.colEnd,
-      scale: asset.scale,
-      zIndex: asset.animation.breathingAmplitude.x > 4 ? 3 : 1,
-      parallaxX: asset.animation.parallaxSpeedX,
-      parallaxY: asset.animation.parallaxSpeedY,
-      breathingX: asset.animation.breathingAmplitude.x,
-      breathingY: asset.animation.breathingAmplitude.y,
-      breathingScale: asset.animation.breathingAmplitude.scale
-    };
-    return generateGridAssetConfig(asset, values);
+    const values = assetValues[assetKey] || getAssetDefaults(asset, false);
+    return generateAssetConfig(asset, values);
   }).join(",\n");
 
   return `export const ART_ASSETS: AssetConfig[] = [\n${config}\n];`;

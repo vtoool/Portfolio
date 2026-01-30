@@ -73,8 +73,13 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
 
   useEffect(() => {
     setMounted(true);
-    initializeValues();
   }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      initializeValues();
+    }
+  }, [mounted, initializeValues]);
 
   useEffect(() => {
     setViewMode(breakpoint === 'mobile' ? 'mobile' : 'desktop');

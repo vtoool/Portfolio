@@ -11,26 +11,26 @@ interface FloatingAssetsProps {
 }
 
 // Animation timing for wave effect - cascading ripple pattern
-// Wave starts at Guitar and flows through each asset one by one
-// 4.5s total cycle / 6 assets = 0.75s spacing between each
+// Order: Me → Plane → Big Gear → Small Gear → Guitar → Map
+// Gears have smaller delay (0.4s) between them
 const getWaveDelay = (assetSrc: string): number => {
-  if (assetSrc.includes('Guitar')) {
+  if (assetSrc.includes('Me')) {
     return 0; // First to start the wave
   }
-  if (assetSrc.includes('Map')) {
-    return 0.75; // Follows Guitar
-  }
-  if (assetSrc.includes('Me')) {
-    return 1.5; // Follows Map
-  }
   if (assetSrc.includes('Plane')) {
-    return 2.25; // Follows Me
+    return 0.75; // Follows Me
   }
   if (assetSrc.includes('Gear1')) {
-    return 3.0; // Big gear follows Plane
+    return 1.5; // Big gear follows Plane
   }
   if (assetSrc.includes('Gear2')) {
-    return 3.75; // Small gear follows big gear (last)
+    return 1.9; // Small gear follows big gear (0.4s delay)
+  }
+  if (assetSrc.includes('Guitar')) {
+    return 2.65; // Follows small gear
+  }
+  if (assetSrc.includes('Map')) {
+    return 3.4; // Last, follows Guitar
   }
   return 0;
 };

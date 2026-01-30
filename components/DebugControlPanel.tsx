@@ -314,7 +314,7 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
                   </div>
 
                   <div className="space-y-3">
-                    <div className="text-xs font-medium text-zinc-400 uppercase tracking-wider">Animation</div>
+                    <div className="text-xs font-medium text-zinc-400 uppercase tracking-wider">Size</div>
 
                     <div className="space-y-1">
                       <div className="flex justify-between text-xs">
@@ -324,106 +324,10 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
                       <input
                         type="range"
                         min="0.1"
-                        max="3"
+                        max="5"
                         step="0.01"
                         value={values.scale}
                         onChange={(e) => updateValue(key, 'scale', parseFloat(e.target.value))}
-                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-zinc-400">Z-Index</span>
-                        <span className="text-indigo-400">{values.zIndex}</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="0"
-                        max="20"
-                        step="1"
-                        value={values.zIndex}
-                        onChange={(e) => updateValue(key, 'zIndex', parseInt(e.target.value))}
-                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-zinc-400">Parallax X</span>
-                        <span className="text-indigo-400">{values.parallaxX.toFixed(2)}</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.01"
-                        value={values.parallaxX}
-                        onChange={(e) => updateValue(key, 'parallaxX', parseFloat(e.target.value))}
-                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-zinc-400">Parallax Y</span>
-                        <span className="text-indigo-400">{values.parallaxY.toFixed(2)}</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.01"
-                        value={values.parallaxY}
-                        onChange={(e) => updateValue(key, 'parallaxY', parseFloat(e.target.value))}
-                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-zinc-400">Breathing X</span>
-                        <span className="text-indigo-400">{values.breathingX.toFixed(1)}</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="0"
-                        max="20"
-                        step="0.5"
-                        value={values.breathingX}
-                        onChange={(e) => updateValue(key, 'breathingX', parseFloat(e.target.value))}
-                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-zinc-400">Breathing Y</span>
-                        <span className="text-indigo-400">{values.breathingY.toFixed(1)}</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="0"
-                        max="20"
-                        step="0.5"
-                        value={values.breathingY}
-                        onChange={(e) => updateValue(key, 'breathingY', parseFloat(e.target.value))}
-                        className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-zinc-400">Breathing Scale</span>
-                        <span className="text-indigo-400">{values.breathingScale.toFixed(3)}</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="0"
-                        max="0.05"
-                        step="0.001"
-                        value={values.breathingScale}
-                        onChange={(e) => updateValue(key, 'breathingScale', parseFloat(e.target.value))}
                         className="w-full h-2 bg-zinc-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full"
                       />
                     </div>

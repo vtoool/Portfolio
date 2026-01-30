@@ -9,9 +9,9 @@ import Footer from "@/components/Footer";
 import ProjectClient from "@/components/ProjectClient";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export function generateStaticParams() {
@@ -26,7 +26,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const project = projects.find((p) => p.id === params.id);
+  const { id } = await params;
+  const project = projects.find((p) => p.id === id);
 
   if (!project) {
     return {
@@ -53,8 +54,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function ProjectPage({ params }: PageProps) {
-  const project = projects.find((p) => p.id === params.id);
+export default async function ProjectPage({ params }: PageProps) {
+  const { id } = await params;
+  const project = projects.find((p) => p.id === id);
 
   if (!project) {
     notFound();

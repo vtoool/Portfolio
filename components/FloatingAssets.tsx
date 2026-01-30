@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import { motion, useMotionValue, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { AssetConfig, getAssetsForBreakpoint } from "@/lib/assets";
 import { useViewport } from "@/hooks/useViewport";
-
 
 interface GridAssetValue {
   rowStart: number;
@@ -22,11 +21,8 @@ interface GridAssetValue {
 }
 
 interface FloatingAssetsProps {
-  onAssetValuesChange?: (values: { [key: string]: GridAssetValue }) => void;
   assetValues?: { [key: string]: GridAssetValue } | null;
 }
-
-
 
 const GRID_CONFIG = {
   desktop: { columns: 12, rows: 4 },
@@ -34,7 +30,7 @@ const GRID_CONFIG = {
   mobile: { columns: 5, rows: 4, aspectRatio: '1/1' }
 };
 
-const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, assetValues: externalAssetValues }) => {
+const FloatingAssets: React.FC<FloatingAssetsProps> = ({ assetValues: externalAssetValues }) => {
   const scrollY = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const gridContainerRef = useRef<HTMLDivElement>(null);
@@ -42,19 +38,15 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
 
   const { breakpoint } = useViewport();
 
-  const getAssetsForCurrentBreakpoint = useCallback(() => {
+  const assetsToRender = useMemo(() => {
     return getAssetsForBreakpoint(breakpoint);
   }, [breakpoint]);
 
-  const assetsToRender = getAssetsForCurrentBreakpoint();
   const gridConfig = GRID_CONFIG[breakpoint === 'tablet' ? 'tablet' : breakpoint];
   const isMobile = breakpoint === 'mobile';
 
   const [isLayoutMode, setIsLayoutMode] = useState(false);
-  const [localValues, setLocalValues] = useState<{ [key: string]: GridAssetValue }>({});
-  const [renderKey, setRenderKey] = useState(0);
   const [mounted, setMounted] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -65,22 +57,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     }
   }, []);
 
-  useEffect(() => {
-    if (externalAssetValues && Object.keys(externalAssetValues).length > 0) {
-      // Only update if values actually changed to avoid re-render loops
-      const currentKeys = Object.keys(localValues);
-      const newKeys = Object.keys(externalAssetValues);
-      
-      if (JSON.stringify(localValues) !== JSON.stringify(externalAssetValues)) {
-        setLocalValues(externalAssetValues);
-        setIsInitialized(true);
-        setRenderKey(k => k + 1);
-      }
-    }
-  }, [externalAssetValues, localValues]);
-
   const getAssetDefaults = useCallback((asset: AssetConfig): GridAssetValue => {
-    const isMobile = breakpoint === 'mobile';
     const position = isMobile && asset.mobile ? asset.mobile.position : asset.position;
     const scale = isMobile && asset.mobile ? asset.mobile.scale : asset.scale;
 
@@ -97,23 +74,13 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
       breathingY: asset.animation.breathingAmplitude.y,
       breathingScale: asset.animation.breathingAmplitude.scale
     };
-  }, [breakpoint]);
+  }, [isMobile]);
 
+  // Simply use external values if provided, otherwise use defaults
   const getAssetValue = useCallback((asset: AssetConfig): GridAssetValue => {
     const key = `${asset.src}-${asset.alt}`;
-    return localValues[key] || getAssetDefaults(asset);
-  }, [localValues, getAssetDefaults]);
-
-  useEffect(() => {
-    if (mounted && onAssetValuesChange && !isInitialized) {
-      const values: { [key: string]: GridAssetValue } = {};
-      assetsToRender.forEach(asset => {
-        values[`${asset.src}-${asset.alt}`] = getAssetValue(asset);
-      });
-      onAssetValuesChange(values);
-      setIsInitialized(true);
-    }
-  }, [mounted, localValues, assetsToRender, getAssetValue, onAssetValuesChange, isInitialized]);
+    return externalAssetValues?.[key] || getAssetDefaults(asset);
+  }, [externalAssetValues, getAssetDefaults]);
 
   useEffect(() => {
     if (prefersReducedMotion) return;
@@ -140,8 +107,6 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [scrollY, prefersReducedMotion]);
-
-
 
   const gridStyle = {
     display: 'grid' as const,
@@ -208,7 +173,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
   }
 
   return (
-    <div ref={containerRef} className="relative w-full h-full overflow-visible" key={renderKey}>
+    <div ref={containerRef} className="relative w-full h-full overflow-visible">
       <div ref={gridContainerRef} style={gridStyle}>
         {assetsToRender.map((asset) => {
           const values = getAssetValue(asset);
@@ -223,7 +188,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
 
           return (
             <motion.div
-              key={`${asset.src}-${renderKey}`}
+              key={asset.src}
               className="floating-asset transform-gpu"
               style={{
                 gridRow: `${values.rowStart} / ${values.rowEnd}`,

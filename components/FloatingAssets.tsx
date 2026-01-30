@@ -10,19 +10,29 @@ interface FloatingAssetsProps {
   assetValues?: { [key: string]: AssetValues } | null;
 }
 
-// Animation timing for wave effect
-// Group 1: Guitar + Map (phase 0)
-// Group 2: Me (phase 1/3 of cycle)
-// Group 3: Plane + Gears (phase 2/3 of cycle)
+// Animation timing for wave effect - cascading ripple pattern
+// Wave starts at Guitar and flows through each asset one by one
+// 4.5s total cycle / 6 assets = 0.75s spacing between each
 const getWaveDelay = (assetSrc: string): number => {
-  if (assetSrc.includes('Guitar') || assetSrc.includes('Map')) {
-    return 0; // First wave
+  if (assetSrc.includes('Guitar')) {
+    return 0; // First to start the wave
+  }
+  if (assetSrc.includes('Map')) {
+    return 0.75; // Follows Guitar
   }
   if (assetSrc.includes('Me')) {
-    return 1.5; // Second wave (1/3 of 4.5s cycle)
+    return 1.5; // Follows Map
   }
-  // Plane and Gears
-  return 3; // Third wave (2/3 of 4.5s cycle)
+  if (assetSrc.includes('Plane')) {
+    return 2.25; // Follows Me
+  }
+  if (assetSrc.includes('Gear1')) {
+    return 3.0; // Big gear follows Plane
+  }
+  if (assetSrc.includes('Gear2')) {
+    return 3.75; // Small gear follows big gear (last)
+  }
+  return 0;
 };
 
 const FloatingAssets: React.FC<FloatingAssetsProps> = ({ assetValues: externalAssetValues }) => {

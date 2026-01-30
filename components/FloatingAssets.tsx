@@ -36,6 +36,20 @@ const getWaveDelay = (assetSrc: string): number => {
   return 0;
 };
 
+// Get entrance animation direction for each asset
+const getEntranceDirection = (assetSrc: string): { x: number; y: number } => {
+  if (assetSrc.includes('Me')) {
+    return { x: 0, y: 80 }; // From below
+  }
+  if (assetSrc.includes('Guitar') || assetSrc.includes('Map')) {
+    return { x: -100, y: 0 }; // From left
+  }
+  if (assetSrc.includes('Plane') || assetSrc.includes('Gear')) {
+    return { x: 100, y: 0 }; // From right
+  }
+  return { x: 0, y: 0 };
+};
+
 const FloatingAssets: React.FC<FloatingAssetsProps> = ({ assetValues: externalAssetValues }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
@@ -126,6 +140,36 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ assetValues: externalAs
         const waveDelay = getWaveDelay(asset.src);
         const floatAmplitude = isMobile ? 6 : 10; // Pixels to float up/down
         const floatDuration = 4.5; // Total wave cycle duration
+        
+        // Get entrance direction
+        const entrance = getEntranceDirection(asset.src);
+        
+        // Animation variants
+        const variants = {
+          initial: {
+            opacity: 0,
+            x: entrance.x,
+            y: entrance.y,
+            filter: "blur(8px)",
+            scale: 0.8
+          },
+          entrance: {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            filter: "blur(0px)",
+            scale: 1
+          },
+          floating: {
+            y: [0, -floatAmplitude, 0],
+            transition: {
+              duration: floatDuration,
+              repeat: Infinity,
+              ease: "easeInOut" as const,
+              delay: waveDelay
+            }
+          }
+        };
 
         return (
           <motion.div
@@ -140,26 +184,15 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ assetValues: externalAs
               marginLeft: -assetSize / 2,
               marginTop: -assetSize / 2,
             }}
-            initial={{
-              opacity: 0,
-              y: 20,
-              filter: "blur(4px)"
-            }}
-            animate={{
-              opacity: 1,
-              y: [0, -floatAmplitude, 0], // Smooth up and down motion
-              filter: "blur(0px)"
-            }}
+            initial="initial"
+            animate={["entrance", "floating"]}
+            variants={variants}
             transition={{
-              opacity: { duration: 0.8, delay: asset.animation.delay },
-              y: {
-                duration: floatDuration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: waveDelay + asset.animation.delay,
-                times: [0, 0.5, 1] // Peak at middle of cycle
-              },
-              filter: { duration: 0.8, delay: asset.animation.delay }
+              opacity: { duration: 1, delay: asset.animation.delay, ease: "easeOut" },
+              x: { duration: 1.2, delay: asset.animation.delay, ease: [0.16, 1, 0.3, 1] },
+              y: { duration: 1.2, delay: asset.animation.delay, ease: [0.16, 1, 0.3, 1] },
+              filter: { duration: 1, delay: asset.animation.delay, ease: "easeOut" },
+              scale: { duration: 1, delay: asset.animation.delay, ease: "easeOut" }
             }}
           >
             <Image

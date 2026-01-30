@@ -60,11 +60,10 @@ const Hero: React.FC = () => {
           </h1>
         </ScrollReveal>
 
-        {breakpoint === 'mobile' && (
-          <div className="w-[90vw] aspect-square shrink-0 relative flex items-center justify-center overflow-visible my-4 mx-auto max-h-[90vw]">
-            <FloatingAssets assetValues={assetValues} />
-          </div>
-        )}
+        {/* Mobile & Tablet: Assets under header, centered */}
+        <div className="w-full md:w-[90vw] lg:w-[500px] aspect-square shrink-0 relative flex items-center justify-center overflow-visible my-4 mx-auto lg:hidden max-h-[90vw] md:max-h-[500px]">
+          <FloatingAssets assetValues={assetValues} />
+        </div>
 
         <ScrollReveal direction="up" delay={0.2}>
           <div className="max-w-2xl mx-auto lg:mx-0 bg-white/60 dark:bg-zinc-900/20 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 backdrop-blur-sm mt-6">
@@ -103,11 +102,10 @@ const Hero: React.FC = () => {
         <div id="cta-trigger" className="h-1 w-full" />
       </div>
 
-        {breakpoint !== 'mobile' && (
-        <div className="hidden md:flex flex-[1] items-center justify-end relative overflow-visible pr-8 h-[520px] pt-16">
+        {/* Desktop: Assets on the right side */}
+        <div className="hidden lg:flex flex-[1] items-center justify-end relative overflow-visible pr-8 h-[520px] pt-16">
           <FloatingAssets assetValues={assetValues} />
         </div>
-      )}
 
       {/* <DebugControlPanel onValuesChange={handleAssetValuesChange} /> */}
     </section>

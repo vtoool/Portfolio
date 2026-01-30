@@ -1,0 +1,328 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e7] [cursor=pointer]:
+    - img [ref=e8]
+  - alert [ref=e11]
+  - generic [ref=e13]:
+    - navigation [ref=e14]:
+      - link "VB VICTOR BUJOR" [ref=e15] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e17]: VB
+        - generic [ref=e18]: VICTOR BUJOR
+      - generic [ref=e19]:
+        - link "Portfolio" [ref=e20] [cursor=pointer]:
+          - /url: /#portfolio
+          - text: Portfolio
+        - link "Services" [ref=e21] [cursor=pointer]:
+          - /url: /#services
+          - text: Services
+        - link "About" [ref=e22] [cursor=pointer]:
+          - /url: /#about
+          - text: About
+      - generic [ref=e23]:
+        - link [ref=e24] [cursor=pointer]:
+          - /url: https://github.com/vtoool
+          - img [ref=e25]
+        - button "Toggle theme" [ref=e28] [cursor=pointer]:
+          - img [ref=e29]
+        - button "Switch language" [ref=e31] [cursor=pointer]:
+          - img [ref=e32]
+          - generic [ref=e35]: en
+        - link "let'sTalk" [ref=e36] [cursor=pointer]:
+          - /url: mailto:victor@cabin-story.com
+          - img [ref=e37]
+          - text: let'sTalk
+    - main [ref=e40]:
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - generic [ref=e44]: Available for new projects
+          - heading "Turn Manual Operations Into Revenue Engines." [level=1] [ref=e47]
+          - paragraph [ref=e50]: Hi, I'm Victor. I'm a developer, a student, and a creative at heart. I focus on building software that solves actual business problems. My work ranges from creating booking systems for local service providers to developing specialized SaaS tools for the logistics industry. I use my background in sales to ensure that everything I build drives results, regardless of the project size. When I'm not coding, I recharge by playing the guitar and traveling to find new inspiration.
+          - generic [ref=e52]:
+            - generic [ref=e55] [cursor=pointer]:
+              - img [ref=e56]
+              - text: Book a Call
+              - img [ref=e58]
+            - link "View Projects" [ref=e60] [cursor=pointer]:
+              - /url: /#portfolio
+              - generic [ref=e62]:
+                - img [ref=e63]
+                - text: View Projects
+        - generic [ref=e69]:
+          - generic [ref=e70]:
+            - img "Me - Clay Figurine"
+          - generic [ref=e71]:
+            - img "Guitar"
+          - generic [ref=e72]:
+            - img "Map App Icon"
+          - generic [ref=e73]:
+            - img "Plane"
+          - generic [ref=e74]:
+            - img "Gear"
+          - generic [ref=e75]:
+            - img "Small Gear"
+      - generic [ref=e78]:
+        - paragraph [ref=e79]: Tools I Work With
+        - generic [ref=e81]:
+          - generic [ref=e82]: RingCentral
+          - generic [ref=e83]: DocuSign
+          - generic [ref=e84]: Meta
+          - generic [ref=e85]: Stripe
+          - generic [ref=e86]: Airtable
+          - generic [ref=e87]: AWS
+          - generic [ref=e88]: PostgreSQL
+          - generic [ref=e89]: OpenAI
+          - generic [ref=e90]: RingCentral
+          - generic [ref=e91]: DocuSign
+          - generic [ref=e92]: Meta
+          - generic [ref=e93]: Stripe
+          - generic [ref=e94]: Airtable
+          - generic [ref=e95]: AWS
+          - generic [ref=e96]: PostgreSQL
+          - generic [ref=e97]: OpenAI
+      - generic [ref=e98]:
+        - generic [ref=e99]:
+          - generic [ref=e101]: Portfolio
+          - generic [ref=e102]:
+            - heading "Featured Work" [level=2] [ref=e103]
+            - paragraph [ref=e104]: A selection of internal tools, automation systems, and SaaS products.
+        - generic [ref=e106]:
+          - generic [ref=e109] [cursor=pointer]:
+            - generic [ref=e110]:
+              - generic [ref=e111]:
+                - generic [ref=e112]: Enterprise Tool
+                - generic [ref=e113]: In Production
+              - generic [ref=e114]:
+                - heading "PFCRM" [level=3] [ref=e115]:
+                  - text: PFCRM
+                  - img [ref=e116]
+                - paragraph [ref=e119]: A custom CRM handling high-volume sales with scraping, telephony, and e-signature integrations.
+              - generic [ref=e121]:
+                - generic [ref=e122]: React
+                - generic [ref=e123]: Node.js
+                - generic [ref=e124]: Puppeteer
+                - generic [ref=e125]: "+3"
+            - img "PFCRM" [ref=e127]
+          - generic [ref=e132] [cursor=pointer]:
+            - generic [ref=e133]:
+              - generic [ref=e134]:
+                - generic [ref=e135]: Reservation System
+                - generic [ref=e136]: Live
+              - generic [ref=e137]:
+                - heading "Chef De Chef" [level=3] [ref=e138]:
+                  - text: Chef De Chef
+                  - img [ref=e139]
+                - paragraph [ref=e142]: End-to-end reservation and client management system for a dance instruction business.
+              - generic [ref=e144]:
+                - generic [ref=e145]: Next.js
+                - generic [ref=e146]: Resend
+                - generic [ref=e147]: Stripe
+                - generic [ref=e148]: "+2"
+            - img "Chef De Chef" [ref=e150]
+          - generic [ref=e155] [cursor=pointer]:
+            - generic [ref=e156]:
+              - generic [ref=e157]:
+                - generic [ref=e158]: Browser Extension
+                - generic [ref=e159]: Live
+              - generic [ref=e160]:
+                - heading "FareSnap" [level=3] [ref=e161]:
+                  - text: FareSnap
+                  - img [ref=e162]
+                - paragraph [ref=e165]: Chrome extension for travel agents to quickly capture and compare airfare options.
+              - generic [ref=e167]:
+                - generic [ref=e168]: React
+                - generic [ref=e169]: Chrome Extension API
+                - generic [ref=e170]: Manifest V3
+                - generic [ref=e171]: "+1"
+            - img "FareSnap" [ref=e173]
+          - generic [ref=e178] [cursor=pointer]:
+            - generic [ref=e179]:
+              - generic [ref=e180]:
+                - generic [ref=e181]: Automation Tool
+                - generic [ref=e182]: Live
+              - generic [ref=e183]:
+                - heading "Meta Graph Automator" [level=3] [ref=e184]:
+                  - text: Meta Graph Automator
+                  - img [ref=e185]
+                - paragraph [ref=e188]: Inbox organization using Meta Graph API to sort and categorize messages automatically.
+              - generic [ref=e190]:
+                - generic [ref=e191]: Python
+                - generic [ref=e192]: FastAPI
+                - generic [ref=e193]: Meta Graph API
+                - generic [ref=e194]: "+1"
+            - img "Meta Graph Automator" [ref=e196]
+          - generic [ref=e201] [cursor=pointer]:
+            - generic [ref=e202]:
+              - generic [ref=e203]:
+                - generic [ref=e204]: Travel Tech SaaS
+                - generic [ref=e205]: Live Beta
+              - generic [ref=e206]:
+                - heading "CabinStory" [level=3] [ref=e207]:
+                  - text: CabinStory
+                  - img [ref=e208]
+                - paragraph [ref=e211]: Presentation tool helping travel agents build stunning, professional itineraries in minutes.
+              - generic [ref=e213]:
+                - generic [ref=e214]: React
+                - generic [ref=e215]: PostgreSQL
+                - generic [ref=e216]: AWS S3
+                - generic [ref=e217]: "+2"
+            - img "CabinStory" [ref=e219]
+          - generic [ref=e224] [cursor=pointer]:
+            - generic [ref=e225]:
+              - generic [ref=e226]:
+                - generic [ref=e227]: Internal Utilities
+                - generic [ref=e228]: Live
+              - generic [ref=e229]:
+                - heading "GDS Micro-Tools" [level=3] [ref=e230]:
+                  - text: GDS Micro-Tools
+                  - img [ref=e231]
+                - paragraph [ref=e234]: Collection of productivity tools for travel industry professionals.
+              - generic [ref=e236]:
+                - generic [ref=e237]: TypeScript
+                - generic [ref=e238]: SVG
+                - generic [ref=e239]: React
+            - img "GDS Micro-Tools" [ref=e241]
+      - generic [ref=e244]:
+        - generic [ref=e247]: Services
+        - generic [ref=e248]:
+          - generic [ref=e251] [cursor=pointer]:
+            - generic [ref=e252]:
+              - img [ref=e254]
+              - heading "Custom CRMs & Internal Tools" [level=3] [ref=e258]
+            - paragraph [ref=e259]: Stop using spreadsheets. I build internal tools that fit your specific sales process, reducing manual entry and data fragmentation.
+            - generic [ref=e260]:
+              - generic [ref=e261]:
+                - img [ref=e262]
+                - generic [ref=e264]: Lead capture & qualification workflows
+              - generic [ref=e265]:
+                - img [ref=e266]
+                - generic [ref=e268]: Automated task assignments & reminders
+              - generic [ref=e269]:
+                - img [ref=e270]
+                - generic [ref=e272]: Custom reporting & dashboards
+              - generic [ref=e273]:
+                - img [ref=e274]
+                - generic [ref=e276]: Integration with existing tools
+          - generic [ref=e279] [cursor=pointer]:
+            - generic [ref=e280]:
+              - img [ref=e282]
+              - heading "API Integrations & Automation" [level=3] [ref=e284]
+            - paragraph [ref=e285]: Connect your isolated tools so data flows automatically. Real-time sync for better insights and fewer manual handoffs.
+            - generic [ref=e286]:
+              - generic [ref=e287]:
+                - img [ref=e288]
+                - generic [ref=e290]: Two-way sync between platforms
+              - generic [ref=e291]:
+                - img [ref=e292]
+                - generic [ref=e294]: Webhook-based real-time updates
+              - generic [ref=e295]:
+                - img [ref=e296]
+                - generic [ref=e298]: Custom API development
+              - generic [ref=e299]:
+                - img [ref=e300]
+                - generic [ref=e302]: Legacy system integration
+          - generic [ref=e305] [cursor=pointer]:
+            - generic [ref=e306]:
+              - img [ref=e308]
+              - heading "SaaS MVPs & Web Apps" [level=3] [ref=e313]
+            - paragraph [ref=e314]: From idea to deployed product. I build fast, scalable Minimum Viable Products using modern tech stacks.
+            - generic [ref=e315]:
+              - generic [ref=e316]:
+                - img [ref=e317]
+                - generic [ref=e319]: User authentication & payments
+              - generic [ref=e320]:
+                - img [ref=e321]
+                - generic [ref=e323]: Database design & optimization
+              - generic [ref=e324]:
+                - img [ref=e325]
+                - generic [ref=e327]: Admin dashboards & analytics
+              - generic [ref=e328]:
+                - img [ref=e329]
+                - generic [ref=e331]: Email/SMS notifications
+      - generic [ref=e332]:
+        - generic [ref=e335]: About
+        - generic [ref=e336]:
+          - generic [ref=e338]:
+            - generic [ref=e339]:
+              - generic [ref=e340]: 50+
+              - generic [ref=e341]: Projects Delivered
+            - generic [ref=e342]:
+              - generic [ref=e343]: 10K+
+              - generic [ref=e344]: Hours Saved
+            - generic [ref=e345]:
+              - generic [ref=e346]: 500%
+              - generic [ref=e347]: Client ROI
+            - generic [ref=e348]:
+              - generic [ref=e349]: <2hrs
+              - generic [ref=e350]: Response Time
+          - heading "What Clients Say" [level=2] [ref=e353]
+          - generic [ref=e354]:
+            - generic [ref=e356]:
+              - generic [ref=e357]:
+                - img [ref=e358]
+                - img [ref=e360]
+                - img [ref=e362]
+                - img [ref=e364]
+                - img [ref=e366]
+              - paragraph [ref=e368]: "\"Victor didn't just build us a tool - he understood our business and built exactly what we needed. The CRM he created has transformed our sales process. We're closing 30% more deals now.\""
+              - generic [ref=e369]:
+                - generic [ref=e370]: MC
+                - generic [ref=e371]:
+                  - generic [ref=e372]: Michael Chen
+                  - generic [ref=e373]: Founder, Growth Marketing Agency
+            - generic [ref=e375]:
+              - generic [ref=e376]:
+                - img [ref=e377]
+                - img [ref=e379]
+                - img [ref=e381]
+                - img [ref=e383]
+                - img [ref=e385]
+              - paragraph [ref=e387]: "\"Finally, a developer who speaks business, not just code. Victor understood our pain points immediately and delivered a solution that our team actually wants to use. The automation he built saves us 20+ hours per week.\""
+              - generic [ref=e388]:
+                - generic [ref=e389]: SW
+                - generic [ref=e390]:
+                  - generic [ref=e391]: Sarah Williams
+                  - generic [ref=e392]: Director of Operations, Travel Luxury Group
+            - generic [ref=e394]:
+              - generic [ref=e395]:
+                - img [ref=e396]
+                - img [ref=e398]
+                - img [ref=e400]
+                - img [ref=e402]
+                - img [ref=e404]
+              - paragraph [ref=e406]: "\"Working with Victor was different from other developers. He asked the right questions, challenged our assumptions, and delivered a product that exceeded our specs. The Meta Graph automation alone was worth 10x his fee.\""
+              - generic [ref=e407]:
+                - generic [ref=e408]: DP
+                - generic [ref=e409]:
+                  - generic [ref=e410]: David Park
+                  - generic [ref=e411]: CEO, B2B SaaS Startup
+          - img [ref=e416] [cursor=pointer]
+    - contentinfo [ref=e419]:
+      - generic [ref=e421]:
+        - generic [ref=e422]:
+          - heading "Ready to automate your growth?" [level=2] [ref=e423]
+          - paragraph [ref=e424]: Let's discuss how we can streamline your operations and build tools that scale with your business.
+        - generic [ref=e425]:
+          - link "Book a Call" [ref=e426] [cursor=pointer]:
+            - /url: mailto:victor@cabin-story.com
+            - generic [ref=e428]:
+              - text: Book a Call
+              - img [ref=e429]
+          - link "Hire Me" [ref=e431] [cursor=pointer]:
+            - /url: mailto:victor@cabin-story.com
+            - generic [ref=e433]: Hire Me
+      - generic [ref=e435]:
+        - generic [ref=e436]: © 2026 Victor Bujor. All rights reserved.
+        - generic [ref=e437]:
+          - link [ref=e438] [cursor=pointer]:
+            - /url: https://github.com/vtoool
+            - img [ref=e439]
+          - link [ref=e442] [cursor=pointer]:
+            - /url: https://linkedin.com
+            - img [ref=e443]
+          - link [ref=e447] [cursor=pointer]:
+            - /url: mailto:victor@cabin-story.com
+            - img [ref=e448]
+```

@@ -1,11 +1,1 @@
-{
-  "version": 4,
-  "routes": {},
-  "dynamicRoutes": {},
-  "notFoundRoutes": [],
-  "preview": {
-    "previewModeId": "3aaa1f4afc83c765800566a83c61d3aa",
-    "previewModeSigningKey": "7e60b9be7fcd6995f359bca5f47c0cda6c2b5f84e1a76b1da32b3cf9e8256a3e",
-    "previewModeEncryptionKey": "793e7e008ff52663ca2e994c19b8091118de5d9eb54bd15a8ee66d2f643674de"
-  }
-}
+{"version":4,"routes":{"/project/pfcrm":{},"/project/chef":{},"/project/faresnap":{},"/project/meta":{},"/project/cabin":{},"/project/gds":{}},"dynamicRoutes":{"/project/[id]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/project/[id]","routeRegex":"^\\/project\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"7183fa3fa2d455097ead80328685f89f","previewModeSigningKey":"9aadefe11c8c90f59cb1745d805c5e2c54b9983d26e4dc183597ed64b465aee7","previewModeEncryptionKey":"568b0641397ccbf4720a2e22bef0af6fd3710ba94a4883ab77092eb771ce62cd"}}

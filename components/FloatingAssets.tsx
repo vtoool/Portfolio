@@ -40,9 +40,9 @@ interface DragState {
 }
 
 const GRID_CONFIG = {
-  desktop: { columns: 12, rows: 6 },
-  tablet: { columns: 8, rows: 5 },
-  mobile: { columns: 5, rows: 5, aspectRatio: '1/1' }
+  desktop: { columns: 12, rows: 4 },
+  tablet: { columns: 8, rows: 4 },
+  mobile: { columns: 5, rows: 4, aspectRatio: '1/1' }
 };
 
 const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, assetValues: externalAssetValues }) => {
@@ -79,11 +79,17 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
 
   useEffect(() => {
     if (externalAssetValues && Object.keys(externalAssetValues).length > 0) {
-      setLocalValues(externalAssetValues);
-      setIsInitialized(true);
-      setRenderKey(k => k + 1);
+      // Only update if values actually changed to avoid re-render loops
+      const currentKeys = Object.keys(localValues);
+      const newKeys = Object.keys(externalAssetValues);
+      
+      if (JSON.stringify(localValues) !== JSON.stringify(externalAssetValues)) {
+        setLocalValues(externalAssetValues);
+        setIsInitialized(true);
+        setRenderKey(k => k + 1);
+      }
     }
-  }, [externalAssetValues]);
+  }, [externalAssetValues, localValues]);
 
   const getAssetDefaults = useCallback((asset: AssetConfig): GridAssetValue => {
     const isMobile = breakpoint === 'mobile';

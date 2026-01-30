@@ -61,7 +61,11 @@ const Hero: React.FC = () => {
 
         {breakpoint === 'mobile' && (
           <div className="w-[90vw] aspect-square shrink-0 relative flex items-center justify-center overflow-visible my-4 mx-auto max-h-[90vw]">
-            <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
+            <FloatingAssets 
+              key={JSON.stringify(assetValues)}
+              assetValues={assetValues} 
+              onAssetValuesChange={handleAssetValuesChange} 
+            />
           </div>
         )}
 
@@ -97,8 +101,12 @@ const Hero: React.FC = () => {
       </div>
 
       {breakpoint !== 'mobile' && (
-        <div className="hidden md:flex flex-[1] items-center justify-end relative overflow-visible pr-8">
-          <FloatingAssets assetValues={assetValues} onAssetValuesChange={handleAssetValuesChange} />
+        <div className="hidden md:flex flex-[1] items-center justify-end relative overflow-visible pr-8 h-[520px] pt-16">
+          <FloatingAssets 
+            key={JSON.stringify(assetValues)}
+            assetValues={assetValues} 
+            onAssetValuesChange={handleAssetValuesChange} 
+          />
         </div>
       )}
 

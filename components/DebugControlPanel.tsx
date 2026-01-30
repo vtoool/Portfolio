@@ -24,9 +24,9 @@ interface DebugControlPanelProps {
 }
 
 const GRID_CONFIG = {
-  desktop: { columns: 12, rows: 8 },
-  tablet: { columns: 8, rows: 6 },
-  mobile: { columns: 5, rows: 5 }
+  desktop: { columns: 12, rows: 4 },
+  tablet: { columns: 8, rows: 4 },
+  mobile: { columns: 5, rows: 4 }
 };
 
 const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange }) => {

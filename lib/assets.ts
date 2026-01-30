@@ -32,12 +32,12 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Me.webp",
     alt: "Me - Clay Figurine",
     position: {
-      rowStart: 3.5,
-      rowEnd: 6.5,
-      colStart: 4,
-      colEnd: 8
+      rowStart: 0.5,
+      rowEnd: 3.0,
+      colStart: 5,
+      colEnd: 9
     },
-    scale: 2.0,
+    scale: 2.4,
     animation: {
       delay: 0,
       parallaxSpeedX: 0.3,
@@ -53,12 +53,12 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Guitar.webp",
     alt: "Guitar",
     position: {
-      rowStart: 4.5,
-      rowEnd: 7.5,
-      colStart: 1,
-      colEnd: 4.5
+      rowStart: 0.8,
+      rowEnd: 3.0,
+      colStart: 2.5,
+      colEnd: 5
     },
-    scale: 1.8,
+    scale: 1.9,
     animation: {
       delay: 0.1,
       parallaxSpeedX: 0.35,
@@ -74,12 +74,12 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Map.webp",
     alt: "Map App Icon",
     position: {
-      rowStart: 2.5,
-      rowEnd: 5,
-      colStart: 2.5,
-      colEnd: 5.5
+      rowStart: 0.2,
+      rowEnd: 2.0,
+      colStart: 4,
+      colEnd: 6
     },
-    scale: 1.5,
+    scale: 1.4,
     animation: {
       delay: 0.15,
       parallaxSpeedX: 0.25,
@@ -95,12 +95,12 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Plane.webp",
     alt: "Plane",
     position: {
-      rowStart: 2.5,
-      rowEnd: 5,
-      colStart: 8,
-      colEnd: 11.5
+      rowStart: 0.2,
+      rowEnd: 2.0,
+      colStart: 8.5,
+      colEnd: 11
     },
-    scale: 1.6,
+    scale: 1.5,
     animation: {
       delay: 0.05,
       parallaxSpeedX: 0.4,
@@ -116,12 +116,12 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Gear1.webp",
     alt: "Gear",
     position: {
-      rowStart: 5.5,
-      rowEnd: 8,
+      rowStart: 2.0,
+      rowEnd: 3.8,
       colStart: 9,
-      colEnd: 12
+      colEnd: 11.5
     },
-    scale: 1.8,
+    scale: 1.6,
     animation: {
       delay: 0.2,
       parallaxSpeedX: 0.2,
@@ -137,12 +137,12 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Gear2.webp",
     alt: "Small Gear",
     position: {
-      rowStart: 5.5,
-      rowEnd: 7.5,
+      rowStart: 2.5,
+      rowEnd: 3.8,
       colStart: 10.5,
       colEnd: 12
     },
-    scale: 1.4,
+    scale: 1.0,
     animation: {
       delay: 0.25,
       parallaxSpeedX: 0.18,
@@ -161,12 +161,12 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Me.webp",
     alt: "Me - Clay Figurine",
     position: {
-      rowStart: 1.5,
-      rowEnd: 3.5,
-      colStart: 2,
-      colEnd: 4
+      rowStart: 1.2,
+      rowEnd: 3.2,
+      colStart: 1.8,
+      colEnd: 3.8
     },
-    scale: 1.8,
+    scale: 1.5,
     animation: {
       delay: 0,
       parallaxSpeedX: 0.15,
@@ -179,19 +179,40 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     }
   },
   {
-    src: "/art/Map.webp",
-    alt: "Map App Icon",
+    src: "/art/Guitar.webp",
+    alt: "Guitar",
     position: {
-      rowStart: 1,
-      rowEnd: 2.5,
-      colStart: 1,
-      colEnd: 2.5
+      rowStart: 1.8,
+      rowEnd: 3.5,
+      colStart: 0.3,
+      colEnd: 1.8
     },
     scale: 1.2,
     animation: {
       delay: 0.1,
       parallaxSpeedX: 0.12,
       parallaxSpeedY: 0.1,
+      breathingAmplitude: {
+        x: 1.5,
+        y: 1.5,
+        scale: 0.002
+      }
+    }
+  },
+  {
+    src: "/art/Map.webp",
+    alt: "Map App Icon",
+    position: {
+      rowStart: 0.5,
+      rowEnd: 1.8,
+      colStart: 0.5,
+      colEnd: 1.8
+    },
+    scale: 1.0,
+    animation: {
+      delay: 0.15,
+      parallaxSpeedX: 0.1,
+      parallaxSpeedY: 0.08,
       breathingAmplitude: {
         x: 1.5,
         y: 1.5,
@@ -203,16 +224,16 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Plane.webp",
     alt: "Plane",
     position: {
-      rowStart: 0.8,
-      rowEnd: 2,
-      colStart: 3.5,
-      colEnd: 4.8
+      rowStart: 0.3,
+      rowEnd: 1.6,
+      colStart: 3.3,
+      colEnd: 4.6
     },
-    scale: 1.3,
+    scale: 1.2,
     animation: {
-      delay: 0.15,
-      parallaxSpeedX: 0.18,
-      parallaxSpeedY: 0.15,
+      delay: 0.2,
+      parallaxSpeedX: 0.15,
+      parallaxSpeedY: 0.12,
       breathingAmplitude: {
         x: 2,
         y: 1.5,
@@ -221,36 +242,15 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     }
   },
   {
-    src: "/art/Guitar.webp",
-    alt: "Guitar",
-    position: {
-      rowStart: 2.5,
-      rowEnd: 4.5,
-      colStart: 1,
-      colEnd: 2.5
-    },
-    scale: 1.5,
-    animation: {
-      delay: 0.2,
-      parallaxSpeedX: 0.1,
-      parallaxSpeedY: 0.12,
-      breathingAmplitude: {
-        x: 1.5,
-        y: 2,
-        scale: 0.002
-      }
-    }
-  },
-  {
     src: "/art/Gear1.webp",
     alt: "Gear",
     position: {
-      rowStart: 2,
-      rowEnd: 3.8,
-      colStart: 4,
-      colEnd: 5
+      rowStart: 2.0,
+      rowEnd: 3.5,
+      colStart: 3.5,
+      colEnd: 4.7
     },
-    scale: 1.2,
+    scale: 1.0,
     animation: {
       delay: 0.25,
       parallaxSpeedX: 0.08,
@@ -266,12 +266,12 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Gear2.webp",
     alt: "Small Gear",
     position: {
-      rowStart: 3.5,
-      rowEnd: 5,
-      colStart: 3.5,
+      rowStart: 2.8,
+      rowEnd: 3.8,
+      colStart: 4,
       colEnd: 4.8
     },
-    scale: 1.0,
+    scale: 0.7,
     animation: {
       delay: 0.3,
       parallaxSpeedX: 0.06,

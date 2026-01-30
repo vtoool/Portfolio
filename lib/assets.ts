@@ -149,10 +149,10 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Me.webp",
     alt: "Me - Clay Figurine",
     position: {
-      x: 50,
-      y: 40
+      x: 43.7,
+      y: 60.6
     },
-    scale: 1.5,
+    scale: 5.00,
     animation: {
       delay: 0,
       parallaxSpeedX: 0.15,
@@ -168,14 +168,14 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Guitar.webp",
     alt: "Guitar",
     position: {
-      x: 15,
-      y: 55
+      x: 15.0,
+      y: 76.5
     },
-    scale: 1.2,
+    scale: 2.03,
     animation: {
       delay: 0.1,
       parallaxSpeedX: 0.12,
-      parallaxSpeedY: 0.1,
+      parallaxSpeedY: 0.10,
       breathingAmplitude: {
         x: 1.5,
         y: 1.5,
@@ -187,18 +187,18 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Map.webp",
     alt: "Map App Icon",
     position: {
-      x: 20,
-      y: 15
+      x: 17.5,
+      y: 18.6
     },
-    scale: 1.0,
+    scale: 1.55,
     animation: {
       delay: 0.15,
-      parallaxSpeedX: 0.1,
+      parallaxSpeedX: 0.10,
       parallaxSpeedY: 0.08,
       breathingAmplitude: {
         x: 1.5,
         y: 1.5,
-        scale: 0.0015
+        scale: 0.002
       }
     }
   },
@@ -206,10 +206,10 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Plane.webp",
     alt: "Plane",
     position: {
-      x: 80,
-      y: 20
+      x: 72.9,
+      y: 11.9
     },
-    scale: 1.2,
+    scale: 1.72,
     animation: {
       delay: 0.2,
       parallaxSpeedX: 0.15,
@@ -217,7 +217,7 @@ export const MOBILE_ASSETS: AssetConfig[] = [
       breathingAmplitude: {
         x: 2,
         y: 1.5,
-        scale: 0.0015
+        scale: 0.002
       }
     }
   },
@@ -225,14 +225,14 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Gear1.webp",
     alt: "Gear",
     position: {
-      x: 75,
-      y: 60
+      x: 69.1,
+      y: 81.8
     },
-    scale: 1.0,
+    scale: 1.55,
     animation: {
       delay: 0.25,
       parallaxSpeedX: 0.08,
-      parallaxSpeedY: 0.1,
+      parallaxSpeedY: 0.10,
       breathingAmplitude: {
         x: 1.5,
         y: 1,
@@ -244,10 +244,10 @@ export const MOBILE_ASSETS: AssetConfig[] = [
     src: "/art/Gear2.webp",
     alt: "Small Gear",
     position: {
-      x: 85,
-      y: 75
+      x: 76.1,
+      y: 71.2
     },
-    scale: 0.7,
+    scale: 1.31,
     animation: {
       delay: 0.3,
       parallaxSpeedX: 0.06,

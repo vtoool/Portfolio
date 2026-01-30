@@ -14,10 +14,15 @@ interface PageProps {
   };
 }
 
-export async function generateStaticParams() {
-  return projects.map((project) => ({
-    id: project.id,
-  }));
+export function generateStaticParams() {
+  return [
+    { id: 'pfcrm' },
+    { id: 'chef' },
+    { id: 'faresnap' },
+    { id: 'meta' },
+    { id: 'cabin' },
+    { id: 'gds' },
+  ];
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

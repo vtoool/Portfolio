@@ -10,7 +10,7 @@
     "headline": "Turn Manual Operations Into {highlight}",
     "highlight": "Revenue Engines.",
     "description": "I replace spreadsheets and busywork with intelligent software. Specializing in custom CRMs, API Integrations, and SaaS MVPs.",
-    "bookCall": "Book a Discovery Call",
+    "bookCall": "Book a Call",
     "viewProjects": "View Projects",
     "toolsSection": "Tools I Work With",
     "aboutMe": "Hi, I'm Victor. I'm a developer, a student, and a creative at heart. I focus on building software that solves actual business problems. My work ranges from creating booking systems for local service providers to developing specialized SaaS tools for the logistics industry. I use my background in sales to ensure that everything I build drives results, regardless of the project size. When I'm not coding, I recharge by playing the guitar and traveling to find new inspiration.",
@@ -49,5 +49,47 @@
     "hoursSaved": "Hours Saved",
     "clientROI": "Client ROI",
     "responseTime": "Response Time"
+  },
+  "booking": {
+    "title": "Book a Discovery Call",
+    "subtitle": "Schedule a 30-minute call to discuss your project",
+    "selectDate": "Select a Date",
+    "selectTime": "Select a Time",
+    "timeSections": {
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening"
+    },
+    "fields": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "message": "Tell me about your project"
+    },
+    "placeholders": {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "+1 (555) 000-0000",
+      "message": "Brief description of what you're looking to build..."
+    },
+    "optional": "Optional",
+    "summary": {
+      "title": "Selected Date & Time"
+    },
+    "submit": "Book Call",
+    "submitting": "Booking...",
+    "terms": "By booking, you agree to receive confirmation emails and calendar invites",
+    "errors": {
+      "nameRequired": "Please enter your name",
+      "emailRequired": "Please enter your email",
+      "emailInvalid": "Please enter a valid email address",
+      "dateRequired": "Please select a date",
+      "timeRequired": "Please select a time slot"
+    },
+    "success": {
+      "title": "Booking Received!",
+      "message": "Thank you for your interest. I'll review your request and get back to you soon.",
+      "comingSoon": "This is a demo - in production, you would receive a calendar invite."
+    }
   }
 }

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { MagneticButton } from "./MagneticButton";
 import FloatingAssets from "./FloatingAssets";
+import { BookingModal } from "./BookingModal";
 // import DebugControlPanel from "./DebugControlPanel"; // Debug panel hidden - uncomment to re-enable
 import { useLanguage } from './LanguageContext';
 import { useViewport } from '@/hooks/useViewport';
@@ -15,8 +16,10 @@ const Hero: React.FC = () => {
   const { breakpoint, mounted } = useViewport();
   const [isLayoutMode, setIsLayoutMode] = useState(false);
   const [assetValues, setAssetValues] = useState<{ [key: string]: any }>({});
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
   const safeBreakpoint = mounted ? breakpoint : 'desktop';
+  const highlight = t('hero.highlight');
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -32,13 +35,11 @@ const Hero: React.FC = () => {
 
   const renderHeadline = () => {
     const headline = t('hero.headline');
-    const highlight = t('hero.highlight');
-
     return headline.replace('{highlight}', highlight);
   };
 
   return (
-    <section className="flex flex-col md:flex-row min-h-[95vh] md:min-h-[70vh] pt-24 md:pt-0 relative">
+    <section className="flex flex-col md:flex-row min-h-[95vh] md:min-h-[70vh] pt-12 md:pt-0 relative">
       <div className="absolute top-0 left-0 w-full h-full hero-glow pointer-events-none -z-10" />
 
       <div className="flex-1 flex flex-col justify-start pt-8 md:pt-16 px-6 lg:px-12 text-center lg:text-left">
@@ -51,9 +52,9 @@ const Hero: React.FC = () => {
 
         <ScrollReveal direction="up" delay={0.1}>
           <h1 className={`text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white max-w-2xl mx-auto lg:mx-0 leading-[1.2] ${locale === 'ro' ? 'lg:text-4xl' : 'lg:text-5xl'}`}>
-            {renderHeadline().split('Revenue Engines.').map((part, i) => i === 0 ? part : (
+            {renderHeadline().split(highlight).map((part, i) => i === 0 ? part : (
               <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-emerald-500 dark:from-indigo-400 dark:to-emerald-400">
-                Revenue Engines.
+                {highlight}
               </span>
             ))}
           </h1>
@@ -77,7 +78,7 @@ const Hero: React.FC = () => {
           <div className="flex flex-col sm:flex-row items-center gap-4 pt-6 justify-center lg:justify-start">
             <MagneticButton
               variant="primary"
-              href="mailto:victor@cabin-story.com"
+              onClick={() => setIsBookingModalOpen(true)}
             >
               <Calendar className="w-4 h-4" />
               {t('hero.bookCall')}
@@ -92,6 +93,12 @@ const Hero: React.FC = () => {
             </MagneticButton>
           </div>
         </ScrollReveal>
+
+        {/* Booking Modal */}
+        <BookingModal 
+          isOpen={isBookingModalOpen} 
+          onClose={() => setIsBookingModalOpen(false)} 
+        />
 
         <div id="cta-trigger" className="h-1 w-full" />
       </div>

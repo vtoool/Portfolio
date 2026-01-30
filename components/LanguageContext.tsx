@@ -23,7 +23,7 @@ const enMessages = {
     availability: "Available for new projects",
     headline: "Turn Manual Operations Into {highlight}",
     highlight: "Revenue Engines.",
-    bookCall: "Book a Discovery Call",
+    bookCall: "Book a Call",
     viewProjects: "View Projects",
     toolsSection: "Tools I Work With",
     aboutMe: "Hi, I'm Victor. I'm a developer, a student, and a creative at heart. I focus on building software that solves actual business problems. My work ranges from creating booking systems for local service providers to developing specialized SaaS tools for the logistics industry. I use my background in sales to ensure that everything I build drives results, regardless of the project size. When I'm not coding, I recharge by playing the guitar and traveling to find new inspiration.",
@@ -62,6 +62,48 @@ const enMessages = {
     hoursSaved: "Hours Saved",
     clientROI: "Client ROI",
     responseTime: "Response Time"
+  },
+  booking: {
+    title: "Book a Discovery Call",
+    subtitle: "Schedule a 30-minute call to discuss your project",
+    selectDate: "Select a Date",
+    selectTime: "Select a Time",
+    timeSections: {
+      morning: "Morning",
+      afternoon: "Afternoon",
+      evening: "Evening"
+    },
+    fields: {
+      name: "Full Name",
+      email: "Email Address",
+      phone: "Phone Number",
+      message: "Tell me about your project"
+    },
+    placeholders: {
+      name: "John Doe",
+      email: "john@example.com",
+      phone: "+1 (555) 000-0000",
+      message: "Brief description of what you're looking to build..."
+    },
+    optional: "Optional",
+    summary: {
+      title: "Selected Date & Time"
+    },
+    submit: "Book Call",
+    submitting: "Booking...",
+    terms: "By booking, you agree to receive confirmation emails and calendar invites",
+    errors: {
+      nameRequired: "Please enter your name",
+      emailRequired: "Please enter your email",
+      emailInvalid: "Please enter a valid email address",
+      dateRequired: "Please select a date",
+      timeRequired: "Please select a time slot"
+    },
+    success: {
+      title: "Booking Received!",
+      message: "Thank you for your interest. I'll review your request and get back to you soon.",
+      comingSoon: "This is a demo - in production, you would receive a calendar invite."
+    }
   }
 };
 
@@ -76,7 +118,7 @@ const roMessages = {
     availability: "Disponibil pentru proiecte noi",
     headline: "Transform Operațiunile Manuale în {highlight}",
     highlight: "Motoare de Venituri.",
-    bookCall: "Rezervă o Discuție de Descoperire",
+    bookCall: "Programează un Apel",
     viewProjects: "Vezi Proiectele",
     toolsSection: "Tehnologii cu care Lucrez",
     aboutMe: "Salut, sunt Victor. Sunt dezvoltator, student și o persoană creativă. Mă concentrez pe construirea de software care rezolvă probleme reale de business. Activitatea mea variază de la sisteme de programări pentru prestatori de servicii locali, până la platforme SaaS complexe pentru logistică. Îmi folosesc experiența în vânzări pentru a mă asigura că tot ce construiesc aduce rezultate, indiferent de mărimea proiectului. Când nu scriu cod, mă reîncarc cântând la chitară și călătoresc pentru a găsi inspirație nouă.",
@@ -115,6 +157,48 @@ const roMessages = {
     hoursSaved: "Ore Salvate",
     clientROI: "ROI",
     responseTime: "Răspund în"
+  },
+  booking: {
+    title: "Programează un Apel de Descoperire",
+    subtitle: "Planifică un apel de 30 de minute pentru a discuta proiectul tău",
+    selectDate: "Selectează o Dată",
+    selectTime: "Selectează o Oră",
+    timeSections: {
+      morning: "Dimineața",
+      afternoon: "După-amiaza",
+      evening: "Seara"
+    },
+    fields: {
+      name: "Nume Complet",
+      email: "Adresă Email",
+      phone: "Număr de Telefon",
+      message: "Spune-mi despre proiectul tău"
+    },
+    placeholders: {
+      name: "Ion Popescu",
+      email: "ion@exemplu.ro",
+      phone: "+40 (721) 000-000",
+      message: "O scurtă descriere a ceea ce dorești să construiești..."
+    },
+    optional: "Opțional",
+    summary: {
+      title: "Dată și Oră Selectate"
+    },
+    submit: "Programează Apel",
+    submitting: "Se programează...",
+    terms: "Prin programare, ești de acord să primești emailuri de confirmare și invitații în calendar",
+    errors: {
+      nameRequired: "Te rugăm să introduci numele",
+      emailRequired: "Te rugăm să introduci emailul",
+      emailInvalid: "Te rugăm să introduci o adresă de email validă",
+      dateRequired: "Te rugăm să selectezi o dată",
+      timeRequired: "Te rugăm să selectezi un interval orar"
+    },
+    success: {
+      title: "Programare Primită!",
+      message: "Îți mulțumesc pentru interes. Voi revizui solicitarea și te voi contacta în curând.",
+      comingSoon: "Acesta este un demo - în producție, ai primi o invitație în calendar."
+    }
   }
 };
 

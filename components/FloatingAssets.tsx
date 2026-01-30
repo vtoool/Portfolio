@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 import { AssetConfig, getAssetsForBreakpoint, AssetValues, getAssetDefaults } from "@/lib/assets";
 import { useViewport } from "@/hooks/useViewport";
 
@@ -99,10 +100,9 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ assetValues: externalAs
                 alt={asset.alt}
                 width={assetSize}
                 height={assetSize}
-                className="pointer-events-none select-none w-full h-full"
+                className="pointer-events-none select-none w-full h-full drop-shadow-[0_0_10px_rgba(0,0,0,0.15)] drop-shadow-[0_4px_20px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.08)] dark:drop-shadow-[0_0_20px_rgba(255,255,255,0.04)]"
                 style={{
-                  objectFit: 'contain',
-                  filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.08)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.04))'
+                  objectFit: 'contain'
                 }}
                 priority={asset.animation.delay === 0}
               />
@@ -167,10 +167,9 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ assetValues: externalAs
               alt={asset.alt}
               width={assetSize}
               height={assetSize}
-              className="pointer-events-none select-none w-full h-full"
+              className="pointer-events-none select-none w-full h-full drop-shadow-[0_0_10px_rgba(0,0,0,0.15)] drop-shadow-[0_4px_20px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_0_10px_rgba(255,255,255,0.08)] dark:drop-shadow-[0_0_20px_rgba(255,255,255,0.04)]"
               style={{
-                objectFit: 'contain',
-                filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.08)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.04))'
+                objectFit: 'contain'
               }}
               priority={asset.animation.delay === 0}
             />

@@ -32,19 +32,19 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Me.webp",
     alt: "Me - Clay Figurine",
     position: {
-      rowStart: 2.5,
-      rowEnd: 6,
+      rowStart: 3.5,
+      rowEnd: 6.5,
       colStart: 4,
       colEnd: 8
     },
-    scale: 0.65,
+    scale: 2.0,
     animation: {
       delay: 0,
       parallaxSpeedX: 0.3,
       parallaxSpeedY: 0.25,
       breathingAmplitude: {
-        x: 5,
-        y: 4,
+        x: 8,
+        y: 6,
         scale: 0.004
       }
     }
@@ -53,19 +53,19 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Guitar.webp",
     alt: "Guitar",
     position: {
-      rowStart: 3.5,
-      rowEnd: 6.5,
+      rowStart: 4.5,
+      rowEnd: 7.5,
       colStart: 1,
-      colEnd: 4
+      colEnd: 4.5
     },
-    scale: 0.55,
+    scale: 1.8,
     animation: {
       delay: 0.1,
       parallaxSpeedX: 0.35,
       parallaxSpeedY: 0.3,
       breathingAmplitude: {
-        x: 4,
-        y: 5,
+        x: 6,
+        y: 8,
         scale: 0.003
       }
     }
@@ -74,19 +74,19 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Map.webp",
     alt: "Map App Icon",
     position: {
-      rowStart: 1.5,
-      rowEnd: 4.5,
+      rowStart: 2.5,
+      rowEnd: 5,
       colStart: 2.5,
       colEnd: 5.5
     },
-    scale: 0.6,
+    scale: 1.5,
     animation: {
       delay: 0.15,
       parallaxSpeedX: 0.25,
       parallaxSpeedY: 0.2,
       breathingAmplitude: {
-        x: 3,
-        y: 3,
+        x: 5,
+        y: 5,
         scale: 0.005
       }
     }
@@ -95,19 +95,19 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Plane.webp",
     alt: "Plane",
     position: {
-      rowStart: 1.5,
-      rowEnd: 4,
+      rowStart: 2.5,
+      rowEnd: 5,
       colStart: 8,
-      colEnd: 11
+      colEnd: 11.5
     },
-    scale: 0.52,
+    scale: 1.6,
     animation: {
       delay: 0.05,
       parallaxSpeedX: 0.4,
       parallaxSpeedY: 0.35,
       breathingAmplitude: {
-        x: 4,
-        y: 3,
+        x: 6,
+        y: 5,
         scale: 0.003
       }
     }
@@ -116,19 +116,19 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Gear1.webp",
     alt: "Gear",
     position: {
-      rowStart: 4.5,
-      rowEnd: 7.5,
+      rowStart: 5.5,
+      rowEnd: 8,
       colStart: 9,
       colEnd: 12
     },
-    scale: 0.65,
+    scale: 1.8,
     animation: {
       delay: 0.2,
       parallaxSpeedX: 0.2,
       parallaxSpeedY: 0.18,
       breathingAmplitude: {
-        x: 3,
-        y: 2,
+        x: 5,
+        y: 4,
         scale: 0.006
       }
     }
@@ -137,19 +137,19 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Gear2.webp",
     alt: "Small Gear",
     position: {
-      rowStart: 4.3,
-      rowEnd: 7,
-      colStart: 10,
-      colEnd: 12.5
+      rowStart: 5.5,
+      rowEnd: 7.5,
+      colStart: 10.5,
+      colEnd: 12
     },
-    scale: 0.55,
+    scale: 1.4,
     animation: {
       delay: 0.25,
       parallaxSpeedX: 0.18,
       parallaxSpeedY: 0.22,
       breathingAmplitude: {
-        x: 3.5,
-        y: 3,
+        x: 5,
+        y: 5,
         scale: 0.004
       }
     }

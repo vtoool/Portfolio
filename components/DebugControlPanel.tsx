@@ -24,12 +24,10 @@ interface DebugControlPanelProps {
 }
 
 const GRID_CONFIG = {
-  desktop: { columns: 12, rows: 12 },
-  tablet: { columns: 8, rows: 8 },
+  desktop: { columns: 12, rows: 8 },
+  tablet: { columns: 8, rows: 6 },
   mobile: { columns: 5, rows: 5 }
 };
-
-const STORAGE_KEY = 'grid-asset-values';
 
 const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange }) => {
   const { breakpoint } = useViewport();
@@ -75,28 +73,8 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
 
   useEffect(() => {
     setMounted(true);
-
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          setAssetValues(parsed);
-          onValuesChange(parsed);
-        } catch (e) {
-          initializeValues();
-        }
-      } else {
-        initializeValues();
-      }
-    }
+    initializeValues();
   }, []);
-
-  useEffect(() => {
-    if (mounted) {
-      initializeValues();
-    }
-  }, [viewMode, mounted, initializeValues]);
 
   useEffect(() => {
     setViewMode(breakpoint === 'mobile' ? 'mobile' : 'desktop');
@@ -112,10 +90,6 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
     };
     setAssetValues(newValues);
     onValuesChange(newValues);
-
-    if (typeof window !== "undefined") {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newValues));
-    }
   }, [assetValues, onValuesChange]);
 
   const handleLogToConsole = useCallback(() => {
@@ -345,7 +319,7 @@ const DebugControlPanel: React.FC<DebugControlPanelProps> = ({ onValuesChange })
                       <input
                         type="range"
                         min="0.1"
-                        max="2"
+                        max="3"
                         step="0.01"
                         value={values.scale}
                         onChange={(e) => updateValue(key, 'scale', parseFloat(e.target.value))}

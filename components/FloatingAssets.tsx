@@ -23,7 +23,7 @@ interface GridAssetValue {
 
 interface FloatingAssetsProps {
   onAssetValuesChange?: (values: { [key: string]: GridAssetValue }) => void;
-  assetValues?: { [key: string]: GridAssetValue };
+  assetValues?: { [key: string]: GridAssetValue } | null;
 }
 
 interface DragState {
@@ -40,8 +40,8 @@ interface DragState {
 }
 
 const GRID_CONFIG = {
-  desktop: { columns: 12, rows: 12 },
-  tablet: { columns: 8, rows: 8 },
+  desktop: { columns: 12, rows: 8 },
+  tablet: { columns: 8, rows: 6 },
   mobile: { columns: 5, rows: 5, aspectRatio: '1/1' }
 };
 
@@ -55,9 +55,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
 
   const [isLayoutMode, setIsLayoutMode] = useState(false);
   const [dragState, setDragState] = useState<DragState | null>(null);
-  const [localAssetValues, setLocalAssetValues] = useState<{ [key: string]: GridAssetValue }>({});
   const [mounted, setMounted] = useState(false);
-  const [gridDimensions, setGridDimensions] = useState({ cellWidth: 0, cellHeight: 0 });
 
   const { breakpoint } = useViewport();
 
@@ -75,34 +73,8 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
       const urlParams = new URLSearchParams(window.location.search);
       const layoutMode = urlParams.get("layoutMode");
       setIsLayoutMode(layoutMode === "true");
-
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          setLocalAssetValues(parsed);
-        } catch (e) {
-          console.error('Failed to parse stored asset values');
-        }
-      }
     }
   }, []);
-
-  useEffect(() => {
-    if (!gridContainerRef.current) return;
-
-    const updateGridDimensions = () => {
-      const rect = gridContainerRef.current!.getBoundingClientRect();
-      setGridDimensions({
-        cellWidth: rect.width / gridConfig.columns,
-        cellHeight: rect.height / gridConfig.rows
-      });
-    };
-
-    updateGridDimensions();
-    window.addEventListener('resize', updateGridDimensions);
-    return () => window.removeEventListener('resize', updateGridDimensions);
-  }, [gridConfig, assetsToRender, breakpoint]);
 
   const getAssetDefaults = useCallback((asset: AssetConfig, breakpoint: string): GridAssetValue => {
     const isMobile = breakpoint === 'mobile';
@@ -132,18 +104,16 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
 
       if (externalAssetValues && externalAssetValues[key]) {
         result[key] = externalAssetValues[key];
-      } else if (localAssetValues[key]) {
-        result[key] = localAssetValues[key];
       } else {
         result[key] = getAssetDefaults(asset, breakpoint);
       }
     });
 
     return result;
-  }, [assetsToRender, externalAssetValues, localAssetValues, breakpoint, getAssetDefaults]);
+  }, [assetsToRender, externalAssetValues, breakpoint, getAssetDefaults]);
 
   useEffect(() => {
-    if (mounted && onAssetValuesChange) {
+    if (mounted && onAssetValuesChange && computedAssetValues) {
       onAssetValuesChange(computedAssetValues);
     }
   }, [computedAssetValues, onAssetValuesChange, mounted]);
@@ -173,12 +143,6 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [scrollY, prefersReducedMotion]);
-
-  const saveToLocalStorage = useCallback((values: { [key: string]: GridAssetValue }) => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
-    }
-  }, []);
 
   const handleMouseDown = useCallback((e: React.MouseEvent, asset: AssetConfig, action: 'move' | 'resize', direction?: string) => {
     if (!isLayoutMode || !gridContainerRef.current) return;
@@ -218,7 +182,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
       const newRowStart = Math.max(0, Math.min(gridConfig.rows - 1, dragState.startRowStart + deltaY));
       const newRowEnd = Math.max(newRowStart + 0.5, Math.min(gridConfig.rows, dragState.startRowEnd + deltaY));
 
-      const updatedValues = {
+      const newValues = {
         ...computedAssetValues,
         [dragState.assetSrc]: {
           ...computedAssetValues[dragState.assetSrc],
@@ -229,8 +193,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
         }
       };
 
-      setLocalAssetValues(updatedValues);
-      saveToLocalStorage(updatedValues);
+      onAssetValuesChange?.(newValues);
     } else if (dragState.action === 'resize') {
       const deltaX = e.clientX - dragState.startX;
       const deltaY = e.clientY - dragState.startY;
@@ -239,9 +202,9 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
       const scaleChange = distance / 100;
       const scaleMultiplier = deltaX > 0 || deltaY > 0 ? 1 : -1;
 
-      const newScale = Math.max(0.1, Math.min(3, dragState.startScale + (scaleChange * scaleMultiplier)));
+      const newScale = Math.max(0.1, Math.min(5, dragState.startScale + (scaleChange * scaleMultiplier)));
 
-      const updatedValues = {
+      const newValues = {
         ...computedAssetValues,
         [dragState.assetSrc]: {
           ...computedAssetValues[dragState.assetSrc],
@@ -249,10 +212,9 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
         }
       };
 
-      setLocalAssetValues(updatedValues);
-      saveToLocalStorage(updatedValues);
+      onAssetValuesChange?.(newValues);
     }
-  }, [dragState, gridConfig, computedAssetValues, saveToLocalStorage]);
+  }, [dragState, gridConfig, computedAssetValues, onAssetValuesChange]);
 
   const handleMouseUp = useCallback(() => {
     setDragState(null);
@@ -292,7 +254,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
             style={{
               gridRow: `${row} / ${row + 1}`,
               gridColumn: `${col} / ${col + 1}`,
-              border: '1px solid rgba(255, 255, 255, 0.15)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
               backgroundColor: 'transparent'
             }}
           />
@@ -320,9 +282,13 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ onAssetValuesChange, as
   }, [isLayoutMode, gridConfig]);
 
   const getAssetSize = (values: GridAssetValue) => {
-    const cellWidth = gridDimensions.cellWidth || 100;
-    const cellHeight = gridDimensions.cellHeight || 100;
-    const baseSize = Math.min(cellWidth, cellHeight);
+    const containerWidth = gridContainerRef.current?.getBoundingClientRect().width || 800;
+    const containerHeight = gridContainerRef.current?.getBoundingClientRect().height || 600;
+    const cellWidth = containerWidth / gridConfig.columns;
+    const cellHeight = containerHeight / gridConfig.rows;
+    const spanWidth = (values.colEnd - values.colStart) * cellWidth;
+    const spanHeight = (values.rowEnd - values.rowStart) * cellHeight;
+    const baseSize = Math.min(spanWidth, spanHeight);
     return baseSize * values.scale;
   };
 

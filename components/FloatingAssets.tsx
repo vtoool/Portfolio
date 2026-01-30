@@ -60,7 +60,7 @@ const FloatingAssets: React.FC<FloatingAssetsProps> = ({ assetValues: externalAs
     return getAssetsForBreakpoint(breakpoint);
   }, [breakpoint]);
 
-  const isMobile = breakpoint === 'mobile';
+  const isMobile = breakpoint === 'mobile' || breakpoint === 'tablet';
 
   const [isLayoutMode, setIsLayoutMode] = useState(false);
   const [mounted, setMounted] = useState(false);

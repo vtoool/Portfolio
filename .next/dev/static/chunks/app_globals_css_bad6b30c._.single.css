@@ -692,10 +692,6 @@ img, video {
   width: 90%;
 }
 
-.w-\[90vw\] {
-  width: 90vw;
-}
-
 .w-full {
   width: 100%;
 }
@@ -2773,8 +2769,16 @@ html.dark ::selection {
     display: none;
   }
 
+  .md\:max-h-\[500px\] {
+    max-height: 500px;
+  }
+
   .md\:min-h-\[70vh\] {
     min-height: 70vh;
+  }
+
+  .md\:w-\[90vw\] {
+    width: 90vw;
   }
 
   .md\:grid-cols-2 {
@@ -2892,6 +2896,18 @@ html.dark ::selection {
   .lg\:mx-0 {
     margin-left: 0;
     margin-right: 0;
+  }
+
+  .lg\:flex {
+    display: flex;
+  }
+
+  .lg\:hidden {
+    display: none;
+  }
+
+  .lg\:w-\[500px\] {
+    width: 500px;
   }
 
   .lg\:grid-cols-4 {

@@ -268,7 +268,7 @@ export const ASSET_CONFIGS = {
   },
   tablet: {
     visible: true,
-    assets: ART_ASSETS
+    assets: MOBILE_ASSETS
   },
   desktop: {
     visible: true,

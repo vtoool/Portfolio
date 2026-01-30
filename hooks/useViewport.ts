@@ -16,7 +16,7 @@ export const useViewport = () => {
 
       if (width < 640) {
         setBreakpoint('mobile');
-      } else if (width < 768) {
+      } else if (width < 1024) {
         setBreakpoint('tablet');
       } else {
         setBreakpoint('desktop');

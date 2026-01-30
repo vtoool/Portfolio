@@ -1213,6 +1213,31 @@ const getWaveDelay = (assetSrc)=>{
     }
     return 0;
 };
+// Get entrance animation direction for each asset
+const getEntranceDirection = (assetSrc)=>{
+    if (assetSrc.includes('Me')) {
+        return {
+            x: 0,
+            y: 80
+        }; // From below
+    }
+    if (assetSrc.includes('Guitar') || assetSrc.includes('Map')) {
+        return {
+            x: -100,
+            y: 0
+        }; // From left
+    }
+    if (assetSrc.includes('Plane') || assetSrc.includes('Gear')) {
+        return {
+            x: 100,
+            y: 0
+        }; // From right
+    }
+    return {
+        x: 0,
+        y: 0
+    };
+};
 const FloatingAssets = ({ assetValues: externalAssetValues })=>{
     _s();
     const containerRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
@@ -1253,7 +1278,7 @@ const FloatingAssets = ({ assetValues: externalAssetValues })=>{
             className: "w-full h-full"
         }, void 0, false, {
             fileName: "[project]/components/FloatingAssets.tsx",
-            lineNumber: 70,
+            lineNumber: 84,
             columnNumber: 12
         }, ("TURBOPACK compile-time value", void 0));
     }
@@ -1291,18 +1316,18 @@ const FloatingAssets = ({ assetValues: externalAssetValues })=>{
                         priority: asset.animation.delay === 0
                     }, void 0, false, {
                         fileName: "[project]/components/FloatingAssets.tsx",
-                        lineNumber: 98,
+                        lineNumber: 112,
                         columnNumber: 15
                     }, ("TURBOPACK compile-time value", void 0))
                 }, asset.src, false, {
                     fileName: "[project]/components/FloatingAssets.tsx",
-                    lineNumber: 85,
+                    lineNumber: 99,
                     columnNumber: 13
                 }, ("TURBOPACK compile-time value", void 0));
             })
         }, void 0, false, {
             fileName: "[project]/components/FloatingAssets.tsx",
-            lineNumber: 76,
+            lineNumber: 90,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0));
     }
@@ -1319,6 +1344,38 @@ const FloatingAssets = ({ assetValues: externalAssetValues })=>{
             const waveDelay = getWaveDelay(asset.src);
             const floatAmplitude = isMobile ? 6 : 10; // Pixels to float up/down
             const floatDuration = 4.5; // Total wave cycle duration
+            // Get entrance direction
+            const entrance = getEntranceDirection(asset.src);
+            // Animation variants
+            const variants = {
+                initial: {
+                    opacity: 0,
+                    x: entrance.x,
+                    y: entrance.y,
+                    filter: "blur(8px)",
+                    scale: 0.8
+                },
+                entrance: {
+                    opacity: 1,
+                    x: 0,
+                    y: 0,
+                    filter: "blur(0px)",
+                    scale: 1
+                },
+                floating: {
+                    y: [
+                        0,
+                        -floatAmplitude,
+                        0
+                    ],
+                    transition: {
+                        duration: floatDuration,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: waveDelay
+                    }
+                }
+            };
             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
                 className: "floating-asset transform-gpu absolute",
                 style: {
@@ -1330,39 +1387,47 @@ const FloatingAssets = ({ assetValues: externalAssetValues })=>{
                     marginLeft: -assetSize / 2,
                     marginTop: -assetSize / 2
                 },
-                initial: {
-                    opacity: 0,
-                    y: 20,
-                    filter: "blur(4px)"
-                },
-                animate: {
-                    opacity: 1,
-                    y: [
-                        0,
-                        -floatAmplitude,
-                        0
-                    ],
-                    filter: "blur(0px)"
-                },
+                initial: "initial",
+                animate: [
+                    "entrance",
+                    "floating"
+                ],
+                variants: variants,
                 transition: {
                     opacity: {
-                        duration: 0.8,
-                        delay: asset.animation.delay
+                        duration: 1,
+                        delay: asset.animation.delay,
+                        ease: "easeOut"
+                    },
+                    x: {
+                        duration: 1.2,
+                        delay: asset.animation.delay,
+                        ease: [
+                            0.16,
+                            1,
+                            0.3,
+                            1
+                        ]
                     },
                     y: {
-                        duration: floatDuration,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: waveDelay + asset.animation.delay,
-                        times: [
-                            0,
-                            0.5,
+                        duration: 1.2,
+                        delay: asset.animation.delay,
+                        ease: [
+                            0.16,
+                            1,
+                            0.3,
                             1
-                        ] // Peak at middle of cycle
+                        ]
                     },
                     filter: {
-                        duration: 0.8,
-                        delay: asset.animation.delay
+                        duration: 1,
+                        delay: asset.animation.delay,
+                        ease: "easeOut"
+                    },
+                    scale: {
+                        duration: 1,
+                        delay: asset.animation.delay,
+                        ease: "easeOut"
                     }
                 },
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1377,18 +1442,18 @@ const FloatingAssets = ({ assetValues: externalAssetValues })=>{
                     priority: asset.animation.delay === 0
                 }, void 0, false, {
                     fileName: "[project]/components/FloatingAssets.tsx",
-                    lineNumber: 165,
+                    lineNumber: 198,
                     columnNumber: 13
                 }, ("TURBOPACK compile-time value", void 0))
             }, asset.src, false, {
                 fileName: "[project]/components/FloatingAssets.tsx",
-                lineNumber: 131,
+                lineNumber: 175,
                 columnNumber: 11
             }, ("TURBOPACK compile-time value", void 0));
         })
     }, void 0, false, {
         fileName: "[project]/components/FloatingAssets.tsx",
-        lineNumber: 117,
+        lineNumber: 131,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -2532,19 +2597,19 @@ const Hero = ()=>{
                         lineNumber: 53,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
-                    breakpoint === 'mobile' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "w-[90vw] aspect-square shrink-0 relative flex items-center justify-center overflow-visible my-4 mx-auto max-h-[90vw]",
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "w-full md:w-[90vw] lg:w-[500px] aspect-square shrink-0 relative flex items-center justify-center overflow-visible my-4 mx-auto lg:hidden max-h-[90vw] md:max-h-[500px]",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$FloatingAssets$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                             assetValues: assetValues
                         }, void 0, false, {
                             fileName: "[project]/components/Hero.tsx",
                             lineNumber: 65,
-                            columnNumber: 13
+                            columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/components/Hero.tsx",
                         lineNumber: 64,
-                        columnNumber: 11
+                        columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollReveal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ScrollReveal"], {
                         direction: "up",
@@ -2556,17 +2621,17 @@ const Hero = ()=>{
                                 children: t('hero.aboutMe')
                             }, void 0, false, {
                                 fileName: "[project]/components/Hero.tsx",
-                                lineNumber: 71,
+                                lineNumber: 70,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/components/Hero.tsx",
-                            lineNumber: 70,
+                            lineNumber: 69,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/components/Hero.tsx",
-                        lineNumber: 69,
+                        lineNumber: 68,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ScrollReveal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ScrollReveal"], {
@@ -2583,7 +2648,7 @@ const Hero = ()=>{
                                             className: "w-4 h-4"
                                         }, void 0, false, {
                                             fileName: "[project]/components/Hero.tsx",
-                                            lineNumber: 83,
+                                            lineNumber: 82,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         t('hero.bookCall'),
@@ -2591,13 +2656,13 @@ const Hero = ()=>{
                                             className: "w-4 h-4"
                                         }, void 0, false, {
                                             fileName: "[project]/components/Hero.tsx",
-                                            lineNumber: 85,
+                                            lineNumber: 84,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/Hero.tsx",
-                                    lineNumber: 79,
+                                    lineNumber: 78,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$MagneticButton$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MagneticButton"], {
@@ -2608,25 +2673,25 @@ const Hero = ()=>{
                                             className: "w-4 h-4"
                                         }, void 0, false, {
                                             fileName: "[project]/components/Hero.tsx",
-                                            lineNumber: 91,
+                                            lineNumber: 90,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         t('hero.viewProjects')
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/Hero.tsx",
-                                    lineNumber: 87,
+                                    lineNumber: 86,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/Hero.tsx",
-                            lineNumber: 78,
+                            lineNumber: 77,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/components/Hero.tsx",
-                        lineNumber: 77,
+                        lineNumber: 76,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$BookingModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["BookingModal"], {
@@ -2634,7 +2699,7 @@ const Hero = ()=>{
                         onClose: ()=>setIsBookingModalOpen(false)
                     }, void 0, false, {
                         fileName: "[project]/components/Hero.tsx",
-                        lineNumber: 98,
+                        lineNumber: 97,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2642,7 +2707,7 @@ const Hero = ()=>{
                         className: "h-1 w-full"
                     }, void 0, false, {
                         fileName: "[project]/components/Hero.tsx",
-                        lineNumber: 103,
+                        lineNumber: 102,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
@@ -2651,18 +2716,18 @@ const Hero = ()=>{
                 lineNumber: 45,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
-            breakpoint !== 'mobile' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "hidden md:flex flex-[1] items-center justify-end relative overflow-visible pr-8 h-[520px] pt-16",
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "hidden lg:flex flex-[1] items-center justify-end relative overflow-visible pr-8 h-[520px] pt-16",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$FloatingAssets$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                     assetValues: assetValues
                 }, void 0, false, {
                     fileName: "[project]/components/Hero.tsx",
-                    lineNumber: 108,
+                    lineNumber: 107,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/components/Hero.tsx",
-                lineNumber: 107,
+                lineNumber: 106,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0))
         ]

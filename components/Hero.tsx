@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { MagneticButton } from "./MagneticButton";
 import FloatingAssets from "./FloatingAssets";
-import DebugControlPanel from "./DebugControlPanel";
+// import DebugControlPanel from "./DebugControlPanel"; // Debug panel hidden - uncomment to re-enable
 import { useLanguage } from './LanguageContext';
 import { useViewport } from '@/hooks/useViewport';
 
@@ -102,7 +102,7 @@ const Hero: React.FC = () => {
         </div>
       )}
 
-      <DebugControlPanel onValuesChange={handleAssetValuesChange} />
+      {/* <DebugControlPanel onValuesChange={handleAssetValuesChange} /> */}
     </section>
   );
 };

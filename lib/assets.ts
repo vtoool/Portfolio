@@ -31,10 +31,10 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Me.webp",
     alt: "Me - Clay Figurine",
     position: {
-      x: 45,
-      y: 20
+      x: 45.5,
+      y: 69.5
     },
-    scale: 2.4,
+    scale: 4.89,
     animation: {
       delay: 0,
       parallaxSpeedX: 0.3,
@@ -50,10 +50,10 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Guitar.webp",
     alt: "Guitar",
     position: {
-      x: 20,
-      y: 25
+      x: 17.9,
+      y: 85.1
     },
-    scale: 1.9,
+    scale: 1.90,
     animation: {
       delay: 0.1,
       parallaxSpeedX: 0.35,
@@ -69,10 +69,10 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Map.webp",
     alt: "Map App Icon",
     position: {
-      x: 35,
-      y: 10
+      x: 23.1,
+      y: 35.7
     },
-    scale: 1.4,
+    scale: 1.40,
     animation: {
       delay: 0.15,
       parallaxSpeedX: 0.25,
@@ -88,10 +88,10 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Plane.webp",
     alt: "Plane",
     position: {
-      x: 75,
-      y: 15
+      x: 70.1,
+      y: 31.8
     },
-    scale: 1.5,
+    scale: 1.50,
     animation: {
       delay: 0.05,
       parallaxSpeedX: 0.4,
@@ -107,10 +107,10 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Gear1.webp",
     alt: "Gear",
     position: {
-      x: 80,
-      y: 55
+      x: 72.7,
+      y: 86.4
     },
-    scale: 1.6,
+    scale: 1.60,
     animation: {
       delay: 0.2,
       parallaxSpeedX: 0.2,
@@ -126,10 +126,10 @@ export const ART_ASSETS: AssetConfig[] = [
     src: "/art/Gear2.webp",
     alt: "Small Gear",
     position: {
-      x: 90,
-      y: 65
+      x: 79.9,
+      y: 74.7
     },
-    scale: 1.0,
+    scale: 1.33,
     animation: {
       delay: 0.25,
       parallaxSpeedX: 0.18,
